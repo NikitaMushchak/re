@@ -1,0 +1,65 @@
+#
+# 'make depend' uses makedepend to automatically generate dependencies 
+#			   (dependencies are added to end of Makefile)
+# 'make'		build executable file './planar3D.out'
+# 'make clean'  removes all .o and executable files
+#
+
+#*# ************************************************************************ #*#
+
+ifeq ($(origin CXX), default)
+CXX = g++
+endif
+CXXFLAGS ?= -std=c++11 -O3 -pedantic -Wall
+
+INCLUDES = 
+
+LFLAGS = 
+
+LIBS = 
+
+SRCS = ./Sources/Sequential/buildInfluenceMatrix.cc ./Sources/Sequential/buildPartialInfluenceMatrix.cc ./Sources/Sequential/collectDistanceFromVelocity.cc ./Sources/Sequential/findActiveElements.cc ./Sources/Sequential/findNewRibbons.cc ./Sources/Sequential/findRibbons.cc ./Sources/Sequential/initialData.cc ./Sources/Sequential/main.cc ./Sources/Sequential/planar3D.cc ./Sources/Sequential/rhs3D.cc ./Sources/Sequential/setDerivatives.cc
+
+HDR = ./Sources/Sequential/ai.hh ./Sources/Sequential/buildInfluenceMatrix.hh ./Sources/Sequential/buildPartialInfluenceMatrix.hh ./Sources/Sequential/collectDistanceFromVelocity.hh ./Sources/Sequential/findActiveElements.hh ./Sources/Sequential/findNewRibbons.hh ./Sources/Sequential/findRibbons.hh ./Sources/Sequential/initialData.hh ./Sources/Sequential/planar3D.hh ./Sources/Sequential/rhs3D.hh ./Sources/Sequential/setDerivatives.hh
+
+MAIN = ./planar3D.out
+
+ifeq ($(DESTDIR),)
+	PREFIX := /usr/local
+endif
+
+ifeq ($(verbose),true)
+	ai_echo :=
+else
+	ai_echo := @
+endif
+
+#*# ************************************************************************ #*#
+
+OBJS = $(SRCS:.cc=.o)
+
+INSTLIB = $(INSTALL_DIR)/$(HDR)
+
+.PHONY: depend clean
+
+all: $(MAIN)
+		@echo  $(MAIN) has been compiled
+
+$(MAIN): $(OBJS)
+		$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(MAIN) $(OBJS) $(LFLAGS) $(LIBS)
+
+.cc.o:
+		$(CXX) $(CXXFLAGS) $(INCLUDES) -c $<  -o $@
+
+clean:
+		$(RM) ./*.o ./*~ ./Sources/Sequential/*.o ./Sources/Sequential/*~ $(MAIN)
+		
+install: ai.hh
+		$(ai_echo)install -d $(DESTDIR)/include/
+		$(ai_echo)install -m 644 ai.hh $(DESTDIR)/include/
+		cd $(DESTDIR)$(PREFIX)/include/ && ln -f -s -v ai.hh ai
+
+depend: $(SRCS)
+		makedepend $(INCLUDES) $^
+
+# DO NOT DELETE THIS LINE - make depend needs it
