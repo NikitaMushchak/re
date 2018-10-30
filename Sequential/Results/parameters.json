@@ -1,0 +1,51 @@
+{
+    "model": "planar3D",
+    "time": 100,
+    "mesh": {
+        "height": 85,
+        "lenght": 43,
+        "cell": {
+            "height": 8.24261,
+            "length": 8.24261
+        }
+    },
+    "fluid": {
+        "0": {
+            "start time": 0,
+            "stop time": 100,
+            "injection": 0.16,
+            "rheology index": 1,
+            "viscosity": 0.4
+        }
+    },
+    "proppant": {
+        "0": {
+            "start time": 0,
+            "stop time": 100,
+            "injection": 0
+        }
+    },
+    "layers": {
+        "0": {
+            "y1": -4150.15,
+            "y2": -70.0622,
+            "plane strain modulus": 3.2e+10,
+            "leak-off": 0,
+            "stress": 500000
+        },
+        "1": {
+            "y1": -70.0622,
+            "y2": 70.0622,
+            "plane strain modulus": 3.2e+10,
+            "leak-off": 0,
+            "stress": 0
+        },
+        "2": {
+            "y1": 70.0622,
+            "y2": 4150.15,
+            "plane strain modulus": 3.2e+10,
+            "leak-off": 0,
+            "stress": 500000
+        }
+    }
+}
