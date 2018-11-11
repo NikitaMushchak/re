@@ -65,7 +65,7 @@ void calculatePressure(
     std::vector< std::vector<size_t> > &activeElements,
     std::vector< std::vector<double> > &influenceMatrix,
     std::vector<double> &opening,
-    std::vector<double> &sigma,
+    std::vector<double> &stress,
     const size_t size
 ){
     pressure.resize(size);
@@ -74,11 +74,12 @@ void calculatePressure(
     std::vector<double> pressureS;
     multiply(influenceMatrix, opening, pressureS);
 
+    /// \todo Проверить производительность
     // #pragma omp parallel for
     for(size_t i = 0; i < activeElements.size(); ++i){
         const size_t ai = activeElements[i][0];
         const size_t aj = activeElements[i][1];
-        pressure[index[ai][aj]] = pressureS[i] / dx + sigma[i];
+        pressure[index[ai][aj]] = pressureS[i] / dx + stress[aj];
     }
 }
 
@@ -241,7 +242,7 @@ void calculateOpeningSpeed(
 		const double yDerivative = (flowJPlusHalf - flowJMinusHalf) / dy;
 
 		const double value = xDerivative + yDerivative
-			+ Q0 * (double)(i == i00 && j == j00) / std::pow(dx, 2)
+			+ Q * (double)(i == i00 && j == j00) / std::pow(dx, 2)
 			- C / std::sqrt(currentTime - mesh[i][j].activationTime);
 
 		dWdt[index[i][j]] = value;
@@ -350,7 +351,6 @@ void calculateOpeningSpeedProp_TVD(
 	double Rof = 1.1*1000;												//плотность жидкости
 	double g = 9.81;
 	double d = 2 * 0.001; 												//диаметр частицы проппанта
-	double betta = -2.5*bn;  											//степень для вязкости
 	double C_max = 0.6;  												//максимальная концентрация проппанта
 	double alfa = 5;  													//степень для корректирующего коэффициента в уравнении для скорости
 	double vs = g * (Rop - Rof)*std::pow(d, (bn + 1.))/(std::pow(3.,(bn - 1))*18.);	// скорость оседания пропанта
@@ -606,7 +606,7 @@ void calculateOpeningSpeedProp_TVD(
         const double yDerivative = (flowJPlusHalf - flowJMinusHalf) / dy;
 
         const double value = xDerivative + yDerivative
-            + Q0 * (double)(i == i00 && j == j00) / std::pow(dx, 2)
+            + Q * (double)(i == i00 && j == j00) / std::pow(dx, 2)
             - C / std::sqrt(currentTime-mesh[i][j].activationTime);
 
 		dWdt[index[i][j]] = value;
@@ -639,31 +639,71 @@ void calculateOpeningSpeedProp_TVD(
 /*!
 \detailed __calculateOpeningSpeedProp__ - функция, рассчитывающая производную раскрытия по времени с учётом давления и раскрытия в соседних элементах,
 а также утечки жидкости в пласт, а также переноса проппанта Явная противопоточная разностная схема
-<br>Уравнение переноса проппанта:
-<br>\f$[\frac{\partial \left( {{}_{p}}w \right)}{\partial t}+\nabla \cdot \left( {{C}_{p}}w{{\mathbf{v}}_{\mathbf{}}} \right)=0,]\f$
-<br>где \f${{C}_{p}}\f$– концентрация проппанта, \f$[{{\mathbf{v}}_{\mathbf{}}}]\f$– скорость проппанта.
-<br>\f$\frac{u_{i,j}^{k+1}-u_{i,j}^{k}}{\vartriangle t}+\frac{H_{i+0.5,j}^{k}-H_{i-0.5,j}^{k}}{\vartriangle x}+\frac{Q_{i,j+0.5}^{k}-Q_{i,j-0.5}^{k}}{\vartriangle y}=0,\f$
-<br>где \f$u_{i,j}^{k}=\left( {{C}_{p}}w \right)_{i,j}^{k}\f$
-<br>\f$H_{i+0.5,j}^{k}=h_{i+0.5,j}^{k}+\frac{1}{2}\delta \left( r \right)\left[ sgn \left( \left( {{v}_{p}} \right)_{i+0.5,j}^{k} \right)-\lambda \left( {{v}_{p}} \right)_{i+0.5,j}^{k} \right]\left( {{v}_{p}} \right)_{i+0.5,j}^{k}\left( u_{i+1,j}^{k}-u_{i,j}^{k} \right)\f$
-<br>\f$[h_{i+0.5,j}^{k}=\left\{ \begin{align}
-  & u_{i,j}^{k}\cdot \left( {{v}_{p}} \right)_{i+0.5,j}^{k},\,\,\,\,\,\left( {{v}_{p}} \right)_{i+0.5,j}^{k}\ge 0 \\
- & u_{i+1,j}^{k}\cdot \left( {{v}_{p}} \right)_{i+0.5,j}^{k},\,\,\left( {{v}_{p}} \right)_{i+0.5,j}^{k}\le 0 \\
-\end{align} \right.]\f$
-<br>\f$[\delta \left( r \right)]\f$ – ограничитель потока (Flux limiter)
-<br>
-\f$ [\begin{align}
-& \left. 1 \right)\delta \left( r \right)=\min \bmod \left( 1,r \right), \\
-& \left. 2 \right)\delta \left( r \right)=\frac{r+\left| r \right|}{1+r{}^{2}}, \\
-& \left. 3 \right)\delta \left( r \right)=\max \left[ 0,\min \left( 2r,1 \right),\min \left( 2,r \right) \right] \\
-\end{align}] \f$
-<br>\f$r=\frac{u_{i+1+\sigma ,j}^{k}-u_{i+\sigma ,j}^{k}}{u_{i+1,j}^{k}-u_{i,j}^{k}},\f$
-<br>\f$ [\sigma =sgn \left[ \left( {{v}_{p}} \right)_{i+0.5,j}^{k} \right].] \f$
-<br>\f$\lambda =\frac{\vartriangle t}{\vartriangle x}\f$
-<br>
 <br>
 
+Рассматривается двухкомпонентная среда, состоящая из несущей жидкости и проппанта. Уравнение переноса проппанта имеет вид:
 
+\f{equation}{
+    \frac{\partial w}{\partial t}
+    + \nabla \cdot \left(C_{p}\vec{v}\right) = 0,
+\f}
+где \f$\frac{\partial w}{\partial t}\f$~--- производная раскрытия по времени, \f${C_{p}}\f$~--- концентрация проппанта, \f$\vec{v}\f$~--- скорость переноса проппанта.
 
+Скорость изменения раскрытия может быть записана через горизонтальные и вертикальные потоки закачиваемой жидкости \f$H\f$ и \f$Q\f$ согласно уравнению переноса жидкости. Дополнительно введём обозначения:
+
+\f{equation}{
+    u_{i,j}^{k} = \left(C_{p}w\right)_{i,j}^{k},
+\f}
+
+\f{equation}{
+    \sigma = sgn\!\left(\left(v_{p}\right)_{i+0.5,j}^{k}\right),
+\f}
+
+\f{equation}{
+    r = \frac{u_{i+1+\sigma,j}^{k}-u_{i+\sigma,j}^{k}}{u_{i+1,j}^{k}-u_{i,j}^{k}},
+\f}
+
+\f{equation}{
+    h_{i+0.5,j}^{k} = \left\{
+    \begin{array}{lc}
+      u_{i,j}^{k} \left(v_{p}\right)_{i+0.5,j}^{k}, & \left(v_{p}\right)_{i+0.5,j}^{k} \geq 0 \\
+      u_{i+1,j}^{k} \left(v_{p}\right)_{i+0.5,j}^{k}, & \left(v_{p}\right)_{i+0.5,j}^{k} < 0
+   \end{array}
+   \right.
+   .
+\f}
+
+Определим функцию ограничителя потока \f$\delta\!\left(r\right)\f$:
+\f{equation}{
+    \delta\!\left(r\right) = \left[
+    \begin{array}{l}
+        \min\!\left(\bmod\!\left(1,r\right)\right)\\
+        \frac{r+\left|r\right|}{1+r^{2}}\\
+        \max\!\left(0, \min\!\left(1,2r\right), \min\!\left(2,r\right)\right)
+    \end{array}
+    \right.
+    .
+\f}
+
+\f{equation}{
+    H_{i+0.5,j}^{k} = h_{i+0.5,j}^{k} \\
+    + \frac{1}{2} \delta\!\left(r\right) \Delta u_{k}
+    \left(v_{p}\right)_{i+0.5,j}^{k} \left(
+        \sigma - \lambda \left(v_{p}\right)_{i+0.5,j}^{k}
+    \right),
+\f}
+где \f$\Delta u_{k}~= u_{i+1,j}^{k}-u_{i,j}^{k}\f$, \f$\lambda = \frac{\Delta t}{\Delta x}\f$.
+
+Запишем итоговую конечно-разностную схему:
+
+\f{equation}{
+    \frac{u_{i,j}^{k+1}-u_{i,j}^{k}}{\Delta t}
+    + \frac{H_{i+0.5,j}^{k}-H_{i-0.5,j}^{k}}{\Delta x}
+    + \frac{Q_{i,j+0.5}^{k}-Q_{i,j-0.5}^{k}}{\Delta y} = 0.
+\f}
+\latexonly
+\input ./untitled.tex
+\endlatexonly
 \param[in] Wt !!!!тут все нужно скопировать с твд схемы!!!!
 \param[in] dWdt
 \param[in] dWdts
@@ -687,6 +727,7 @@ void calculateOpeningSpeedProp(
 	std::vector< std::vector<size_t> > &activeElements,
 	std::vector<double> &concentration,				//Вектор концентраций проппанта Света
 	std::vector<double> &concentration_temp,		//Вектор новых концентраций проппанта Света
+	double DproppantInjection,						//Величина мнгновенной плотности проппанта (кг/(м3*dt)
 	double currentTime
 ) {
 	dWdt.resize(Wt.size());
@@ -718,16 +759,15 @@ void calculateOpeningSpeedProp(
 	double Rof = 1.1 * 1000;												//плотность жидкости
 	double g = 9.81;
 	double d = 2 * 0.001; 												//диаметр частицы проппанта
-	double betta = -2.5*bn;  											//степень для вязкости
-	double C_max = 0.6;  												//максимальная концентрация проппанта
+	double C_max = 0.585;  												//максимальная концентрация проппанта
 	double alfa = 5;  													//степень для корректирующего коэффициента в уравнении для скорости
-	double vs = g * (Rop - Rof)*std::pow(d, (bn + 1.)) / (std::pow(3., (bn - 1))*18.);	// скорость оседания пропанта
+	double vs = 476.7 * g * (Rop - Rof)*std::pow(d, (bn + 1.)) / (std::pow(3., (bn - 1))*18.);	// скорость оседания пропанта
 	double cp = -2.5;				// у Светы это расчетная величина:	cp = betta / bn;
 
 	double injFunc;														//Скорость закачки
 	double gradient_concentration;										//Градиент изменения концентрации. Меняется при наличии закачки в центре терщины
 
-		injFunc = 0.5;
+		injFunc = DproppantInjection * Q / (Rop * std::pow(dx, 2));
 
 
 	int minI = 10;
@@ -864,10 +904,10 @@ void calculateOpeningSpeedProp(
 		//Для нулевого слоя "отражаем значения потоков для симметрии
 		if (i00 == i) {
 			flowIMinusHalf = -flowIPlusHalf;
-			//p_flowIMinusHalf = -p_flowIPlusHalf;
-			//p_velocityIMinusHalf = -p_velocityIPlusHalf;
-			p_flowIMinusHalf = 0.;
-			p_velocityIMinusHalf = 0.;
+			p_flowIMinusHalf = -p_flowIPlusHalf;
+			p_velocityIMinusHalf = -p_velocityIPlusHalf;
+			//p_flowIMinusHalf = 0.;
+			//p_velocityIMinusHalf = 0.;
 		}
 
 
@@ -902,19 +942,19 @@ void calculateOpeningSpeedProp(
 			}
 			else
 			{
-				p_velocityJMinusHalf = flowJMinusHalf / openingJMHalf;
+				p_velocityJMinusHalf = flowJMinusHalf / openingJMHalf - vs * (1. - concentrationJMinusHalf);
 
 
 				///////////////////////////////////////////////////////
-				if ((p_velocityJMinusHalf*pressure_gradient)>0)
-				{
-					std::cout << " BOTTOM!!! " << "endl";
-				}
+				//if ((p_velocityJMinusHalf*pressure_gradient)>0)
+				//{
+				//	std::cout << " BOTTOM!!! " << "endl";
+				//}
 				/////////////////////////////////////////////////////////
 
 
 				//Оседание проппанта
-				//p_velocityJMinusHalf = p_velocityJMinusHalf - vs * std::pow((1. - concentrationJMinusHalf / C_max), alfa);
+				//p_velocityJMinusHalf = p_velocityJMinusHalf - vs * (1. - concentrationJMinusHalf);
 				if (p_velocityJMinusHalf < 0)
 				{
 					p_flowJMinusHalf = p_velocityJMinusHalf * concentration[index[i][j - 1]] * Wt[index[i][j - 1]];
@@ -956,19 +996,19 @@ void calculateOpeningSpeedProp(
 			}
 			else
 			{
-				p_velocityJPlusHalf = flowJPlusHalf / openingJPlusHalf;
+				p_velocityJPlusHalf = flowJPlusHalf / openingJPlusHalf - vs * (1. - concentrationJPlusHalf);
 
 				///////////////////////////////////////////////////////
-				if ((p_velocityJPlusHalf*pressure_gradient)<0)
-				{
-					std::cout << " TOP!!! " << "endl";
-				}
+				//if ((p_velocityJPlusHalf*pressure_gradient)<0)
+				//{
+				//	std::cout << " TOP!!! " << "endl";
+				//}
 				/////////////////////////////////////////////////////////
 
 
 
 				//Оседание проппанта
-				//p_velocityJPlusHalf = p_velocityJPlusHalf - vs * std::pow((1. - concentrationJPlusHalf / C_max), alfa);
+				//p_velocityJPlusHalf = p_velocityJPlusHalf - vs * (1. - concentrationJPlusHalf);
 				if (p_velocityJPlusHalf > 0)
 				{
 					p_flowJPlusHalf = p_velocityJPlusHalf * concentration[index[i][j + 1]] * Wt[index[i][j + 1]];
@@ -984,7 +1024,7 @@ void calculateOpeningSpeedProp(
 		const double yDerivative = (flowJPlusHalf - flowJMinusHalf) / dy;
 
 		const double value = xDerivative + yDerivative
-			+ Q0 * (double)(i == i00 && j == j00) / std::pow(dx, 2)
+			+ Q * (double)(i == i00 && j == j00) / std::pow(dx, 2)
 			- C / std::sqrt(currentTime - mesh[i][j].activationTime);
 
 		dWdt[index[i][j]] = value;
@@ -1006,6 +1046,35 @@ void calculateOpeningSpeedProp(
 			}
 			concentration_temp[index[i][j]] = (gradient_concentration
 				+ concentration[index[i][j]] * Wt[index[i][j]]) / (Wt[index[i][j]] + value * dt_step);
+		}
+		//Полукостыль. проверка превышения максимальной концентрации и "закидывание" излишков на "верхнюю полку"
+		if (concentration_temp[index[i][j]] > C_max)
+		{
+
+			int temp_n = 1;
+			while ((concentration_temp[index[i][j - temp_n]] + (concentration_temp[index[i][j]] - C_max)* Wt[index[i][j]] / Wt[index[i][j - temp_n]]) > C_max)
+			{
+				temp_n++;
+				if (temp_n > j)
+					std::cout << "KARAUL!!! OUT OF RANGE!!!" << std::endl;	//максимальное значение индекса элемента, на который мы можем "пропихнуть" проппант вверх
+			}
+			//if (j - temp_n <= j00)
+			{
+				//Если мы находимся под точкой закачки, то пихаем проппант только вверх
+				concentration_temp[index[i][j - temp_n]] = concentration_temp[index[i][j - temp_n]] + (concentration_temp[index[i][j]] - C_max)* Wt[index[i][j]] / Wt[index[i][j - temp_n]];
+			}
+			//else
+			//{
+			//	//Если мы находимся над точкой закачки, то пихаем проппант вверх и вправо
+			//	concentration_temp[index[i][j - temp_n]] = concentration_temp[index[i][j - temp_n]] + 0.5*(concentration_temp[index[i][j]] - C_max)* Wt[index[i][j]] / Wt[index[i][j - temp_n]];
+			//	concentration_temp[index[i + 1][j - temp_n]] = concentration_temp[index[i + 1][j - temp_n]] + 0.5*(concentration_temp[index[i][j]] - C_max)* Wt[index[i][j]] / Wt[index[i + 1][j - temp_n]];
+			//	system("pause");
+			//}
+
+
+			//if (concentration_temp[index[i][j - 1]] > C_max)
+			//*utechka_prop += (concentration_temp[index[i][j-1]] - C_max)* Wt[index[i][j-1]];
+			concentration_temp[index[i][j]] = C_max;
 		}
 	}
 	concentration = concentration_temp;

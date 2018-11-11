@@ -19,6 +19,10 @@
 #define INLINE inline
 
 /// \todo add
+#define STRINGIFY(x) #x
+#define TO_STRING(x) STRINGIFY(x)
+
+/// \todo add
 //#define DIRENT_SUPPORT
 //#define SHELL_SUPPORT
 //#define AI_FUTURE

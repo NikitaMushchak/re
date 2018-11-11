@@ -4,15 +4,9 @@
 /// \details Функция заполняет матрицу коэффициентами влияния с учётом 
 /// симметрии вдоль одного из орт
 void buildInfluenceMatrix(
-    std::vector< 
-        std::vector< 
-            std::vector< 
-                std::vector<double> 
-            >
-        >
-    > & influenceMatrix,
-	const size_t xSize,
-	const size_t ySize
+    std::vector< std::vector<double> > &influenceMatrix,
+    const size_t xSize,
+    const size_t ySize
 ){
     const double coeff = -1. / (8. * M_PI);
         
@@ -21,15 +15,11 @@ void buildInfluenceMatrix(
     std::vector<double> xCollocationPoints;
     std::vector<double> yCollocationPoints;
     
-    std::vector< std::vector<double> > A(xSize);
-    for(size_t i = 0; i < A.size(); ++i){
-        A[i].resize(ySize);
-    }
-
     for(size_t i = 0; i < xSize; ++i){
         xCollocationPoints.push_back((double) i - i00);
     }
-    xCollocationPoints[0] = 0.25;
+    /// В предыдущих версиях – 0.25
+    xCollocationPoints[0] = 0.01;
     
     for(size_t i = 0; i < ySize; ++i){
         yCollocationPoints.push_back((double) i + 1. - j00);
@@ -39,22 +29,9 @@ void buildInfluenceMatrix(
         xIntegrationLimits.push_back((double) i - i00 - 0.5);
     }
     xIntegrationLimits[0] = 0;
-
+    
     for(size_t i = 0; i <= ySize; ++i){
         yIntegrationLimits.push_back((double) i - j00 + 0.5);
-    }
-
-    influenceMatrix.resize(xSize);
-    for(size_t i = 0; i < influenceMatrix.size(); ++i){
-        influenceMatrix[i].resize(ySize);
-        
-        for(size_t j = 0; j < influenceMatrix[i].size(); ++j){
-            influenceMatrix[i][j].resize(xSize);
-            
-            for(size_t k = 0; k < influenceMatrix[i][j].size(); ++k){
-                influenceMatrix[i][j][k].resize(ySize);
-            }
-        }
     }
     
     for(size_t k = 0; k < xSize; ++k){
@@ -86,12 +63,10 @@ void buildInfluenceMatrix(
                         - std::sqrt(std::pow(x1 + b, 2)
                         + std::pow(d - x2, 2)) / (x1 + b);
                     
-                    A[i][j] = coeff * (term1 / (x2 - c) + term2 / (x2 - d)
+                    influenceMatrix[k * ySize + m][i * ySize + j] = coeff * (term1 / (x2 - c) + term2 / (x2 - d)
                         + term3 / (c - x2) + term4 / (d - x2));
                 }
             }
-            
-            influenceMatrix[k][m] = A;
         }
     }
 }

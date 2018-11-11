@@ -4,13 +4,16 @@
 #include "ai.hh"
 #include "planar3D.hh"
 
+/// \todo Исправить учёт утечек при масштабировании сетки
 
-#define STRINGIFY(x) #x
-#define TO_STRING(x) STRINGIFY(x)
+/// \brief Версия программы
+/// \details Текущая версия программы
+std::string version("3.1.0");
+
 #if defined(_MSC_VER)
     std::string compiler(ai::string("msc") + ai::string(_MSC_VER));
 #elif defined(_COMPILER_)
-    std::string compiler(TO_STRING(_COMPILER_))
+    std::string compiler(TO_STRING(_COMPILER_));
 #else
     std::string compiler("%compiler%");
 #endif
@@ -24,41 +27,57 @@
 #else
     std::string timestamp("%timestamp%");
 #endif
-std::string version("2.1.1");
 #if defined(_PLATFORM_)
-    std::string buildVersion(version + ai::string("+") + TO_STRING(_PLATFORM_));
+    std::string buildVersion(
+        version + ai::string("+") + TO_STRING(_PLATFORM_)
+    );
 #else
     std::string buildVersion(version + ai::string("+%platform%"));
 #endif
 
+#if defined(OPENMP)
+    #include <omp.h>
+#else
+    std::size_t omp_get_max_threads(){return 1;}
+#endif
+
 /// \brief Main-функция
 /// \details Первичная функция, считывающая параметры, переданные при запуске
-/// программы, и запускающая расчёт распространения трещины по планарной модели
+/// программы, и запускающая расчёт распространения трещины по планарной
+/// модели
 int main(const int argc, const char *argv[]){
     bool saveSteps = false;
     bool runningFromGUI = false;
 
-    std::string pathToBarriersFile = std::string();
-    std::string pathToInjectionFile = std::string();
+    std::string pathToLayersFile("./InitialConditions/layers.txt");
+    std::string pathToInjectionFile("./InitialConditions/injection.txt");
+    std::string pathToImportFolder = std::string();
 
-    double cellSize = 6.;
-    double meshSize = 5.;
-    double mu = 0.4;
-    double T1 = 25.0;
+    std::size_t numberOfThreads = (std::size_t) omp_get_max_threads();
+
+    int meshScalingCounter = -1;
+
+    double cellSize = 4.;
+    double meshSize = 30.;
+    double time = 25.0;
     double ts = 60.;
 
     E = 32 * pow(10, 9);
     epsilon = std::pow(10., -8);
     C = 0. * std::pow(10., -6);
     Kic = 0. * std::pow(10., 6);
-    Q0 = 4.8 / 60.;//4.4/60.
+    Q = 2.2 / 60.;//4.4/60.
     bn = 1.;
+    mu = 0.4;
 
-    ///TODO: specify regime
+    /// \todo Добавить define для режимов
     regime = 1;
 
     for(int i = 1; i < argc; ++i){
-        if("-v" == std::string(argv[i]) || "--version" == std::string(argv[i])){
+        if(
+            std::string("-v") == std::string(argv[i])
+            || std::string("--version") == std::string(argv[i])
+        ){
             std::cout << "  Build: "  << buildVersion << "." << std::endl;
             std::cout << "  Compiler: "  << compiler << "." << std::endl;
             std::cout << "  Target: "  << target << "." << std::endl;
@@ -70,18 +89,29 @@ int main(const int argc, const char *argv[]){
             return 0;
         }
 
-        if("-h" == std::string(argv[i]) || "--help" == std::string(argv[i])){
+        if(std::string("--name") == std::string(argv[i])){
+            std::cout << "Planar3D-LL" << std::endl;
+
+            return 0;
+        }
+
+        if(
+            std::string("-h") == std::string(argv[i])
+            || std::string("--help") == std::string(argv[i])
+        ){
             std::cout << "usage: planar3D [options]"
                 << std::endl
                 << "    -h  --help            print this usage and exit"
                 << std::endl
                 << "    -v  --version         print build info and exit"
                 << std::endl
+                << "    --name                print program name and exit"
+                << std::endl
                 << "    --list-errors         print possible errors ans exit"
                 << std::endl << std::endl
 
                 << "  Liquid parameters" << std::endl
-                << "    --Q=<value>           injection [double, m^3 / s]"
+                << "    --Q=<value>           injection [double, m^3 / min]"
                 << std::endl
                 << "    --mu=<value>          viscosity [double, Pa * s]"
                 << std::endl
@@ -96,8 +126,8 @@ int main(const int argc, const char *argv[]){
                 << "    --C=<value>           Carter coefficient [double, "
                 << "um / s^0.5]"
                 << std::endl
-                << "    --Kic=<value>         stress intensity factor [double, "
-                << "MPa/m^0.5]"
+                << "    --Kic=<value>         stress intensity factor "
+                << "[double, MPa/m^0.5]"
                 << std::endl << std::endl
 
                 << "  Time parameters" << std::endl
@@ -107,16 +137,20 @@ int main(const int argc, const char *argv[]){
                 << std::endl << std::endl
 
                 << "  Mesh parameters" << std::endl
-                << "    --mesh-size=<value>    how many initial cracks fit the "
-                << "mesh [uint, n/d]"
+                << "    --mesh-size=<value>    mesh size in cells [uint, n/d]" 
                 << std::endl
-                << "    --cell-size=<value>    how many cells fit the initial "
-                << "crack [uint, n/d]"
+                << "    --cell-size=<value>    cell size in meters [double, m]"
+                << std::endl
+                << "    --mesh-scale=<value> how many times mesh scaling is "
+                << "allowed [uint, n/d]"
+                << std::endl
+                << "    --mesh-scale          allow infinite mesh scaling"
+                << std::endl
                 << std::endl << std::endl
 
                 << "  Fracture regime" << std::endl
                 << "    --viscosity           viscosity dominated regime "
-                << "{defualt}"
+                << "{default}"
                 << std::endl
                 << "    --toughness           toughness dominated regime "
                 << std::endl
@@ -124,15 +158,15 @@ int main(const int argc, const char *argv[]){
                 << std::endl << std::endl
 
                 << "  Compressive stress barriers" << std::endl
-                << "    --barriers=<path>     path to a txt-file with a list "
-                << "of barriers [string]"
+                << "    --layers=<path>       path to a txt-file with layers "
+                << "description [string]"
                 << std::endl
-                << "    --barriers            default load from "
-                << "./InitialConditions/barriers.txt"
+                << "    --layers              default load from "
+                << "./InitialConditions/layers.txt"
                 << std::endl << std::endl
 
                 << "  Dynamic Injection" << std::endl
-                << "    --injection=<path>     path to a txt-file with a list "
+                << "    --injection=<path>     path to a txt-file with a plan "
                 << "of injections [string]"
                 << std::endl
                 << "    --injection            default load from "
@@ -140,10 +174,17 @@ int main(const int argc, const char *argv[]){
                 << std::endl << std::endl
 
                 << "  Other flags" << std::endl
-                << "    --save-steps           save pressure and opening at "
-                << "every check"
+                << "    --import=<path>       import data from folder [string]"
                 << std::endl
-                << "    --env=gui             flag for planar3DGUI"
+                << "    --import              default import from ./Results"
+                << std::endl
+                << "    --save-steps          save concentration and opening "
+                << "at every check"
+                << std::endl
+                << "    --env=gui             flag for FractureGUI"
+                << std::endl
+                << "    --threads=<value>     number of parallel openmp"
+                << " threads [uint, n/d]"
                 << std::endl;
 
             return 0;
@@ -151,9 +192,9 @@ int main(const int argc, const char *argv[]){
 
         if("--list-errors" == std::string(argv[i])){
             std::cout << "  User input errors" << std::endl
-                << "    Code 11. Cell size is not a positive integer."
+                << "    Code 11. Cell size is less than 1 meter."
                 << std::endl
-                << "    Code 12. Cell size is less than 5."
+                << "    Code 12. Mesh size is less than 10 cells."
                 << std::endl
                 << "    Code 13. Mesh size is not a positive integer."
                 << std::endl
@@ -173,99 +214,147 @@ int main(const int argc, const char *argv[]){
                 << "    Code 21. Cannot find %folderName%."
                 << std::endl
                 << "    Code 22. Cannot open %fileName%."
+                << std::endl
+                << "    Code 23. Format error in %fileName%."
+                << std::endl << std::endl
+
+                << "  Calculating errors" << std::endl
+                << "    Code 31. Calculations failed due to unmet "
+                << "mathematical condition."
+                << std::endl
+                << "    Code 32. Automodel solution cannot be applied. "
                 << std::endl;
 
             return 0;
         }
 
         if(
-            ai::assignAbsDoubleParameter(argv[i], "--Q=", Q0)
+            ai::assignAbsDoubleParameter(argv[i], "--Q=", Q)
             || ai::assignAbsDoubleParameter(argv[i], "--n=", bn)
             || ai::assignAbsDoubleParameter(argv[i], "--mu=", mu)
-            || ai::assignAbsDoubleParameter(argv[i], "--time=", T1)
+            || ai::assignAbsDoubleParameter(argv[i], "--time=", time)
             || ai::assignAbsDoubleParameter(argv[i], "--ts=", ts)
             || ai::assignAbsDoubleParameter(argv[i], "--cell-size=", cellSize)
             || ai::assignAbsDoubleParameter(argv[i], "--mesh-size=", meshSize)
-            || ai::assignStringParameter(argv[i],
-                "--barriers=", pathToBarriersFile
+            || ai::assignStringParameter(
+                argv[i],
+                "--layers=",
+                pathToLayersFile
             )
-            || ai::assignStringParameter(argv[i],
-                "--injection=", pathToInjectionFile
+            || ai::assignStringParameter(
+                argv[i],
+                "--injection=",
+                pathToInjectionFile
             )
+            || ai::assignParameter(
+                argv[i],
+                "--mesh-scaling=",
+                meshScalingCounter
+            )
+            || ai::assignParameter(argv[i], "--threads=", numberOfThreads)
         ){
             continue;
         }
 
         if(ai::assignAbsDoubleParameter(argv[i], "--E=", E)){
-            E *= std::pow(10, 9);
+            E *= std::pow(10., 9);
+
             continue;
         }
 
         if(ai::assignAbsDoubleParameter(argv[i], "--C=", C)){
             C *= std::pow(10., -6);
+
             continue;
         }
 
         if(ai::assignAbsDoubleParameter(argv[i], "--Kic=", Kic)){
             Kic *= std::pow(10., 6);
+
             continue;
         }
 
         if("--viscosity" == std::string(argv[i])){
             regime = 1;
+
             continue;
         }
 
         if("--toughness" == std::string(argv[i])){
             regime = 0;
+
             continue;
         }
 
         if("--leak-off" == std::string(argv[i])){
             regime = -1;
+
             continue;
         }
 
-        if("--barriers" == std::string(argv[i])){
-            pathToBarriersFile = "./InitialConditions/barriers.txt";
+        if("--layers" == std::string(argv[i])){
+            pathToLayersFile = std::string("./InitialConditions/layers.txt");
+
             continue;
         }
 
         if("--injection" == std::string(argv[i])){
-            pathToInjectionFile = "./InitialConditions/injection.txt";
+            pathToInjectionFile = std::string(
+                "./InitialConditions/injection.txt"
+            );
+
+            continue;
+        }
+
+        if("--mesh-scale" == std::string(argv[i])){
+            meshScalingCounter = 1000;
+
+            continue;
+        }
+
+        if("--import" == std::string(argv[i])){
+            pathToImportFolder = "./Results";
+
             continue;
         }
 
         if("--save-steps" == std::string(argv[i])){
             saveSteps = true;
+
             continue;
         }
 
         if("--env=gui" == std::string(argv[i])){
             runningFromGUI = true;
+
             continue;
         }
     }
 
-    // if(cellSize != (int) cellSize){
-        // std::cerr << "Cell size should be a positive integer." << std::endl;
-        // return 11;
-    // }
 
-    // if(5. > cellSize){
-        // std::cerr << "Cell size should be at least 5." << std::endl;
-        // return 12;
-    // }
+    if(1. > cellSize){
+        std::cerr << "Cell size should be at least 1 meter" << std::endl;
 
-    // if(meshSize != (int) meshSize){
-        // std::cerr << "Mesh size should be a positive integer." << std::endl;
-        // return 13;
-    // }
+        return 11;
+    }
+
+    if(10. > meshSize){
+        std::cerr << "Mesh size should be at least 10 cells." << std::endl;
+
+        return 12;
+    }
+
+    if(meshSize != (int) meshSize){
+        std::cerr << "Mesh size should be a positive integer." << std::endl;
+
+        return 13;
+    }
 
     if(-1 == regime && epsilon > C){
         std::cerr << "Carter coefficient should be positive in a leak-off "
             << "dominated regime."
             << std::endl;
+
         return 14;
     }
 
@@ -273,6 +362,7 @@ int main(const int argc, const char *argv[]){
         std::cerr << "Stress intensity factor should be positive in a "
             << "toughness dominated regime."
             << std::endl;
+
         return 15;
     }
 
@@ -280,16 +370,17 @@ int main(const int argc, const char *argv[]){
         std::cerr << "Viscosity should be positive in a viscosity dominated"
             << "regime."
             << std::endl;
+
         return 16;
     }
-
-    const double theta = 2. * std::pow(2. * (2. * bn + 1.) / bn, 1. / bn);
-    alpha = 2. / (bn + 2.);
-    const double BAlpha = 0.25 * alpha * tan(0.5 * M_PI - M_PI * (1 - alpha));
-    Amu = std::pow(BAlpha * (1 - alpha), -0.5 * alpha);
+    
+    if(0 != (int) meshSize % 2){
+        meshSize = round(meshSize + 1);
+    }
 
     return planar3D(
-        T1, mu, theta, ts, cellSize, meshSize,
-        pathToBarriersFile, pathToInjectionFile, runningFromGUI, saveSteps
+        time, ts, cellSize, meshSize, meshScalingCounter,
+        pathToLayersFile, pathToInjectionFile, pathToImportFolder,
+        runningFromGUI, saveSteps, numberOfThreads
     );
 }

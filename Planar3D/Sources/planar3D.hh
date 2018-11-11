@@ -12,33 +12,50 @@
 
 //глобальные переменные, необходимые в разных фрагментах расчётной программы
 
-//Type
-#define INITIAL -666	//Инициализация значения типа элемента
+/// Константа для инициализации неизвестных значений
+#define INITIAL -666
 
+/// Тип внешних для трещины сеточных элементов
 #define OUTSIDE 0
+
+/// Тип внутренних для трещины сеточных элементов, близких к фронту трещины
 #define RIBBON  1
+
+/// Тип внутренних для трещины сеточных элементов
 #define CHANNEL 2
 
-//XDerivative:
+/// Тип x-производной сеточного элемента с одним активным соседом
 #define LEFT   -1
+
+/// Тип x-производной сеточного элемента без активных соседей
 #define ALONE   0
+
+/// Тип x-производной сеточного элемента с одним активным соседом
 #define RIGHT   1
+
+/// Тип x-производной сеточного элемента с двумя активными соседями
 #define REGULAR 2
 
-//YDerivative:
+/// Тип y-производной сеточного элемента с одним активным соседом
 #define BOTTOM -1
-#define ALONE   0
-#define TOP     1
-#define REGULAR 2
 
+/// Тип y-производной сеточного элемента без активных соседей
+#define ALONE   0
+
+/// Тип y-производной сеточного элемента с одним активным соседом
+#define TOP     1
+
+/// Тип y-производной сеточного элемента с двумя активными соседями
+#define REGULAR 2
 
 extern int regime;
 
-extern double xStar0;
+extern double initialRadius;
 extern double dx;
 extern double dy;
 extern double bn;
-extern double Q0;
+extern double mu;
+extern double Q;
 extern double E;
 extern double C;
 extern double Kic;
@@ -76,7 +93,7 @@ class Cell{
         double y = 0;
 
         int type = INITIAL;
-		int xDerivative = INITIAL;
+        int xDerivative = INITIAL;
         int yDerivative = INITIAL;
 
         double activationTime = -1.;
@@ -95,14 +112,32 @@ void printLogo();
 
 /// \brief Основная расчётная функция
 int planar3D(
-    const double T1,
-    const double mu,
-    const double theta,
+    double T1,
     const double ts,
-    const double cellSize,
-    const double meshSize,
-    const std::string pathToBarriersFile,
-    const std::string pathToInjectionFile,
+    double cellSize,
+    double meshSize,
+    int meshScalingCounter,
+    std::string pathToLayersFile,
+    std::string pathToInjectionFile,
+    const std::string pathToImportFolder,
     const bool runningFromGUI,
-    const bool saveSteps
+    const bool saveSteps,
+    const std::size_t numberOfThreads
 );
+
+
+
+/// \brief Функция экспорта данных в json формате
+/// 
+void SaveJson(
+	const std::string filename,		//Имя файла (без разрешения) для сохранения выходного файла json
+	std::vector<double> &Wk,
+	std::vector<double> &pressure,
+	std::vector<double>&concentration,
+	std::vector< std::vector<size_t> > &index, 
+	double Time,
+	double xSize,
+	double ySize,
+	double wn,
+	double DproppantInjection						//Величина мнгновенной плотности проппанта (кг/(м3*dt)
+	);

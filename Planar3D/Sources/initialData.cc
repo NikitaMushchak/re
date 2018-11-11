@@ -1,8 +1,11 @@
 #include <vector>
 #include <iostream>
 
+#include "nlohmann/json.hpp"
+
 #include "ai.hh"
 #include "planar3D.hh"
+#include "linearOperator.hh"
 
 /// \details Функция рассчитывает начальное раскрытие в точке по 
 /// автомодельному решению для раскрытия и радиуса трещины
@@ -10,10 +13,11 @@ double getInitialOpening(
     const double x,
     const double y,
     const double radius,
-    const std::vector<double> zP,
-    const std::vector<double> W0
+    const std::vector<double> &zP,
+    const std::vector<double> &W0
 ){
-    const double distance = std::sqrt(std::pow(x, 2) + std::pow(y, 2)) / radius;
+    const double distance = std::sqrt(std::pow(x, 2) + std::pow(y, 2)) 
+        / radius;
     
     double opening = 0;
     
@@ -34,11 +38,11 @@ double getInitialOpening(
 /// автомодельное решение (радиус трещины, давление и раскрытие) для жидкости
 /// заданной реологии из соответствующих текстовых файлов
 bool setInitialData(
-    const double bn,
-    double &xStar0,
-    std::vector< std::vector<double> > &A,
-    const std::string pathToBarriersFile,
-    std::vector< std::vector<double> > &barriers,
+    double &bn,
+    double &radius,
+    std::vector< std::vector<double> > &modelSolution,
+    const std::string pathToLayersFile,
+    std::vector< std::vector<double> > &layers,
     const std::string pathToInjectionFile,
     std::vector< std::vector<double> > &injection
 ){
@@ -52,49 +56,35 @@ bool setInitialData(
         {1, 1, 0.6975754}
     };
     
-    ai::assignFromVectorByIntervalCondition(approximateBn, xStar0, bn, 
-        bnIntervals);
-
-    std::cout << "Reading initial conditions from text files:" << std::endl;
+    ai::assignFromVectorByIntervalCondition(
+        approximateBn, 
+        radius, 
+        bn, 
+        bnIntervals
+    );
     
+    /// Загружаем автомодельное решение из файла
     try{
-        std::cout << "AS" + ai::string(approximateBn) + "... ";
+        /// \todo Заменить загрузку файла на вызов функции
+        std::cout << "Model solution (" << approximateBn << ")... ";
         
-        ai::parseFileInMatrix("./InitialConditions/A" 
-            + ai::string(approximateBn) + ".txt", '\t', A);
+        ai::parseFileInMatrix(
+            "./InitialConditions/A" + ai::string(approximateBn) + ".txt", 
+            '\t', 
+            modelSolution
+        );
         
-        std::cout << "OK. Size: " << A.size() << "." << std::endl;
+        std::cout << "OK. Size: " << modelSolution.size() << "." << std::endl;
     }catch(const std::exception &error){
         std::cout << "Fail!" << std::endl;
         
-        std::cerr << "Cannot open ./InitialConditions/A"
-            << ai::string(approximateBn) + ".txt, provide file and restart." 
+        std::cerr << "Cannot open './InitialConditions/A"
+            << ai::string(approximateBn) + ".txt', provide file and restart." 
             << std::endl;
         
         std::cerr << error.what() << std::endl;
         
         return false;
-    }
-    
-    if(std::string() != pathToBarriersFile){
-        try{
-            std::cout << "Barriers... ";
-            
-            ai::parseFileInMatrix(pathToBarriersFile, ' ', barriers);
-            
-            std::cout << "OK. Size: " << barriers.size() << "." << std::endl;
-        }catch(const std::exception &error){
-            std::cout << "Fail!" << std::endl;
-            
-            std::cerr << "Cannot open " << pathToBarriersFile << ", "
-                << "provide file and restart." << std::endl;
-            
-            std::cerr << error.what() << std::endl;
-            
-            return false;
-        }
-    }else{
-        std::cout << "Barriers... No file." << std::endl;
     }
     
     if(std::string() != pathToInjectionFile){
@@ -107,7 +97,7 @@ bool setInitialData(
         }catch(const std::exception &error){
             std::cout << "Fail!" << std::endl;
             
-            std::cerr << "Cannot open " << pathToInjectionFile << ", "
+            std::cerr << "Cannot open '" << pathToInjectionFile << "', "
                 << "provide file and restart." << std::endl;
             
             std::cerr << error.what() << std::endl;
@@ -118,20 +108,177 @@ bool setInitialData(
         std::cout << "Injection... No file." << std::endl;
     }
     
+    if(std::string() != pathToLayersFile){
+        try{
+            std::cout << "Layers... ";
+            
+            ai::parseFileInMatrix(pathToLayersFile, ' ', layers);
+            
+            std::cout << "OK. Size: " << layers.size() << "." << std::endl;
+        }catch(const std::exception &error){
+            std::cout << "Fail!" << std::endl;
+            
+            std::cerr << "Cannot open '" << pathToLayersFile << "', "
+                << "provide file and restart." << std::endl;
+            
+            std::cerr << error.what() << std::endl;
+            
+            return false;
+        }
+    }else{
+        std::cout << "Layers... No file." << std::endl;
+    }
+    
+    return true;
+}
+
+bool importInitialData(
+    const std::string pathToImportFolder,
+    nlohmann::json &importData
+){
+    std::cout << "Reading initial conditions from text files:" << std::endl;
+    
+    if(std::string() != pathToImportFolder){
+        try{
+            std::cout << "Parameters (JSON)... ";
+            
+            std::string importDataString = std::string();
+            
+            ai::parseFileIntoString(
+                pathToImportFolder + std::string("/parameters.json"), 
+                importDataString
+            );
+            
+            importData = nlohmann::json::parse(importDataString);
+            
+            std::cout << "OK. Size: " << importData.size() << "." << std::endl;
+        }catch(const std::exception &error){
+            std::cout << "Fail!" << std::endl;
+            
+            std::cerr << "Cannot open '" << pathToImportFolder 
+                << "/parameters.json', provide file and restart." << std::endl;
+            
+            std::cerr << error.what() << std::endl;
+            
+            return false;
+        }
+    }else{
+        std::cout << "Parameters... No file." << std::endl;
+    }
+    
+    return true;
+}
+
+
+bool recalculateInjection(
+    std::vector< std::vector<double> > &injection,
+    const double modelingTime
+){
+    if(1 > injection.size()){
+        std::cerr << "Format error in the injection file: matrix is empty." 
+            << std::endl;
+        
+        return false;
+    }
+    
+    for(std::size_t i = 0; i < injection.size(); ++i){
+        if(6 != injection[i].size()){
+            std::cerr << "Format error in the injection file: matrix size "
+                << "must be four." << std::endl;
+            
+            return false;
+        }
+    }
+    
+    for(size_t i = 0; i + 1 < injection.size(); ++i){
+        if(injection[i][1] < injection[i + 1][0]){
+            injection.insert(
+                injection.begin() + i + 1,
+                std::vector<double>{
+                    injection[i][1],
+                    injection[i + 1][0],
+                    0.,
+                    0.
+                }
+            );
+        }
+    }
+    
+    /// \todo Значения bn и mu подставлять некорректно
+    if(modelingTime > injection[injection.size() - 1][1]){
+        injection.push_back(
+            std::vector<double>{
+                injection[injection.size() - 1][1],
+                modelingTime,
+                0.,
+                0.,
+                injection[injection.size() - 1][4],
+                injection[injection.size() - 1][5],
+            }
+        );
+    }
+    
+    return true;
+}
+
+bool recalculateStressContrast(
+    const std::vector< std::vector<double> > &layers,
+    std::vector<double> &stress,
+    const std::vector<double> &y
+){
+    std::vector<double> coordinates;
+    std::vector<double> coefficients;
+    
+    double nominalStress = 0.;
+    
+    for(int i = layers.size() - 1; i >= 0; --i){
+        coordinates.push_back(layers[i][0]);
+        coordinates.push_back(layers[i][1] - 0.001);
+        coefficients.push_back(layers[i][2]);
+        coefficients.push_back(layers[i][2]);
+        
+        if(0. > layers[i][0] * layers[i][1]){
+            nominalStress = layers[i][2];
+        }
+    }
+    
+    /// \todo Заменить линейный оператор на линейную интерполяцию
+    try{
+        createLinearOperator(coordinates, coefficients);
+    }catch(const std::exception &error){
+        std::cerr << "Error during calculations of the linear operator for "
+            << "stress barriers." << std::endl;
+        
+        std::cerr << error.what() << std::endl;
+        
+        return false;
+    }
+    
+    for(std::size_t i = 0; i < y.size(); ++i){
+        stress.push_back(
+            (
+                calculateValueWithLinearOperator(
+                    y[i],
+                    coordinates,
+                    coefficients
+                ) - nominalStress
+            )
+        );
+    }
+    
     return true;
 }
 
 /// \details Функция сохраняет начальные параметры в файл формата JSON по 
 /// установленному шаблону
-void saveInitialDataJSON(
+void saveInitialData(
     const std::string filename,
     const double modelingTime,
     const std::size_t meshHeight,
     const std::size_t meshLength,
     const double cellHeight,
     const double cellLength,
-    std::vector< std::vector<double> > &fluid,
-    std::vector< std::vector<double> > &proppant,
+    std::vector< std::vector<double> > &injection,
     std::vector< std::vector<double> > &layers,
     const std::string tab = std::string("    ")
 ){
@@ -159,14 +306,14 @@ void saveInitialDataJSON(
     
     output << "{" << std::endl;
     ++indentLevel;
-
-    output << indent() << "\"model\": \"planar3D\"," << std::endl;
+    
+    output << indent() << "\"model\": \"Planar3D\"," << std::endl;
     output << indent() << "\"time\": " << modelingTime << "," << std::endl;
     
     output << indent() << "\"mesh\": {" << std::endl;
     ++indentLevel;
         output << indent() << "\"height\": " << meshHeight << "," << std::endl;
-        output << indent() << "\"lenght\": " << meshLength << "," << std::endl;
+        output << indent() << "\"length\": " << meshLength << "," << std::endl;
         output << indent() << "\"cell\": {" << std::endl;
         ++indentLevel;
             output << indent() << "\"height\": " << cellHeight << "," 
@@ -178,57 +325,32 @@ void saveInitialDataJSON(
     --indentLevel;
     output << indent() << "}," << std::endl;
     
-    output << indent() << "\"fluid\": {" << std::endl;
+    output << indent() << "\"injection\": {" << std::endl;
     ++indentLevel;
-        for(size_t i = 0; i < fluid.size(); ++i){
-            if(fluid[i].size() != 5){
+        for(size_t i = 0; i < injection.size(); ++i){
+            if(injection[i].size() != 6){
                 throw std::runtime_error(
-                    ai::string("Exception in size of the vector: fluid") 
+                    ai::string("Exception in size of the vector: injection") 
                 );
             }
             output << indent() << "\"" << ai::string(i) << "\": {" 
                 << std::endl;
             ++indentLevel;
-                output << indent() << "\"start time\": " << fluid[i][0]
+                output << indent() << "\"start time\": " << injection[i][0]
                     << "," << std::endl;
-                output << indent() << "\"stop time\": " << fluid[i][1]
+                output << indent() << "\"stop time\": " << injection[i][1]
                     << "," << std::endl;
-                output << indent() << "\"injection\": " << fluid[i][2]
+                output << indent() << "\"pumping rate\": " 
+                    << injection[i][2] << "," << std::endl;
+                output << indent() << "\"bulk proppant\": " 
+                    << injection[i][3] << "," << std::endl;
+                output << indent() << "\"rheology index\": " << injection[i][4]
                     << "," << std::endl;
-                output << indent() << "\"rheology index\": " << fluid[i][3]
-                    << "," << std::endl;
-                output << indent() << "\"viscosity\": " << fluid[i][4]
-                    << std::endl;
+                output << indent() << "\"dynamic viscosity\": " 
+                    << injection[i][5] << std::endl;
             --indentLevel;
             output << indent() << "}";
-            if(fluid.size() > i + 1){
-                output << ",";
-            }
-            output << std::endl;
-        }
-    --indentLevel;
-    output << indent() << "}," << std::endl;
-    
-    output << indent() << "\"proppant\": {" << std::endl;
-    ++indentLevel;
-        for(size_t i = 0; i < proppant.size(); ++i){
-            if(proppant[i].size() != 3){
-                throw std::runtime_error(
-                    ai::string("Exception in size of the vector: proppant") 
-                );
-            }
-            output << indent() << "\"" << ai::string(i) << "\": {" 
-                << std::endl;
-            ++indentLevel;
-                output << indent() << "\"start time\": " << proppant[i][0]
-                    << "," << std::endl;
-                output << indent() << "\"stop time\": " << proppant[i][1]
-                    << "," << std::endl;
-                output << indent() << "\"injection\": " << proppant[i][2] 
-                    << std::endl;
-            --indentLevel;
-            output << indent() << "}";
-            if(fluid.size() > i + 1){
+            if(injection.size() > i + 1){
                 output << ",";
             }
             output << std::endl;
@@ -239,24 +361,27 @@ void saveInitialDataJSON(
     output << indent() << "\"layers\": {" << std::endl;
     ++indentLevel;
         for(size_t i = 0; i < layers.size(); ++i){
-            if(layers[i].size() != 5){
+            if(layers[i].size() != 6){
                 throw std::runtime_error(
                     ai::string("Exception in size of the vector: layers") 
                 );
             }
+            
             output << indent() << "\"" << ai::string(i) << "\": {" 
                 << std::endl;
             ++indentLevel;
-                output << indent() << "\"y1\": " << layers[i][0] << ","
+                output << indent() << "\"y1\": " << layers[i][1] << ","
                     << std::endl;
-                output << indent() << "\"y2\": " << layers[i][1] << ","
+                output << indent() << "\"y2\": " << layers[i][0] << ","
                     << std::endl;
-                output << indent() << "\"plane strain modulus\": "
-                    << layers[i][2] << "," << std::endl;
-                output << indent() << "\"leak-off\": " << layers[i][3] << ","
-                    << std::endl;
-                output << indent() << "\"stress\": " << layers[i][4]
-                    << std::endl;
+                output << indent() << "\"stress\": " << layers[i][2]
+                    << "," << std::endl;
+                output << indent() << "\"Young's modulus\": "
+                    << layers[i][3] << "," << std::endl;
+                output << indent() << "\"Poisson's ratio\": " 
+                    << layers[i][4] << "," << std::endl;
+                output << indent() << "\"Carter's coefficient\": " 
+                    << layers[i][5] << std::endl;
             --indentLevel;
             output << indent() << "}";
             if(layers.size() > i + 1){

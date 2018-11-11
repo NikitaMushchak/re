@@ -16,7 +16,7 @@ void calculatePressure(
     std::vector< std::vector<size_t> > &activeElements,
     std::vector< std::vector<double> > &influenceMatrix, 
     std::vector<double> &Ws,
-    std::vector<double> &sigma,
+    std::vector<double> &stress,
     const size_t size
 );
 
@@ -41,12 +41,8 @@ void calculateOpeningSpeed(
 double currentTime
 );
 
-/*/
-* функция, рассчитывающая производную раскрытия по времени с учётом давления и
-* раскрытия в соседних элементах, а также утечки жидкости в пласт, а также переноса проппанта
-* TVD схема тоже явная
-/*/
-
+/// \brief Функция расчёта производной раскрытия по времени с учётом эволюции 
+/// проппанта, TVD схема
 void calculateOpeningSpeedProp_TVD(
 	std::vector<double> &Wt,
 	std::vector<double> &dWdt,
@@ -60,11 +56,8 @@ void calculateOpeningSpeedProp_TVD(
 	double currentTime
 );
 
-/*/
-* объявление функции, рассчитывающей производную раскрытия по времени с учётом
-* давления и раскрытия в соседних элементах, утечки жидкости в пласт, а также переноса проппанта
-/*/
-
+/// \brief Функция расчёта производной раскрытия по времени с учётом эволюции 
+/// проппанта
 void calculateOpeningSpeedProp(
 	std::vector<double> &Wt,
 	std::vector<double> &dWdt,
@@ -75,5 +68,6 @@ void calculateOpeningSpeedProp(
 	std::vector< std::vector<size_t> > &activeElements,
 	std::vector<double> &concentration,
 	std::vector<double> &concentration_temp,
+	double DproppantInjection,						//Величина мнгновенной плотности проппанта (кг/(м3*dt)
 	double currentTime
 );

@@ -7,16 +7,13 @@ void buildPartialInfluenceMatrix(
     std::vector< std::vector<double> > &newInfluenceMatrix,
     std::vector< std::vector<size_t> > &activeElements,
     std::vector<double> &Wk,
-    std::vector<double> &sigmaCol,
     std::vector<double> &WkNew,
     std::vector< std::vector<double> > &partialInfluenceMatrix,
-    std::vector<double> &dSigmaCol,
     std::vector< std::vector<size_t> > &index
 ){
     std::vector<double> zeroVector(activeElements.size(), 0);
 
     WkNew = zeroVector;
-    dSigmaCol = zeroVector;
 
     partialInfluenceMatrix.resize(activeElements.size());
     std::fill(partialInfluenceMatrix.begin(), partialInfluenceMatrix.end(),
@@ -28,7 +25,6 @@ void buildPartialInfluenceMatrix(
         const size_t pc1 = index[ai][aj];
         
         WkNew[j] = Wk[pc1];
-        dSigmaCol[j] = sigmaCol[pc1];
         
         for(size_t i = 0; i < activeElements.size(); ++i){
             const size_t ai2 = activeElements[i][0];
