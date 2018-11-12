@@ -13,7 +13,7 @@
 #include <iostream>
 #include <algorithm>
 
-#include "nlohmann/json.hpp"
+#include "Include/nlohmann/json.hpp"
 
 #include "ai.hh"
 #include "rhs3D.hh"
@@ -103,7 +103,7 @@ void calculateCrackGeometry(
     height = 0.;
     double heightUp = 0.;
     double heightDown = 0.;
-            
+
     const std::size_t xSize = distances.size();
     const std::size_t ySize = distances[0].size();
 
@@ -119,9 +119,9 @@ void calculateCrackGeometry(
     }
     for(size_t j = 0; 2 * j < ySize; ++j){
         if(
-            RIBBON == mesh[i00][j].type 
+            RIBBON == mesh[i00][j].type
             || RIBBON == mesh[i00][ySize - j - 1].type
-        ){  
+        ){
             if(0. == heightUp && RIBBON == mesh[i00][j].type ){
                 heightUp = distances[i00][j]
                     + std::sqrt(std::pow(mesh[i00][j].x, 2)
@@ -149,24 +149,6 @@ void printEfficiency(
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 /*!
 \brief __printLogo__ - функция отображения логотипа программы в консоли
 \details Функция выводит текстовое лого программы
@@ -180,15 +162,15 @@ void printLogo(){
         << "| | " << std::endl;
     std::cout << "|  __/| | (_| | | | | (_| | |  ___) | |_| | | |___| |___ | "
         << "| " << std::endl;
-    std::cout << "|_|   |_|\\__,_|_| |_|\\__,_|_| |____/|____/   " 
+    std::cout << "|_|   |_|\\__,_|_| |_|\\__,_|_| |____/|____/   "
         << "\\____|_____|___|" << std::endl;
     std::cout << std::endl << "Developed by REC \"Gazpromneft-Polytech\"."
         << std::endl << std::endl;
 }
 
 /*!
-\detailed основная расчётная функция, считающая распространение трещины в 
-режиме доминирующей вязкости по планарной модели и сохраняющая данные о 
+\detailed основная расчётная функция, считающая распространение трещины в
+режиме доминирующей вязкости по планарной модели и сохраняющая данные о
 результатах расчёта в виде текстовых файлов
 
 
@@ -198,14 +180,14 @@ void printLogo(){
 \param[in] meshSize	Число ячеек в расчётной области вдоль горизонтальной оси
 \f$meshSize=\frac{numCels}{2*\left( cellSize-1 \right)}\f$
 \param[in] meshScalingCounter Сколько раз допускается масштабировать сетку
-\param[in] pathToLayersFile Путь (относительный или абсолютный) к расположению 
+\param[in] pathToLayersFile Путь (относительный или абсолютный) к расположению
 файла слоёв
-\param[in] pathToInjectionFile Путь (относительный или абсолютный) к 
+\param[in] pathToInjectionFile Путь (относительный или абсолютный) к
 расположению файла параметров закачки
 \param[in] runningFromGUI Флаг запуска программы через графический интерфейс
-\param[in] saveSteps Флаг сохранения значений промежуточных расчетов на каждом 
+\param[in] saveSteps Флаг сохранения значений промежуточных расчетов на каждом
 временном шаге
-\param[in] numberOfThreads флаг сохранения значений промежуточных расчетов на 
+\param[in] numberOfThreads флаг сохранения значений промежуточных расчетов на
 каждом временном шаге
 */
 int planar3D(
@@ -278,7 +260,7 @@ int planar3D(
     }
 
     if(0 < importData.size()){
-        /// \todo Настроить полный импорт даныых в соответсвии с новой 
+        /// \todo Настроить полный импорт даныых в соответсвии с новой
         /// разметкой файла parameters.json
         bn = importData["fluid"]["0"]["rheology index"].get<double>();
         mu = importData["fluid"]["0"]["dynamic viscosity"].get<double>();
@@ -288,7 +270,7 @@ int planar3D(
     }
 
     if(
-        !setInitialData(bn, initialRadius, modelSolution, 
+        !setInitialData(bn, initialRadius, modelSolution,
             pathToLayersFile, layers, pathToInjectionFile, injection
         )
     ){
@@ -324,9 +306,9 @@ int planar3D(
     Q = injection[injectionIndex][2];
     bn = injection[injectionIndex][4];
     mu = injection[injectionIndex][5];
-    
+
     ++injectionIndex;
-    
+
     if(injection.size() > injectionIndex){
         timeToChangeInjection = injection[injectionIndex][0];
     }
@@ -348,11 +330,11 @@ int planar3D(
             << "n = " << bn << ";" << std::endl
             << "  E\' = " << E << ", " << "C = " << C << ","
             << " Kic = " << Kic << ";" << std::endl
-            << "  time = " << modelingTime << ", ts = " << ts << ";" 
+            << "  time = " << modelingTime << ", ts = " << ts << ";"
             << std::endl;
     }
 
-    /// Масштабируем величины 
+    /// Масштабируем величины
 
     Q *= ts / (wn * 60.);
 
@@ -374,7 +356,7 @@ int planar3D(
     );
 
     T0 = ai::min(T0, timeToChangeInjection);
-    
+
 
     initialRadius *= std::pow(Q, 1. / 3.) * std::pow(T0, gammaR);
 
@@ -393,7 +375,7 @@ int planar3D(
 
     modelSolution.clear();
 
-    const double initialVelocity = initialRadius * gammaR 
+    const double initialVelocity = initialRadius * gammaR
         * std::pow(T0, gammaR - 1);
 
     // if(0 < importData.size()){
@@ -410,26 +392,26 @@ int planar3D(
     const double dt = 0.0001 * std::pow(5. / floor(initialRadius / cellSize), 2)
         * std::pow(mu / 0.4, 0.5);
     dt_step = dt;                       //сохранили шаг по времени для использования в расчете проппанта (Света)
-
+std::cout<<"dt = "<<dt<<std::endl;
     /// Выводим входные параметры (продолжение)
     if(!runningFromGUI){
         std::cout << "  mesh = " << meshSize << ", cell = " << cellSize << ","
             << " scaling = " << meshScalingCounter << "." << std::endl;
-        std::cout << "  required radius = " << requiredRadius << ", it's time = " 
+        std::cout << "  required radius = " << requiredRadius << ", it's time = "
             << T0 << ";"<< std::endl;
         std::cout << "Initial regime: " << regimeName() << "." << std::endl;
 
-        std::cout << "Number of cell per initial radius:" 
+        std::cout << "Number of cell per initial radius:"
             << floor(initialRadius / cellSize) << std::endl;
 
-        std::cout << "Time step:" 
+        std::cout << "Time step:"
             << dt << std::endl;
     }
 
     /// Задаём расчётную область
     dx = cellSize;
     dy = dx;
-    
+
     double axMax = meshSize * dx;
 
     x.clear();
@@ -446,7 +428,7 @@ int planar3D(
     const size_t ySize = y.size();
 
     std::vector< std::vector<Cell> > mesh(xSize);
-    
+
     for(size_t i = 0; i < xSize; ++i){
         /// \todo Отказаться от сетки как класса, использовать вектора
         mesh[i].resize(ySize);
@@ -491,7 +473,7 @@ int planar3D(
     }
 
     C *= std::sqrt(ts) / wn;
-	Kic /=std::pow(mu/std::pow(ts,bn),1./(bn+2.))*std::pow(E,(bn+1.)/(bn+2.)); 
+	Kic /=std::pow(mu/std::pow(ts,bn),1./(bn+2.))*std::pow(E,(bn+1.)/(bn+2.));
 
 
 
@@ -543,7 +525,7 @@ int planar3D(
             ++m;
         }
     }
-
+	ai::saveVector("./Wkini", Wk);
     const double dMin1 = std::sqrt(std::pow(0.5 * dx, 2)
         + std::pow(1.5 * dy, 2));
     const double dCenter1 = dx;
@@ -642,6 +624,8 @@ int planar3D(
     }
 
     auto startTime = ai::time();
+	std::vector<double> dis;
+
 
     while(modelingTime >= T && meshIsNotExhausted){
         calculatePressure(
@@ -679,18 +663,20 @@ int planar3D(
             for(size_t i = 0; i < ribbons.size(); ++i){
                 const size_t iRibbon = ribbons[i].i;
                 const size_t jRibbon = ribbons[i].j;
+				// std::cout<<"in"<<std::endl;
+                // distances[iRibbon][jRibbon] = 0.25 *  sqrt(0.5 * M_PI)
+ //                    * Wk[index[iRibbon][jRibbon]] / Kic;
+				distances[iRibbon][jRibbon] = (M_PI*Wk[index[iRibbon][jRibbon]]*Wk[index[iRibbon][jRibbon]])/(32* Kic*Kic);
 
-                distances[iRibbon][jRibbon] = 0.25 *  sqrt(0.5 * M_PI) 
-                    * Wk[index[iRibbon][jRibbon]] / Kic;
-					
-                distances[iRibbon][jRibbon] *= distances[iRibbon][jRibbon];
+               // distances[iRibbon][jRibbon] *= distances[iRibbon][jRibbon];
                 if(epsilon > distances[iRibbon][jRibbon]){
                     distances[iRibbon][jRibbon] = epsilon;
                 }
             }
+			dis.push_back(ai::max(distances));
         }else{
             calculateVelocity(
-                velocities, 
+                velocities,
                 index,
                 ribbons,
                 distances,
@@ -704,6 +690,8 @@ int planar3D(
             }
         }
 	ai::saveMatrix("./dist", distances);
+
+	// ai::printVector(dis);
 	    for(size_t i = 0; i < xSize; ++i){
             for(size_t j = 0; j < ySize; ++j){
                 openingAtTheStep[i][j] = 1000 * wn * Wk[index[i][j]];
@@ -723,7 +711,7 @@ int planar3D(
 
         if(step == stepToCheck){
             if(runningFromGUI){
-                std::cout << "Progress: " << (T - T0) / (modelingTime - T0) 
+                std::cout << "Progress: " << (T - T0) / (modelingTime - T0)
                     << std::endl;
             }else{
                 ai::showProgressBar((T - T0) / (modelingTime - T0));
@@ -838,20 +826,32 @@ int planar3D(
             }
 
             if(0 == regime){
-                const size_t lastIndex = fracture.size() - 1;
+                 const size_t lastIndex = fracture.size() - 1;
 
-                const double maxDelta = ai::max(fracture[lastIndex][3]
+				//const size_t lastInde = dis.size() - 1;
+                 const double maxDelta = ai::max(fracture[lastIndex][3]
                     - fracture[lastIndex - 1][3], fracture[lastIndex][4]
                     - fracture[lastIndex - 1][4]) / (fracture[lastIndex][0]
                     - fracture[lastIndex - 1][0]);
-
-                if(epsilon < maxDelta){
-                    stepToCheck = ai::min(stepToCheck,
-                        (size_t) std::round(dx / (dt * maxDelta) / 20.));
-                }
+				// const double maxDelta = (dis[lastIndex] - dis[lastIndex - 1])/
+// 					(fracture[lastIndex][0] - fracture[lastIndex - 1][0]);
+                // const double maxDelta = ai::max(fracture[lastIndex][3]
+//                     - fracture[lastIndex - 1][3], fracture[lastIndex][4]
+//                     - fracture[lastIndex - 1][4]);
+				std::cout<<"Regime!"<<std::endl;
+                //if(epsilon < maxDelta){
+                     stepToCheck =   200;//ai::min(stepToCheck,
+ 				                   // (size_t) std::round(dx / (dt * maxDelta) / 20.));
+				std::cout<<" IFFFFFsteptoCheck = "<<stepToCheck<<std::endl;
+        // std::cout<<"dx = "<< dx <<std::endl;
+        // std::cout<<"dt = "<< dt <<std::endl;
+// if( maxDelta>0.000001){
+//         std::cout<<"maxDelta = "<<  maxDelta<<std::endl;}
+         std::cout<<"Value = "<<  dx  / dt * maxDelta<<std::endl;
+                //}
             }
         }
-
+		//std::cout<<" StepToCheck = "<<stepToCheck<<std::endl;
         T += dt;
         ++step;
 
@@ -915,7 +915,7 @@ int planar3D(
                     openingNew[index[i00 + i][j00 - j]] = Wk[index[i00 + 2 * i][j00 - 2 * j]];
                     distancesNew[i00 + i][j00 + j] = distances[i00 + 2 * i][j00 + 2 * j];
                     distancesNew[i00 + i][j00 - j] = distances[i00 + 2 * i][j00 - 2 * j];
-                    
+
                     // if(
                     //     (0 <= 2 * i - 1 && 0 <= j00 + 2 * j && RIBBON == mesh[2 * i - 1][j00 + 2 * j].type)
                     //     || (0 <= 2 * i - 1 && 0 <= j00 + 2 * j - 1 && RIBBON == mesh[2 * i - 1][j00 + 2 * j - 1].type)
@@ -1078,7 +1078,7 @@ int planar3D(
     ai::saveMatrix("./Results/concentration", concentrationAtTheEnd, true);
 
     calculateCrackGeometry(mesh, distances, length, height);
-    
+
     fracture.push_back(
         std::vector<double>{
             T,
@@ -1123,7 +1123,7 @@ int planar3D(
     }
 
     /// Поправка на автомодельное решение
-    
+
     proppantVolumeOut -= T0 * injection[0][2] * injection[0][3];
 
     fluidVolumeOut *= 60 * wn / ts;
@@ -1148,10 +1148,10 @@ int planar3D(
     proppantVolumeIn *= wn * dx * dy * 2.65 * 1000;
 
     std::cout << std::endl;
-    std::cout << "Efficiency: " << 100 * fluidVolumeIn / fluidVolumeOut 
+    std::cout << "Efficiency: " << 100 * fluidVolumeIn / fluidVolumeOut
         << "% [fluid]";
     if(0. < proppantVolumeOut){
-        std::cout << ", " << 100 * proppantVolumeIn / proppantVolumeOut 
+        std::cout << ", " << 100 * proppantVolumeIn / proppantVolumeOut
             << "% [proppant]";
     }
     std::cout << "." << std::endl;
@@ -1160,14 +1160,14 @@ int planar3D(
 }
 
 
-void SaveJson(const std::string filename, 
+void SaveJson(const std::string filename,
 	std::vector<double> &Wk,
 	std::vector<double> &pressure,
-	std::vector<double>&concentration, 
-	std::vector< std::vector<size_t> > &index, 
+	std::vector<double>&concentration,
+	std::vector< std::vector<size_t> > &index,
 	double Time,
-	double xSize, 
-	double ySize, 
+	double xSize,
+	double ySize,
 	double wn,
 	double DproppantInjection						//Величина мнгновенной плотности проппанта (кг/(м3*dt)
 	)
@@ -1272,7 +1272,7 @@ void SaveJson(const std::string filename,
 			output << "\t\t ],\n"; //close concentrations
 								   //	dx, dy, dz - размеры расчетной ячейки(dy - раскрытие), [м]
 			output << "\t\t  \"dx\": " << dx << ",\n";
-			output << "\t\t  \"dy\": " << Wk[index[i][j]]*wn << ",\n";   
+			output << "\t\t  \"dy\": " << Wk[index[i][j]]*wn << ",\n";
 			output << "\t\t  \"dz\": " << dy << ",\n";
 			//	id - 0; stage id - 0
 			output << "\t\t  \"i\": " << i << ",\n";
@@ -1300,7 +1300,7 @@ void SaveJson(const std::string filename,
 	output << "\t\"grid\": {\n";
 	//	nx - общее количество расчетных ячеек по Х
 	output << "\t\t  \"nx\": " << xSize << ",\n";
-	//	nz - общее количество расчетных ячеек по Z	
+	//	nz - общее количество расчетных ячеек по Z
 	output << "\t\t  \"nz\": " << ySize << "\n";
 	output << "\t},\n"; //close grid
 
