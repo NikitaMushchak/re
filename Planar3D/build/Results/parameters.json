@@ -1,0 +1,56 @@
+{
+    "model": "Planar3D",
+    "time": 25,
+    "mesh": {
+        "height": 61,
+        "length": 31,
+        "cell": {
+            "height": 4,
+            "length": 4
+        }
+    },
+    "injection": {
+        "0": {
+            "start time": 0,
+            "stop time": 5,
+            "pumping rate": 4,
+            "bulk proppant": 0,
+            "rheology index": 1,
+            "dynamic viscosity": 0.01
+        },
+        "1": {
+            "start time": 5,
+            "stop time": 25,
+            "pumping rate": 0,
+            "bulk proppant": 0,
+            "rheology index": 1,
+            "dynamic viscosity": 0.01
+        }
+    },
+    "layers": {
+        "0": {
+            "y1": 50,
+            "y2": 20,
+            "stress": 3.03975e+07,
+            "Young's modulus": 3.03975e+10,
+            "Poisson's ratio": 0.3,
+            "Carter's coefficient": 0
+        },
+        "1": {
+            "y1": 20,
+            "y2": -20,
+            "stress": 2.63445e+07,
+            "Young's modulus": 3.03975e+10,
+            "Poisson's ratio": 0.3,
+            "Carter's coefficient": 0
+        },
+        "2": {
+            "y1": -20,
+            "y2": -50,
+            "stress": 3.03975e+07,
+            "Young's modulus": 3.03975e+10,
+            "Poisson's ratio": 0.3,
+            "Carter's coefficient": 0
+        }
+    }
+}

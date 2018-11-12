@@ -149,6 +149,24 @@ void printEfficiency(
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*!
 \brief __printLogo__ - функция отображения логотипа программы в консоли
 \details Функция выводит текстовое лого программы
@@ -392,7 +410,7 @@ int planar3D(
     const double dt = 0.0001 * std::pow(5. / floor(initialRadius / cellSize), 2)
         * std::pow(mu / 0.4, 0.5);
     dt_step = dt;                       //сохранили шаг по времени для использования в расчете проппанта (Света)
-std::cout<<"dt = "<<dt<<std::endl;
+
     /// Выводим входные параметры (продолжение)
     if(!runningFromGUI){
         std::cout << "  mesh = " << meshSize << ", cell = " << cellSize << ","
@@ -473,7 +491,7 @@ std::cout<<"dt = "<<dt<<std::endl;
     }
 
     C *= std::sqrt(ts) / wn;
-	Kic /=std::pow(mu/std::pow(ts,bn),1./(bn+2.))*std::pow(E,(bn+1.)/(bn+2.));
+    Kic /= std::pow(mu * E * std::pow(E / ts, bn), 1. / (bn + 2.));
 
 
 
@@ -525,7 +543,8 @@ std::cout<<"dt = "<<dt<<std::endl;
             ++m;
         }
     }
-	ai::saveVector("./Wkini", Wk);
+	ai::saveVector("./iniopen",Wk);
+	
     const double dMin1 = std::sqrt(std::pow(0.5 * dx, 2)
         + std::pow(1.5 * dy, 2));
     const double dCenter1 = dx;
@@ -596,12 +615,14 @@ std::cout<<"dt = "<<dt<<std::endl;
     size_t step = 0;
 
     double T = T0;
+    double savedTime = T0;
 
     bool meshIsNotExhausted = true;
 
     std::vector<double> rhsCE;
     std::vector<double> rhsCEs;
     std::vector<double> pressure;
+    std::vector<double> savedDistances;
 
     std::vector< std::vector<double> > velocities = zeroMatrixXY;
     std::vector< std::vector<double> > openingAtTheStep = zeroMatrixXY;
@@ -624,8 +645,6 @@ std::cout<<"dt = "<<dt<<std::endl;
     }
 
     auto startTime = ai::time();
-	std::vector<double> dis;
-
 
     while(modelingTime >= T && meshIsNotExhausted){
         calculatePressure(
@@ -658,22 +677,51 @@ std::cout<<"dt = "<<dt<<std::endl;
 
  /*       calculateOpeningSpeed(Wk, rhsCE, rhsCEs, pressure, mesh, index,
             activeElements, T);*/
-// sstd::cout<<"Kic = "<<Kic<<std::endl;
-        if(0 == regime){
-            for(size_t i = 0; i < ribbons.size(); ++i){
-                const size_t iRibbon = ribbons[i].i;
-                const size_t jRibbon = ribbons[i].j;
-				// std::cout<<"in"<<std::endl;
-                // distances[iRibbon][jRibbon] = 0.25 *  sqrt(0.5 * M_PI)
- //                    * Wk[index[iRibbon][jRibbon]] / Kic;
-				distances[iRibbon][jRibbon] = (M_PI*Wk[index[iRibbon][jRibbon]]*Wk[index[iRibbon][jRibbon]])/(32* Kic*Kic);
 
-               // distances[iRibbon][jRibbon] *= distances[iRibbon][jRibbon];
-                if(epsilon > distances[iRibbon][jRibbon]){
-                    distances[iRibbon][jRibbon] = epsilon;
+        if(0 == regime){
+            double maxDeltaDistance = 0.;
+
+            for(size_t k = 0; k < ribbons.size(); ++k){
+                const size_t i = ribbons[k].i;
+                const size_t j = ribbons[k].j;
+
+                 distances[i][j] = 0.25 *  sqrt(0.5 * M_PI)
+                    * Wk[index[i][j]] / Kic;
+
+                if(epsilon > distances[i][j]){
+                    
+					distances[i][j] = epsilon;
+                }else{
+                    distances[i][j] *= distances[i][j];
+					std::cout<<" dx = "<<dx<<std::endl;
+					if (distances[i][j] > 2. * sqrt(2.) * dx)
+					{
+						std::cout <<"dist is LARGE"<<std::endl;
+					}
                 }
+				if(savedDistances.size() > 0)
+                maxDeltaDistance = ai::max(
+                    distances[i][j] - savedDistances[k],
+                    maxDeltaDistance
+                );
             }
-			dis.push_back(ai::max(distances));
+			// ai::saveMatrix("./dist", distances);
+			// std::cout<<"maxDeltaDistance = "<<maxDeltaDistance<<std::endl;
+            if(epsilon < maxDeltaDistance){
+                // stepToCheck = std::round(
+                    // dx * (T - savedTime) / (20 * dt * maxDeltaDistance)
+                // );
+				if(maxDeltaDistance > 2. * sqrt(2.) * dx)
+				stepToCheck = step;
+			
+				if (savedTime > 0.)
+				stepToCheck = std::round(dx * (T-savedTime)/ (20. * dt * maxDeltaDistance));
+            }else{
+                
+				stepToCheck = 200;
+            }
+			
+			// std::cout<<"stepToCheck = "<<stepToCheck<<std::endl;
         }else{
             calculateVelocity(
                 velocities,
@@ -689,16 +737,7 @@ std::cout<<"dt = "<<dt<<std::endl;
                 }
             }
         }
-	ai::saveMatrix("./dist", distances);
 
-	// ai::printVector(dis);
-	    for(size_t i = 0; i < xSize; ++i){
-            for(size_t j = 0; j < ySize; ++j){
-                openingAtTheStep[i][j] = 1000 * wn * Wk[index[i][j]];
-            }
-        }
-        ai::saveMatrix("./Results/Open", openingAtTheStep, true);
-	// break;
         for(size_t i = 0; i < rhsCE.size(); ++i){
             Wk[i] = ai::max(Wk[i] + rhsCE[i] * dt, 0.);
         }
@@ -720,9 +759,7 @@ std::cout<<"dt = "<<dt<<std::endl;
             step = 0;
 
             if(0 != regime){
-                stepToCheck = std::round(
-                    dx / (dt * ai::max(velocities)) / 20.
-                );
+                stepToCheck = std::round(dx / (20 * dt * ai::max(velocities)));
             }
 
             std::vector<Ribbon> oldRibbons = ribbons;
@@ -796,6 +833,7 @@ std::cout<<"dt = "<<dt<<std::endl;
             }
 
             /// Сохраняем параметры трезины
+
             calculateCrackGeometry(mesh, distances, length, height);
 
             fracture.push_back(
@@ -826,32 +864,23 @@ std::cout<<"dt = "<<dt<<std::endl;
             }
 
             if(0 == regime){
-                 const size_t lastIndex = fracture.size() - 1;
+                savedDistances.resize(ribbons.size());
 
-				//const size_t lastInde = dis.size() - 1;
-                 const double maxDelta = ai::max(fracture[lastIndex][3]
-                    - fracture[lastIndex - 1][3], fracture[lastIndex][4]
-                    - fracture[lastIndex - 1][4]) / (fracture[lastIndex][0]
-                    - fracture[lastIndex - 1][0]);
-				// const double maxDelta = (dis[lastIndex] - dis[lastIndex - 1])/
-// 					(fracture[lastIndex][0] - fracture[lastIndex - 1][0]);
-                // const double maxDelta = ai::max(fracture[lastIndex][3]
-//                     - fracture[lastIndex - 1][3], fracture[lastIndex][4]
-//                     - fracture[lastIndex - 1][4]);
-				std::cout<<"Regime!"<<std::endl;
-                //if(epsilon < maxDelta){
-                     stepToCheck =   200;//ai::min(stepToCheck,
- 				                   // (size_t) std::round(dx / (dt * maxDelta) / 20.));
-				std::cout<<" IFFFFFsteptoCheck = "<<stepToCheck<<std::endl;
-        // std::cout<<"dx = "<< dx <<std::endl;
-        // std::cout<<"dt = "<< dt <<std::endl;
-// if( maxDelta>0.000001){
-//         std::cout<<"maxDelta = "<<  maxDelta<<std::endl;}
-         std::cout<<"Value = "<<  dx  / dt * maxDelta<<std::endl;
-                //}
+                for(size_t k = 0; k < ribbons.size(); ++k){
+                    const size_t i = ribbons[k].i;
+                    const size_t j = ribbons[k].j;
+
+                    savedDistances[k] = distances[i][j];
+                }
+
+				ai::printVector(savedDistances);
+				
+                savedTime = T;
+				ai::saveMatrix("./distan",distances, true);
+				break;
             }
         }
-		//std::cout<<" StepToCheck = "<<stepToCheck<<std::endl;
+		
         T += dt;
         ++step;
 
@@ -1033,7 +1062,7 @@ std::cout<<"dt = "<<dt<<std::endl;
             }
             ai::printLine("types");
         }
-	}
+    }
 
     auto finishTime = ai::time();
 
