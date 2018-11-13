@@ -36,8 +36,8 @@ void findNewRibbons(
         mesh[i][j].type = RIBBON;
         
         if(0 == regime){
-            distances[i][j] = 0.25 * sqrt(0.5 * M_PI) * opening / Kic;
-            distances[i][j] *= distances[i][j];
+            // distances[i][j] = 0.25 * sqrt(0.5 * M_PI) * opening / Kic;
+            distances[i][j] = (M_PI * opening * opening )/(32. * Kic * Kic );
         }else{
             distances[i][j] = collectDistanceFromVelocity(i, j, Wt[index[i][j]],
                 ribbonsOld, velocities);

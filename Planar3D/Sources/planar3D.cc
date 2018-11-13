@@ -543,7 +543,7 @@ int planar3D(
             ++m;
         }
     }
-	ai::saveVector("./iniopen",Wk);
+	// ai::saveVector("./iniopen",Wk);
 	
     const double dMin1 = std::sqrt(std::pow(0.5 * dx, 2)
         + std::pow(1.5 * dy, 2));
@@ -593,7 +593,7 @@ int planar3D(
     std::vector< std::vector<double> > distances;
     std::vector<Ribbon> ribbons = findRibbons(mesh, activeElements,
         distances, initialRadius, dMax1, 2. * dx);
-
+	 //ai::saveMatrix("./distancesav", distances);
     std::cout << "Ribbons: " << ribbons.size() << "." << std::endl;
 
     std::vector<double> WkNew;
@@ -612,6 +612,7 @@ int planar3D(
 
 
     size_t stepToCheck = round(dx / (dt * initialVelocity) / 20.);
+	std::cout<<"stepToCheck =  "<<stepToCheck<<std::endl;
     size_t step = 0;
 
     double T = T0;
@@ -643,7 +644,7 @@ int planar3D(
     }else{
         ai::showProgressBar(0.);
     }
-
+	//ai::saveVector("./iniopenwhile",Wk);
     auto startTime = ai::time();
 
     while(modelingTime >= T && meshIsNotExhausted){
@@ -685,43 +686,51 @@ int planar3D(
                 const size_t i = ribbons[k].i;
                 const size_t j = ribbons[k].j;
 
-                 distances[i][j] = 0.25 *  sqrt(0.5 * M_PI)
-                    * Wk[index[i][j]] / Kic;
+                 distances[i][j] = (  M_PI
+                    * Wk[index[i][j]] * Wk[index[i][j]]) / (32* Kic*Kic);
 
                 if(epsilon > distances[i][j]){
                     
 					distances[i][j] = epsilon;
-                }else{
-                    distances[i][j] *= distances[i][j];
-					std::cout<<" dx = "<<dx<<std::endl;
-					if (distances[i][j] > 2. * sqrt(2.) * dx)
-					{
-						std::cout <<"dist is LARGE"<<std::endl;
-					}
-                }
-				if(savedDistances.size() > 0)
+				}
+                // }else{
+                    // //distances[i][j] *= distances[i][j];
+					
+					
+					// //std::cout<<" dx = "<<dx<<std::endl;
+					// if (distances[i][j] > 2. * sqrt(2.) * dx)
+					// {
+						// std::cout <<"dist is LARGE"<<std::endl;
+					// }
+                // }
+				if(savedDistances.size() > 0  )
                 maxDeltaDistance = ai::max(
                     distances[i][j] - savedDistances[k],
                     maxDeltaDistance
                 );
             }
-			// ai::saveMatrix("./dist", distances);
+			//std::cout <<"maxdeltadistance = "<<maxDeltaDistance<<std::endl;
+			// ai::saveVector("./ifopen",Wk);
+			//ai::saveMatrix("./Results/distances", distances);
+			//break;
+			ai::saveMatrix("./dist", distances , true);
 			// std::cout<<"maxDeltaDistance = "<<maxDeltaDistance<<std::endl;
             if(epsilon < maxDeltaDistance){
                 // stepToCheck = std::round(
                     // dx * (T - savedTime) / (20 * dt * maxDeltaDistance)
                 // );
-				if(maxDeltaDistance > 2. * sqrt(2.) * dx)
+				if(maxDeltaDistance > 4. * sqrt(2.) * dx)
 				stepToCheck = step;
 			
 				if (savedTime > 0.)
 				stepToCheck = std::round(dx * (T-savedTime)/ (20. * dt * maxDeltaDistance));
             }else{
                 
-				stepToCheck = 200;
+				stepToCheck = 500;
+				//std::cout<<"else"<<std::endl;
             }
 			
-			// std::cout<<"stepToCheck = "<<stepToCheck<<std::endl;
+			 //std::cout<<"stepToCheck = "<<stepToCheck<<std::endl;
         }else{
             calculateVelocity(
                 velocities,
@@ -737,7 +746,7 @@ int planar3D(
                 }
             }
         }
-
+	// break;
         for(size_t i = 0; i < rhsCE.size(); ++i){
             Wk[i] = ai::max(Wk[i] + rhsCE[i] * dt, 0.);
         }
@@ -872,15 +881,17 @@ int planar3D(
 
                     savedDistances[k] = distances[i][j];
                 }
-
-				ai::printVector(savedDistances);
+				std::cout<<"in if!";
+				//ai::printVector(savedDistances);
 				
                 savedTime = T;
 				ai::saveMatrix("./distan",distances, true);
-				break;
+				ai::saveVector("./distan", savedDistances);
+				 break;
             }
+			break;
         }
-		
+		//break;
         T += dt;
         ++step;
 

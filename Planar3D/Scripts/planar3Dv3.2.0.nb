@@ -10,22 +10,22 @@
 NotebookFileLineBreakTest
 NotebookFileLineBreakTest
 NotebookDataPosition[       158,          7]
-NotebookDataLength[    132392,       3072]
-NotebookOptionsPosition[    126114,       2939]
-NotebookOutlinePosition[    126458,       2954]
-CellTagsIndexPosition[    126415,       2951]
+NotebookDataLength[    168906,       3532]
+NotebookOptionsPosition[    162432,       3397]
+NotebookOutlinePosition[    162776,       3412]
+CellTagsIndexPosition[    162733,       3409]
 WindowFrame->Normal*)
 
 (* Beginning of Notebook Content *)
 Notebook[{
 
 Cell[CellGroupData[{
-Cell["Planar3D v3.1.0", "Title",
+Cell["Planar3D v3.2.0", "Title",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.},
  CellChangeTimes->{{3.747660668673644*^9, 3.7476606793673363`*^9}, {
    3.748934775835075*^9, 3.748934775947117*^9}, 3.748969785632721*^9, {
-   3.7503603825095043`*^9, 
-   3.750360384337364*^9}},ExpressionUUID->"ddfe3c05-f490-498c-a937-\
+   3.7503603825095043`*^9, 3.750360384337364*^9}, 
+   3.75103985134317*^9},ExpressionUUID->"ddfe3c05-f490-498c-a937-\
 55d066fcee60"],
 
 Cell[BoxData[
@@ -66,8 +66,8 @@ Cell[BoxData[{
  RowBox[{
   RowBox[{
   "folder", "=", 
-   "\"\<G:\\\\actualplanar\\\\planar5_11\\\\Planar3D\\\\build\\\\Results\\\\\>\
-\""}], ";"}], "\[IndentingNewLine]", 
+   "\"\<G:\\\\actualplanar\\\\planar5_11\\\\Planar3D\\\\Sources\\\\Results\\\\\
+\>\""}], ";"}], "\[IndentingNewLine]", 
  RowBox[{"If", "[", 
   RowBox[{
    RowBox[{"!", 
@@ -92,9 +92,9 @@ Cell[BoxData[{
    3.749002313128289*^9, 3.749002345037242*^9}, {3.749002429317358*^9, 
    3.7490025155955677`*^9}, {3.7490032762745247`*^9, 
    3.7490033047957563`*^9}, {3.749195504804994*^9, 3.749195505707028*^9}, {
-   3.7497457636414347`*^9, 3.749745764379126*^9}, {3.7510105561598525`*^9, 
-   3.751010557962259*^9}, {3.7510883950920568`*^9, 
-   3.7510883966844172`*^9}},ExpressionUUID->"a5463fb8-e42c-4825-bd77-\
+   3.7497457636414347`*^9, 3.749745764379126*^9}, {3.751097601494358*^9, 
+   3.751097603104726*^9}, {3.7510977799819217`*^9, 
+   3.751097781272215*^9}},ExpressionUUID->"a5463fb8-e42c-4825-bd77-\
 14da5aea42de"],
 
 Cell["\:0421\:0447\:0438\:0442\:044b\:0432\:0430\:0435\:043c \:043f\:0430\
@@ -791,16 +791,87 @@ Cell[BoxData[
   3.75066664314911*^9}},ExpressionUUID->"8a2511f9-6e16-4201-9ed6-\
 e04ec148a2c9"],
 
-Cell["\:0417\:0430\:0434\:0430\:0451\:043c \:0444\:0443\:043d\:043a\:0446\
-\:0438\:044e \:0434\:043b\:044f \:043a\:0430\:0440\:0442\:044b \:0441\:043b\
-\:043e\:0451\:0432", "Subsubtitle",
+Cell["\<\
+\:0417\:0430\:0434\:0430\:0451\:043c \:0444\:0443\:043d\:043a\:0446\:0438\
+\:044e \:0434\:043b\:044f \:043f\:043e\:0441\:0442\:0440\:043e\:0435\:043d\
+\:0438\:044f \:043a\:043e\:043d\:0442\:0443\:0440\:0430 \:0444\:0440\:043e\
+\:043d\:0442\:0430 \:0442\:0440\:0435\:0449\:0438\:043d\:044b \:043f\:043e \
+\:0433\:0440\:0430\:043d\:0438\:0447\:043d\:044b\:043c \:044d\:043b\:0435\
+\:043c\:0435\:043d\:0442\:0430\:043c\
+\>", "Subsubtitle",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.},
  CellChangeTimes->{{3.747660686800205*^9, 3.7476607907294893`*^9}, {
    3.747660822878159*^9, 3.7476609770141363`*^9}, 3.747664166426536*^9, 
    3.748969734855447*^9, 3.7489697856369534`*^9, {3.749195493912162*^9, 
    3.749195499122786*^9}, {3.750658025412526*^9, 3.7506580542823963`*^9}, {
    3.7506595791866627`*^9, 3.75065959874923*^9}, {3.750660436149928*^9, 
-   3.75066046023411*^9}},ExpressionUUID->"394e299f-9abe-4d8b-a9b5-\
+   3.75066046023411*^9}, {3.751040043497757*^9, 
+   3.7510400775702553`*^9}},ExpressionUUID->"b0004f69-f221-4be9-a8c1-\
+e15c829973e9"],
+
+Cell[BoxData[
+ RowBox[{
+  RowBox[{"plotCircles", "=", 
+   RowBox[{"Function", "[", 
+    RowBox[{
+     RowBox[{"{", "distances", "}"}], ",", "\[IndentingNewLine]", 
+     RowBox[{
+      RowBox[{"step", "=", "16"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"margin", "=", "1"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"color", "=", "Orange"}], ";", "\[IndentingNewLine]", 
+      RowBox[{"Graphics", "[", "\[IndentingNewLine]", 
+       RowBox[{
+        RowBox[{"{", 
+         RowBox[{"color", ",", 
+          RowBox[{"Table", "[", "\[IndentingNewLine]", 
+           RowBox[{
+            RowBox[{"Circle", "[", "\[IndentingNewLine]", 
+             RowBox[{
+              RowBox[{"{", 
+               RowBox[{
+                RowBox[{"i", "*", "step"}], ",", " ", 
+                RowBox[{"j", "*", "step"}]}], "}"}], ",", 
+              RowBox[{"4", "*", 
+               RowBox[{
+                RowBox[{"distances", "[", 
+                 RowBox[{"[", "i", "]"}], "]"}], "[", 
+                RowBox[{"[", "j", "]"}], "]"}]}]}], "\[IndentingNewLine]", 
+             "]"}], "\[IndentingNewLine]", ",", 
+            RowBox[{"{", 
+             RowBox[{"i", ",", "margin", ",", 
+              RowBox[{
+               RowBox[{"Length", "[", "distances", "]"}], "-", "margin", " ", 
+               "+", " ", "1"}]}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"j", ",", "margin", ",", 
+              RowBox[{
+               RowBox[{"Length", "[", 
+                RowBox[{"distances", "[", 
+                 RowBox[{"[", "1", "]"}], "]"}], "]"}], "-", "margin", " ", 
+               "+", " ", "1"}]}], "}"}]}], "]"}]}], "}"}], ",", 
+        "\[IndentingNewLine]", 
+        RowBox[{"ImageSize", "\[Rule]", "Large"}]}], "\[IndentingNewLine]", 
+       "]"}]}]}], "\[IndentingNewLine]", "]"}]}], ";"}]], "Input",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.},
+ CellChangeTimes->{
+  3.7510400351290483`*^9, {3.751040082955327*^9, 3.751040201282288*^9}, {
+   3.751040352870755*^9, 3.751040354389183*^9}, {3.7510404023651247`*^9, 
+   3.751040408893008*^9}, 
+   3.7510404920256357`*^9},ExpressionUUID->"46a45533-6ecb-4034-b627-\
+79c1f651cb37"],
+
+Cell["\:0417\:0430\:0434\:0430\:0451\:043c \:0444\:0443\:043d\:043a\:0446\
+\:0438\:044e \:0434\:043b\:044f \:043f\:043e\:0441\:0442\:0440\:043e\:0435\
+\:043d\:0438\:044f \:043a\:0430\:0440\:0442\:044b \:0441\:043b\:043e\:0451\
+\:0432", "Subsubtitle",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.},
+ CellChangeTimes->{{3.747660686800205*^9, 3.7476607907294893`*^9}, {
+   3.747660822878159*^9, 3.7476609770141363`*^9}, 3.747664166426536*^9, 
+   3.748969734855447*^9, 3.7489697856369534`*^9, {3.749195493912162*^9, 
+   3.749195499122786*^9}, {3.750658025412526*^9, 3.7506580542823963`*^9}, {
+   3.7506595791866627`*^9, 3.75065959874923*^9}, {3.750660436149928*^9, 
+   3.75066046023411*^9}, {3.751040040004345*^9, 
+   3.751040041480859*^9}},ExpressionUUID->"394e299f-9abe-4d8b-a9b5-\
 36a2d37636ef"],
 
 Cell[BoxData[
@@ -1064,6 +1135,12 @@ Cell[BoxData[{
    RowBox[{"Import", "[", 
     RowBox[{
      RowBox[{"folder", "<>", "\"\<pressure_m.txt\>\""}], ",", " ", 
+     "\"\<Table\>\""}], "]"}]}], ";"}], "\[IndentingNewLine]", 
+ RowBox[{
+  RowBox[{"distances", " ", "=", " ", 
+   RowBox[{"Import", "[", 
+    RowBox[{
+     RowBox[{"folder", " ", "<>", " ", "\"\<distances_m.txt\>\""}], ",", " ", 
      "\"\<Table\>\""}], "]"}]}], ";"}]}], "Input",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.},
  CellChangeTimes->{{3.748933665070517*^9, 3.748933667635915*^9}, {
@@ -1072,8 +1149,9 @@ Cell[BoxData[{
    3.748970008078432*^9, 3.748970029339315*^9}, {3.749002589036405*^9, 
    3.749002591800912*^9}, {3.749197428231081*^9, 3.74919743718463*^9}, {
    3.750355267359632*^9, 3.7503553082320023`*^9}, {3.750361141233561*^9, 
-   3.75036114372082*^9}, {3.75036139017474*^9, 
-   3.7503613910997057`*^9}},ExpressionUUID->"81b3acb9-66fc-4528-a224-\
+   3.75036114372082*^9}, {3.75036139017474*^9, 3.7503613910997057`*^9}, {
+   3.751097817196374*^9, 
+   3.751097855464717*^9}},ExpressionUUID->"81b3acb9-66fc-4528-a224-\
 93e31f291675"],
 
 Cell[BoxData[{
@@ -1151,7 +1229,7 @@ Cell[BoxData[
   RowBox[{"\<\"\:0412\:0440\:0435\:043c\:044f \:043f\:043e\:0441\:043b\:0435\
 \:0434\:043d\:0435\:0433\:043e \
 \:0437\:0430\:043f\:0443\:0441\:043a\:0430:\"\>", " ", 
-   StyleBox["\<\"Tue 13 Nov 2018 13:55:49\"\>",
+   StyleBox["\<\"Tue 13 Nov 2018 15:18:31\"\>",
     StripOnInput->False,
     LineColor->RGBColor[1, 0.5, 0],
     FrontFaceColor->RGBColor[1, 0.5, 0],
@@ -1175,11 +1253,13 @@ Cell[BoxData[
    3.750656136604802*^9, 3.7506564375125713`*^9, {3.750656915409037*^9, 
    3.750656934849925*^9}, 3.750658504368836*^9, 3.750658566935512*^9, 
    3.750659695607489*^9, 3.750660462939427*^9, 3.750660582327619*^9, 
-   3.750660616680229*^9, 3.7506663258812857`*^9, 3.750666757135747*^9, 
-   3.751010563598544*^9, 3.751088338916297*^9, 3.7510884002102194`*^9, 
-   3.751088841822806*^9, 
-   3.751095349688204*^9},ExpressionUUID->"83518fa4-adfd-459a-a75c-\
-a2d0b3067fe5"],
+   3.750660616680229*^9, 3.7506663258812857`*^9, 3.750666757135747*^9, {
+   3.751040182747201*^9, 3.751040192950671*^9}, 3.751040360329432*^9, 
+   3.751040412204547*^9, 3.7510976068245707`*^9, 3.7510977842508907`*^9, 
+   3.751098279278017*^9, 3.7510983500069695`*^9, 3.7510987643811407`*^9, 
+   3.751099239474978*^9, 3.7511000131212564`*^9, 
+   3.751100311693123*^9},ExpressionUUID->"521520b9-7c00-47aa-9779-\
+96fe4d935de6"],
 
 Cell["\:0421\:0442\:0440\:043e\:0438\:043c \:0433\:0440\:0430\:0444\:0438\
 \:043a\:0438", "Subsubtitle",
@@ -1196,11 +1276,17 @@ Cell[BoxData[{
   "opening", ",", " ", 
    "\"\<\:0420\:0430\:0441\:043a\:0440\:044b\:0442\:0438\:0435\>\""}], 
   "]"}], "\[IndentingNewLine]", 
+ RowBox[{"plotCircles", "[", 
+  RowBox[{
+  "distances", ",", " ", 
+   "\"\<\:0420\:0430\:0441\:0441\:0442\:043e\:044f\:043d\:0438\:044f \:0434\
+\:043e \:0444\:0440\:043e\:043d\:0442\:0430 \>\""}], 
+  "]"}], "\[IndentingNewLine]", 
  RowBox[{"plotCharacteristic", "[", 
   RowBox[{
   "3", ",", 
    "\"\<\:041f\:0440\:0438\:0437\:0430\:0431\:043e\:0439\:043d\:043e\:0435 \
-\:0434\:0430\:0432\:043b\:0435\:043d\:0438\:0435, \:041f\:0430\>\""}], 
+\:0434\:0430\:0432\:043b\:0435\:043d\:0438\:0435, \:041c\:041f\:0430\>\""}], 
   "]"}], "\[IndentingNewLine]", 
  RowBox[{"If", "[", 
   RowBox[{
@@ -1218,47 +1304,29 @@ Cell[BoxData[{
   3.749746711959631*^9, {3.7503604496962852`*^9, 3.7503605102226467`*^9}, {
    3.750658187684452*^9, 3.7506581966759377`*^9}, 3.750658599559669*^9, {
    3.750660410623929*^9, 3.7506604108938932`*^9}, {3.750666592966673*^9, 
-   3.750666609429427*^9}, {3.750666647089669*^9, 
-   3.750666650063033*^9}},ExpressionUUID->"04cc1e9d-381e-4076-b5e5-\
+   3.750666609429427*^9}, {3.750666647089669*^9, 3.750666650063033*^9}, {
+   3.7510398594727287`*^9, 3.751039878653421*^9}, {3.7510978744780684`*^9, 
+   3.7510979342187653`*^9}, {3.7510980083094726`*^9, 3.751098010608997*^9}, {
+   3.751100325242031*^9, 
+   3.7511003318112755`*^9}},ExpressionUUID->"04cc1e9d-381e-4076-b5e5-\
 e3b493b8c2f5"]
 }, Open  ]],
 
 Cell[BoxData[
  TemplateBox[{GraphicsBox[{
      RasterBox[CompressedData["
-1:eJzt2ntM1WUcx/EDYireCIHMu9JIKRRxXsr0gZnJSktlZXjJG7rmZZZ3NIGZ
-tWKSbRlTUkBu0knQeVYkQiIqGuIFL3iOmoDA4XA4HE/avKZmBQ+bZ88OW1No
-ez/b2Yvf57fz/T7P9/z3+9F3zpLJ81ppNJpRjz6jH33+/vvfZROIiIiIiIiI
-iIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiI
-iIiIiIiIiIiIiIiIiIiIiIiIiIiI/yfdAtPbeIZes7Pn3HnDPQOsdo4apE3I
-umCxM2ZT5qyhYU1XVUfVV7XP5p4fIuKT0mdvz8jV/pV2ellizoWkGaU5I99b
-79LxsphbNC3uQ2+ztCTO4l/wbbHIa+VfMMLFIo2qKZ36g/GoGOOUUaCPrpPq
-bRW7S9blihum+KxnOlilWzxiwnYvyVLmqjqqvqp9qs6lmkNz/z6IiE1V12H+
-oZ6lJqnRcOLHtDnn5f3lbYa5b4uw1l83LJs45hue0HVljV2e82r+xhcOGu1y
-zSn90nbaSru8z6T3c6Z8XtHkXFVH1Ve1z8fP5WgOiIgtxdAv1uXb/Cql4box
-l732l4u7bqv2VpVdk2rG6nyyQ1bJ753rtuOe55fV9dcNyyZ6nAq76BlRJvPF
-t/eZ5urqhFvd6SPhgRdlfsP7WmDsplpRZng36ZbxnMxjZvQIWn/bLMpqCpLG
-Lj7rMFfVUfVV7VN1LtUcVHN7Ur8TIqIjuy2annE8slqq22++tS3KIO8fmxL3
-XN8MS/11w7KJLRFBOQNvlss8e/sa39NbLGJidMCCthEXZF6wwE/7VrZJlHlW
-TF6TfFzmJZOS45PXG4X/Vv/nA2LyZN4l33l74YYqkbe5ez/zoCyHuaqOqq9q
-n6pzqebgaG6IiE/btHe8CkIW1kg7Ppub4fLLWXm/yLdsvLWPuf5ao9Hu/mmF
-q+Ga6J8V7BMXXyrzkLqIzqauZjFxUq7P66OLZf5mtl+/5Aqj+Ci5Ujtoab7M
-F9jSrVFBlSLwWECqe69UmQ/5Zz3+PEWdq+qo+qr2qTqXag6O5oaI+LSNzRoX
-Z/jAJH3N0H/wsooSeX/P8eAUzcLa+uuGZRNtV91YVnSn8XmFb/GvnT7baham
-6NspRZFnZO7qe92cOq1a+J/Jjh1VeFjmReG9l6bsqxSaDSvM+qhMmVe0dvl9
-ZlaFiKpNTL+fttlhrqqj6qvap+pcqjk4mhsi4tPWUL1SGz2gSvpKygTNnqAy
-ed/S6eNVV2/bv/c8PT/sSofeje8f15Xrpr/tZRU/6w5WHxp+SeZdsrcfrp1d
-I2YleVyIqzkp89hD1sLv9NXCVvz9TdeRR2WuS4x/sZu3UWjGBWxsPTPXYa6q
-o+qr2qfqXKo5OJobImJLcdYbZyIvjqiV5oW6O5Vri+T9DUl3b45Kbnz+0JCn
-GNZGnku4KvOJ906YZhusIvgP54LlvX+Tedr4XZeq/rSIxAMDU0ev1st88Y61
-KQdcLOLrLkO7l7YvcZir6qj6qvapOpejOSAitnTzFhkz98dUSsump4XPf6lc
-THCfGbq4wCo9HeyVcGBehvxe+r6dkauH2L8/TV+57ELcGJNd/nKU39p4V/v/
-J7RlfHLv00lVTc5VdVR9H9+n6lyqOfzX+SIiNrffdMvzcvqqQuqtL53xQHtV
-LHtmjPfEh9XSNMuw2M7OepF4dnDbBwazNND1/Mn2lSeF5vywnVNWWxp1zvK4
-7ndEBM4dkHnmoUUatatNbWenfGWuqqPqq9qn6lzNPW9ExJbifY/ey+/orXYW
-Xu/fbkdxnZ1RvUa4XZnadFV1VH2bex6IiIiIiIiIiIiIiIiIiIiIiIiIiIiI
-iIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiIiI
-iIiILcW/ABDrcV4=
+1:eJzt2r9rFEEUAOCDVPEsbFIYEoygImkDZ6FxPZFDTeGP9AoRQQsxcv9AIBAC
+hhDEQkinYG2hiCA2WphKBJsQU4TDhJgQUlooeGpuizuemyp3bL6B5dt5y76Z
+3WJ4DHN07P71212FQmG4fp2tX3/u/7XthCRJkiRJkiRJkiRJkiRJkiRJkiRJ
+kiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJkiRJslPsPzgztfB6
+s8XSg8ri9K1ai7+KL2efjaymHvhaG+3pXw7jUZ5o3Hb/D5LsdF88+VGZ/7Ta
+4pnxyzdPvNtIfXSj/OHww4X0vYFSd/Xkz62dfqPV891dXHp1aWPX8eY80bjR
+PNv9/0hyr43q3qx1e/xa99vq/NpOv9G2k4/fHn+5MLmSxu8V+64eL28lc32V
+i8tPlzLjUZ5o3Gie6nmS+81of6PxPKq3m9fbweflN6eHvid3jhy70jPxOY1X
+S+fXe4tryblDI7NTp95nxqM80bjRPLO+iyTzZrSP3XjevB8S1dXR+jz0t9XS
+flY8ypNVzzfPM+u7SDJvqs9JMh/aPyfJfOt8C0nmW+fPSZIkSZIkSZIkSZIk
+SZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIkSZIk
+/+9vHI7qtA==
       "], {{0, 0}, {62, 61}}, {0, 1}], {
       LineBox[{{1, 25}, {61, 25}}], 
       InsetBox[
@@ -1366,14 +1434,14 @@ Xc7b5j2HLdd7Gv//j77/5V7nEN/u+/9/67Lj/AewrmBZ
                   StyleBox[
                    LineBox[{{{7.5, -287.5}, 
                     Offset[{4., 0}, {7.5, -287.5}]}, {{
-                    7.5, -143.27887766704578`}, 
-                    Offset[{4., 0}, {7.5, -143.27887766704578`}]}, {{7.5, 
-                    0.9422446659086745}, 
-                    Offset[{4., 0}, {7.5, 0.9422446659086745}]}, {{7.5, 
-                    145.16336699886313`}, 
-                    Offset[{4., 0}, {7.5, 145.16336699886313`}]}, {{7.5, 
-                    273.3599201837112}, 
-                    Offset[{4., 0}, {7.5, 273.3599201837112}]}}], 
+                    7.5, -134.34881447664907`}, 
+                    Offset[{4., 0}, {7.5, -134.34881447664907`}]}, {{
+                    7.5, -11.827866057968322`}, 
+                    Offset[{4., 0}, {7.5, -11.827866057968322`}]}, {{7.5, 
+                    141.3233194653825}, 
+                    Offset[{4., 0}, {7.5, 141.3233194653825}]}, {{7.5, 
+                    263.84426788406336`}, 
+                    Offset[{4., 0}, {7.5, 263.84426788406336`}]}}], 
                    Directive[
                     AbsoluteThickness[0.2], 
                     GrayLevel[0.4]], StripOnInput -> False]}, 
@@ -1387,10 +1455,27 @@ Xc7b5j2HLdd7Gv//j77/5V7nEN/u+/9/67Lj/AewrmBZ
                     InsetBox[
                     FormBox[
                     TagBox[
+                    InterpretationBox["\"0.5\"", 0.5, AutoDelete -> True], 
+                    NumberForm[#, {
+                    DirectedInfinity[1], 1}]& ], TraditionalForm], 
+                    Offset[{7., 0.}, {7.5, -134.34881447664907`}], {-1, 0.}, 
+                    Automatic, {1, 0}], 
+                    InsetBox[
+                    FormBox[
+                    TagBox[
                     InterpretationBox["\"0.9\"", 0.9, AutoDelete -> True], 
                     NumberForm[#, {
                     DirectedInfinity[1], 1}]& ], TraditionalForm], 
-                    Offset[{7., 0.}, {7.5, -143.27887766704578`}], {-1, 0.}, 
+                    Offset[{7., 0.}, {7.5, -11.827866057968322`}], {-1, 0.}, 
+                    Automatic, {1, 0}], 
+                    InsetBox[
+                    FormBox[
+                    TagBox[
+                    InterpretationBox[
+                    "\"1.4\"", 1.4000000000000001`, AutoDelete -> True], 
+                    NumberForm[#, {
+                    DirectedInfinity[1], 1}]& ], TraditionalForm], 
+                    Offset[{7., 0.}, {7.5, 141.3233194653825}], {-1, 0.}, 
                     Automatic, {1, 0}], 
                     InsetBox[
                     FormBox[
@@ -1398,23 +1483,7 @@ Xc7b5j2HLdd7Gv//j77/5V7nEN/u+/9/67Lj/AewrmBZ
                     InterpretationBox["\"1.8\"", 1.8, AutoDelete -> True], 
                     NumberForm[#, {
                     DirectedInfinity[1], 1}]& ], TraditionalForm], 
-                    Offset[{7., 0.}, {7.5, 0.9422446659086745}], {-1, 0.}, 
-                    Automatic, {1, 0}], 
-                    InsetBox[
-                    FormBox[
-                    TagBox[
-                    InterpretationBox["\"2.7\"", 2.7, AutoDelete -> True], 
-                    NumberForm[#, {
-                    DirectedInfinity[1], 1}]& ], TraditionalForm], 
-                    Offset[{7., 0.}, {7.5, 145.16336699886313`}], {-1, 0.}, 
-                    Automatic, {1, 0}], 
-                    InsetBox[
-                    FormBox[
-                    TagBox[
-                    InterpretationBox["\"3.5\"", 3.5, AutoDelete -> True], 
-                    NumberForm[#, {
-                    DirectedInfinity[1], 1}]& ], TraditionalForm], 
-                    Offset[{7., 0.}, {7.5, 273.3599201837112}], {-1, 0.}, 
+                    Offset[{7., 0.}, {7.5, 263.84426788406336`}], {-1, 0.}, 
                     Automatic, {1, 0}]}, 
                     Directive[
                     AbsoluteThickness[0.2], 
@@ -1533,15 +1602,18 @@ Xc7b5j2HLdd7Gv//j77/5V7nEN/u+/9/67Lj/AewrmBZ
              RowBox[{"{", 
                RowBox[{
                  RowBox[{"{", 
-                   RowBox[{"0.6254096715938733`", ",", "0.9`"}], "}"}], ",", 
+                   RowBox[{"0.6331749439333486`", ",", "0.5`"}], "}"}], ",", 
                  RowBox[{"{", 
-                   RowBox[{"0.7508193431877467`", ",", "1.8`"}], "}"}], ",", 
+                   RowBox[{"0.7397148990800275`", ",", "0.9`"}], "}"}], ",", 
                  RowBox[{"{", 
-                   RowBox[{"0.8762290147816201`", ",", "2.7`"}], "}"}], ",", 
+                   
+                   RowBox[{
+                    "0.8728898430133761`", ",", "1.4000000000000001`"}], 
+                   "}"}], ",", 
                  RowBox[{"{", 
                    RowBox[{"0.5`", ",", "0.`"}], "}"}], ",", 
                  RowBox[{"{", 
-                   RowBox[{"0.9877042784206185`", ",", "3.5`"}], "}"}]}], 
+                   RowBox[{"0.979429798160055`", ",", "1.8`"}], "}"}]}], 
                "}"}]}], ",", 
            RowBox[{"\"PinningPoint\"", "\[Rule]", "0.5`"}], ",", 
            RowBox[{"\"SmoothRange\"", "\[Rule]", "False"}], ",", 
@@ -1578,62 +1650,987 @@ Xc7b5j2HLdd7Gv//j77/5V7nEN/u+/9/67Lj/AewrmBZ
    3.7506581971865253`*^9, 3.750658504694495*^9, 3.750658567825721*^9, 
    3.7506596958019648`*^9, 3.750660463292227*^9, 3.750660582523837*^9, 
    3.7506606168868217`*^9, 3.75066632614244*^9, 3.750666607526497*^9, 
-   3.7506666505897923`*^9, 3.750666757500597*^9, 3.7510105643567147`*^9, 
-   3.7510883399155235`*^9, 3.751088400420268*^9, 3.7510888420038486`*^9, 
-   3.7510953498522406`*^9},ExpressionUUID->"842ce452-082a-40f3-974f-\
-ec0d74f7e8fc"],
+   3.7506666505897923`*^9, 3.750666757500597*^9, {3.751040183083065*^9, 
+   3.751040193135181*^9}, 3.7510403605216017`*^9, 3.75104041240919*^9, 
+   3.7510976069996085`*^9, 3.7510977844619384`*^9, 3.751097881843738*^9, 
+   3.7510979358471365`*^9, 3.7510980117712603`*^9, 3.7510982797161207`*^9, 
+   3.7510983501940107`*^9, 3.751098764563182*^9, 3.7510992396280127`*^9, 
+   3.751100013537351*^9, 
+   3.751100311849386*^9},ExpressionUUID->"0359275a-81e3-4129-8cfc-\
+d12cfeffadbb"],
+
+Cell[BoxData[
+ GraphicsBox[{
+   {RGBColor[
+    1, 0.5, 0], {CircleBox[{16, 16}, 0], CircleBox[{16, 32}, 0], 
+     CircleBox[{16, 48}, 0], CircleBox[{16, 64}, 0], CircleBox[{16, 80}, 0], 
+     CircleBox[{16, 96}, 0], CircleBox[{16, 112}, 0], CircleBox[{16, 128}, 0],
+      CircleBox[{16, 144}, 0], CircleBox[{16, 160}, 0], 
+     CircleBox[{16, 176}, 0], CircleBox[{16, 192}, 0], 
+     CircleBox[{16, 208}, 0], CircleBox[{16, 224}, 0], 
+     CircleBox[{16, 240}, 0], CircleBox[{16, 256}, 0], 
+     CircleBox[{16, 272}, 0], CircleBox[{16, 288}, 0], 
+     CircleBox[{16, 304}, 0], CircleBox[{16, 320}, 0], 
+     CircleBox[{16, 336}, 0], CircleBox[{16, 352}, 0], 
+     CircleBox[{16, 368}, 0], CircleBox[{16, 384}, 0], 
+     CircleBox[{16, 400}, 0], CircleBox[{16, 416}, 0], 
+     CircleBox[{16, 432}, 0], CircleBox[{16, 448}, 107.0344], 
+     CircleBox[{16, 464}, 0], CircleBox[{16, 480}, 0], 
+     CircleBox[{16, 496}, 0], CircleBox[{16, 512}, 0], 
+     CircleBox[{16, 528}, 0], CircleBox[{16, 544}, 107.0344], 
+     CircleBox[{16, 560}, 0], CircleBox[{16, 576}, 0], 
+     CircleBox[{16, 592}, 0], CircleBox[{16, 608}, 0], 
+     CircleBox[{16, 624}, 0], CircleBox[{16, 640}, 0], 
+     CircleBox[{16, 656}, 0], CircleBox[{16, 672}, 0], 
+     CircleBox[{16, 688}, 0], CircleBox[{16, 704}, 0], 
+     CircleBox[{16, 720}, 0], CircleBox[{16, 736}, 0], 
+     CircleBox[{16, 752}, 0], CircleBox[{16, 768}, 0], 
+     CircleBox[{16, 784}, 0], CircleBox[{16, 800}, 0], 
+     CircleBox[{16, 816}, 0], CircleBox[{16, 832}, 0], 
+     CircleBox[{16, 848}, 0], CircleBox[{16, 864}, 0], 
+     CircleBox[{16, 880}, 0], CircleBox[{16, 896}, 0], 
+     CircleBox[{16, 912}, 0], CircleBox[{16, 928}, 0], 
+     CircleBox[{16, 944}, 0], CircleBox[{16, 960}, 0], 
+     CircleBox[{16, 976}, 0]}, {CircleBox[{32, 16}, 0], 
+     CircleBox[{32, 32}, 0], CircleBox[{32, 48}, 0], CircleBox[{32, 64}, 0], 
+     CircleBox[{32, 80}, 0], CircleBox[{32, 96}, 0], CircleBox[{32, 112}, 0], 
+     CircleBox[{32, 128}, 0], CircleBox[{32, 144}, 0], 
+     CircleBox[{32, 160}, 0], CircleBox[{32, 176}, 0], 
+     CircleBox[{32, 192}, 0], CircleBox[{32, 208}, 0], 
+     CircleBox[{32, 224}, 0], CircleBox[{32, 240}, 0], 
+     CircleBox[{32, 256}, 0], CircleBox[{32, 272}, 0], 
+     CircleBox[{32, 288}, 0], CircleBox[{32, 304}, 0], 
+     CircleBox[{32, 320}, 0], CircleBox[{32, 336}, 0], 
+     CircleBox[{32, 352}, 0], CircleBox[{32, 368}, 0], 
+     CircleBox[{32, 384}, 0], CircleBox[{32, 400}, 0], 
+     CircleBox[{32, 416}, 0], CircleBox[{32, 432}, 0], 
+     CircleBox[{32, 448}, 93.8892], CircleBox[{32, 464}, 0], 
+     CircleBox[{32, 480}, 0], CircleBox[{32, 496}, 0], 
+     CircleBox[{32, 512}, 0], CircleBox[{32, 528}, 0], 
+     CircleBox[{32, 544}, 93.8892], CircleBox[{32, 560}, 0], 
+     CircleBox[{32, 576}, 0], CircleBox[{32, 592}, 0], 
+     CircleBox[{32, 608}, 0], CircleBox[{32, 624}, 0], 
+     CircleBox[{32, 640}, 0], CircleBox[{32, 656}, 0], 
+     CircleBox[{32, 672}, 0], CircleBox[{32, 688}, 0], 
+     CircleBox[{32, 704}, 0], CircleBox[{32, 720}, 0], 
+     CircleBox[{32, 736}, 0], CircleBox[{32, 752}, 0], 
+     CircleBox[{32, 768}, 0], CircleBox[{32, 784}, 0], 
+     CircleBox[{32, 800}, 0], CircleBox[{32, 816}, 0], 
+     CircleBox[{32, 832}, 0], CircleBox[{32, 848}, 0], 
+     CircleBox[{32, 864}, 0], CircleBox[{32, 880}, 0], 
+     CircleBox[{32, 896}, 0], CircleBox[{32, 912}, 0], 
+     CircleBox[{32, 928}, 0], CircleBox[{32, 944}, 0], 
+     CircleBox[{32, 960}, 0], CircleBox[{32, 976}, 0]}, {
+     CircleBox[{48, 16}, 0], CircleBox[{48, 32}, 0], CircleBox[{48, 48}, 0], 
+     CircleBox[{48, 64}, 0], CircleBox[{48, 80}, 0], CircleBox[{48, 96}, 0], 
+     CircleBox[{48, 112}, 0], CircleBox[{48, 128}, 0], 
+     CircleBox[{48, 144}, 0], CircleBox[{48, 160}, 0], 
+     CircleBox[{48, 176}, 0], CircleBox[{48, 192}, 0], 
+     CircleBox[{48, 208}, 0], CircleBox[{48, 224}, 0], 
+     CircleBox[{48, 240}, 0], CircleBox[{48, 256}, 0], 
+     CircleBox[{48, 272}, 0], CircleBox[{48, 288}, 0], 
+     CircleBox[{48, 304}, 0], CircleBox[{48, 320}, 0], 
+     CircleBox[{48, 336}, 0], CircleBox[{48, 352}, 0], 
+     CircleBox[{48, 368}, 0], CircleBox[{48, 384}, 0], 
+     CircleBox[{48, 400}, 0], CircleBox[{48, 416}, 0], 
+     CircleBox[{48, 432}, 0], CircleBox[{48, 448}, 58.244], 
+     CircleBox[{48, 464}, 120.852], CircleBox[{48, 480}, 0], 
+     CircleBox[{48, 496}, 0], CircleBox[{48, 512}, 0], 
+     CircleBox[{48, 528}, 120.852], CircleBox[{48, 544}, 58.244], 
+     CircleBox[{48, 560}, 0], CircleBox[{48, 576}, 0], 
+     CircleBox[{48, 592}, 0], CircleBox[{48, 608}, 0], 
+     CircleBox[{48, 624}, 0], CircleBox[{48, 640}, 0], 
+     CircleBox[{48, 656}, 0], CircleBox[{48, 672}, 0], 
+     CircleBox[{48, 688}, 0], CircleBox[{48, 704}, 0], 
+     CircleBox[{48, 720}, 0], CircleBox[{48, 736}, 0], 
+     CircleBox[{48, 752}, 0], CircleBox[{48, 768}, 0], 
+     CircleBox[{48, 784}, 0], CircleBox[{48, 800}, 0], 
+     CircleBox[{48, 816}, 0], CircleBox[{48, 832}, 0], 
+     CircleBox[{48, 848}, 0], CircleBox[{48, 864}, 0], 
+     CircleBox[{48, 880}, 0], CircleBox[{48, 896}, 0], 
+     CircleBox[{48, 912}, 0], CircleBox[{48, 928}, 0], 
+     CircleBox[{48, 944}, 0], CircleBox[{48, 960}, 0], 
+     CircleBox[{48, 976}, 0]}, {CircleBox[{64, 16}, 0], 
+     CircleBox[{64, 32}, 0], CircleBox[{64, 48}, 0], CircleBox[{64, 64}, 0], 
+     CircleBox[{64, 80}, 0], CircleBox[{64, 96}, 0], CircleBox[{64, 112}, 0], 
+     CircleBox[{64, 128}, 0], CircleBox[{64, 144}, 0], 
+     CircleBox[{64, 160}, 0], CircleBox[{64, 176}, 0], 
+     CircleBox[{64, 192}, 0], CircleBox[{64, 208}, 0], 
+     CircleBox[{64, 224}, 0], CircleBox[{64, 240}, 0], 
+     CircleBox[{64, 256}, 0], CircleBox[{64, 272}, 0], 
+     CircleBox[{64, 288}, 0], CircleBox[{64, 304}, 0], 
+     CircleBox[{64, 320}, 0], CircleBox[{64, 336}, 0], 
+     CircleBox[{64, 352}, 0], CircleBox[{64, 368}, 0], 
+     CircleBox[{64, 384}, 0], CircleBox[{64, 400}, 0], 
+     CircleBox[{64, 416}, 0], CircleBox[{64, 432}, 0], 
+     CircleBox[{64, 448}, 0], CircleBox[{64, 464}, 58.244], 
+     CircleBox[{64, 480}, 93.8892], CircleBox[{64, 496}, 107.0344], 
+     CircleBox[{64, 512}, 93.8892], CircleBox[{64, 528}, 58.244], 
+     CircleBox[{64, 544}, 0], CircleBox[{64, 560}, 0], 
+     CircleBox[{64, 576}, 0], CircleBox[{64, 592}, 0], 
+     CircleBox[{64, 608}, 0], CircleBox[{64, 624}, 0], 
+     CircleBox[{64, 640}, 0], CircleBox[{64, 656}, 0], 
+     CircleBox[{64, 672}, 0], CircleBox[{64, 688}, 0], 
+     CircleBox[{64, 704}, 0], CircleBox[{64, 720}, 0], 
+     CircleBox[{64, 736}, 0], CircleBox[{64, 752}, 0], 
+     CircleBox[{64, 768}, 0], CircleBox[{64, 784}, 0], 
+     CircleBox[{64, 800}, 0], CircleBox[{64, 816}, 0], 
+     CircleBox[{64, 832}, 0], CircleBox[{64, 848}, 0], 
+     CircleBox[{64, 864}, 0], CircleBox[{64, 880}, 0], 
+     CircleBox[{64, 896}, 0], CircleBox[{64, 912}, 0], 
+     CircleBox[{64, 928}, 0], CircleBox[{64, 944}, 0], 
+     CircleBox[{64, 960}, 0], CircleBox[{64, 976}, 0]}, {
+     CircleBox[{80, 16}, 0], CircleBox[{80, 32}, 0], CircleBox[{80, 48}, 0], 
+     CircleBox[{80, 64}, 0], CircleBox[{80, 80}, 0], CircleBox[{80, 96}, 0], 
+     CircleBox[{80, 112}, 0], CircleBox[{80, 128}, 0], 
+     CircleBox[{80, 144}, 0], CircleBox[{80, 160}, 0], 
+     CircleBox[{80, 176}, 0], CircleBox[{80, 192}, 0], 
+     CircleBox[{80, 208}, 0], CircleBox[{80, 224}, 0], 
+     CircleBox[{80, 240}, 0], CircleBox[{80, 256}, 0], 
+     CircleBox[{80, 272}, 0], CircleBox[{80, 288}, 0], 
+     CircleBox[{80, 304}, 0], CircleBox[{80, 320}, 0], 
+     CircleBox[{80, 336}, 0], CircleBox[{80, 352}, 0], 
+     CircleBox[{80, 368}, 0], CircleBox[{80, 384}, 0], 
+     CircleBox[{80, 400}, 0], CircleBox[{80, 416}, 0], 
+     CircleBox[{80, 432}, 0], CircleBox[{80, 448}, 0], 
+     CircleBox[{80, 464}, 0], CircleBox[{80, 480}, 0], 
+     CircleBox[{80, 496}, 0], CircleBox[{80, 512}, 0], 
+     CircleBox[{80, 528}, 0], CircleBox[{80, 544}, 0], 
+     CircleBox[{80, 560}, 0], CircleBox[{80, 576}, 0], 
+     CircleBox[{80, 592}, 0], CircleBox[{80, 608}, 0], 
+     CircleBox[{80, 624}, 0], CircleBox[{80, 640}, 0], 
+     CircleBox[{80, 656}, 0], CircleBox[{80, 672}, 0], 
+     CircleBox[{80, 688}, 0], CircleBox[{80, 704}, 0], 
+     CircleBox[{80, 720}, 0], CircleBox[{80, 736}, 0], 
+     CircleBox[{80, 752}, 0], CircleBox[{80, 768}, 0], 
+     CircleBox[{80, 784}, 0], CircleBox[{80, 800}, 0], 
+     CircleBox[{80, 816}, 0], CircleBox[{80, 832}, 0], 
+     CircleBox[{80, 848}, 0], CircleBox[{80, 864}, 0], 
+     CircleBox[{80, 880}, 0], CircleBox[{80, 896}, 0], 
+     CircleBox[{80, 912}, 0], CircleBox[{80, 928}, 0], 
+     CircleBox[{80, 944}, 0], CircleBox[{80, 960}, 0], 
+     CircleBox[{80, 976}, 0]}, {CircleBox[{96, 16}, 0], 
+     CircleBox[{96, 32}, 0], CircleBox[{96, 48}, 0], CircleBox[{96, 64}, 0], 
+     CircleBox[{96, 80}, 0], CircleBox[{96, 96}, 0], CircleBox[{96, 112}, 0], 
+     CircleBox[{96, 128}, 0], CircleBox[{96, 144}, 0], 
+     CircleBox[{96, 160}, 0], CircleBox[{96, 176}, 0], 
+     CircleBox[{96, 192}, 0], CircleBox[{96, 208}, 0], 
+     CircleBox[{96, 224}, 0], CircleBox[{96, 240}, 0], 
+     CircleBox[{96, 256}, 0], CircleBox[{96, 272}, 0], 
+     CircleBox[{96, 288}, 0], CircleBox[{96, 304}, 0], 
+     CircleBox[{96, 320}, 0], CircleBox[{96, 336}, 0], 
+     CircleBox[{96, 352}, 0], CircleBox[{96, 368}, 0], 
+     CircleBox[{96, 384}, 0], CircleBox[{96, 400}, 0], 
+     CircleBox[{96, 416}, 0], CircleBox[{96, 432}, 0], 
+     CircleBox[{96, 448}, 0], CircleBox[{96, 464}, 0], 
+     CircleBox[{96, 480}, 0], CircleBox[{96, 496}, 0], 
+     CircleBox[{96, 512}, 0], CircleBox[{96, 528}, 0], 
+     CircleBox[{96, 544}, 0], CircleBox[{96, 560}, 0], 
+     CircleBox[{96, 576}, 0], CircleBox[{96, 592}, 0], 
+     CircleBox[{96, 608}, 0], CircleBox[{96, 624}, 0], 
+     CircleBox[{96, 640}, 0], CircleBox[{96, 656}, 0], 
+     CircleBox[{96, 672}, 0], CircleBox[{96, 688}, 0], 
+     CircleBox[{96, 704}, 0], CircleBox[{96, 720}, 0], 
+     CircleBox[{96, 736}, 0], CircleBox[{96, 752}, 0], 
+     CircleBox[{96, 768}, 0], CircleBox[{96, 784}, 0], 
+     CircleBox[{96, 800}, 0], CircleBox[{96, 816}, 0], 
+     CircleBox[{96, 832}, 0], CircleBox[{96, 848}, 0], 
+     CircleBox[{96, 864}, 0], CircleBox[{96, 880}, 0], 
+     CircleBox[{96, 896}, 0], CircleBox[{96, 912}, 0], 
+     CircleBox[{96, 928}, 0], CircleBox[{96, 944}, 0], 
+     CircleBox[{96, 960}, 0], CircleBox[{96, 976}, 0]}, {
+     CircleBox[{112, 16}, 0], CircleBox[{112, 32}, 0], 
+     CircleBox[{112, 48}, 0], CircleBox[{112, 64}, 0], 
+     CircleBox[{112, 80}, 0], CircleBox[{112, 96}, 0], 
+     CircleBox[{112, 112}, 0], CircleBox[{112, 128}, 0], 
+     CircleBox[{112, 144}, 0], CircleBox[{112, 160}, 0], 
+     CircleBox[{112, 176}, 0], CircleBox[{112, 192}, 0], 
+     CircleBox[{112, 208}, 0], CircleBox[{112, 224}, 0], 
+     CircleBox[{112, 240}, 0], CircleBox[{112, 256}, 0], 
+     CircleBox[{112, 272}, 0], CircleBox[{112, 288}, 0], 
+     CircleBox[{112, 304}, 0], CircleBox[{112, 320}, 0], 
+     CircleBox[{112, 336}, 0], CircleBox[{112, 352}, 0], 
+     CircleBox[{112, 368}, 0], CircleBox[{112, 384}, 0], 
+     CircleBox[{112, 400}, 0], CircleBox[{112, 416}, 0], 
+     CircleBox[{112, 432}, 0], CircleBox[{112, 448}, 0], 
+     CircleBox[{112, 464}, 0], CircleBox[{112, 480}, 0], 
+     CircleBox[{112, 496}, 0], CircleBox[{112, 512}, 0], 
+     CircleBox[{112, 528}, 0], CircleBox[{112, 544}, 0], 
+     CircleBox[{112, 560}, 0], CircleBox[{112, 576}, 0], 
+     CircleBox[{112, 592}, 0], CircleBox[{112, 608}, 0], 
+     CircleBox[{112, 624}, 0], CircleBox[{112, 640}, 0], 
+     CircleBox[{112, 656}, 0], CircleBox[{112, 672}, 0], 
+     CircleBox[{112, 688}, 0], CircleBox[{112, 704}, 0], 
+     CircleBox[{112, 720}, 0], CircleBox[{112, 736}, 0], 
+     CircleBox[{112, 752}, 0], CircleBox[{112, 768}, 0], 
+     CircleBox[{112, 784}, 0], CircleBox[{112, 800}, 0], 
+     CircleBox[{112, 816}, 0], CircleBox[{112, 832}, 0], 
+     CircleBox[{112, 848}, 0], CircleBox[{112, 864}, 0], 
+     CircleBox[{112, 880}, 0], CircleBox[{112, 896}, 0], 
+     CircleBox[{112, 912}, 0], CircleBox[{112, 928}, 0], 
+     CircleBox[{112, 944}, 0], CircleBox[{112, 960}, 0], 
+     CircleBox[{112, 976}, 0]}, {CircleBox[{128, 16}, 0], 
+     CircleBox[{128, 32}, 0], CircleBox[{128, 48}, 0], 
+     CircleBox[{128, 64}, 0], CircleBox[{128, 80}, 0], 
+     CircleBox[{128, 96}, 0], CircleBox[{128, 112}, 0], 
+     CircleBox[{128, 128}, 0], CircleBox[{128, 144}, 0], 
+     CircleBox[{128, 160}, 0], CircleBox[{128, 176}, 0], 
+     CircleBox[{128, 192}, 0], CircleBox[{128, 208}, 0], 
+     CircleBox[{128, 224}, 0], CircleBox[{128, 240}, 0], 
+     CircleBox[{128, 256}, 0], CircleBox[{128, 272}, 0], 
+     CircleBox[{128, 288}, 0], CircleBox[{128, 304}, 0], 
+     CircleBox[{128, 320}, 0], CircleBox[{128, 336}, 0], 
+     CircleBox[{128, 352}, 0], CircleBox[{128, 368}, 0], 
+     CircleBox[{128, 384}, 0], CircleBox[{128, 400}, 0], 
+     CircleBox[{128, 416}, 0], CircleBox[{128, 432}, 0], 
+     CircleBox[{128, 448}, 0], CircleBox[{128, 464}, 0], 
+     CircleBox[{128, 480}, 0], CircleBox[{128, 496}, 0], 
+     CircleBox[{128, 512}, 0], CircleBox[{128, 528}, 0], 
+     CircleBox[{128, 544}, 0], CircleBox[{128, 560}, 0], 
+     CircleBox[{128, 576}, 0], CircleBox[{128, 592}, 0], 
+     CircleBox[{128, 608}, 0], CircleBox[{128, 624}, 0], 
+     CircleBox[{128, 640}, 0], CircleBox[{128, 656}, 0], 
+     CircleBox[{128, 672}, 0], CircleBox[{128, 688}, 0], 
+     CircleBox[{128, 704}, 0], CircleBox[{128, 720}, 0], 
+     CircleBox[{128, 736}, 0], CircleBox[{128, 752}, 0], 
+     CircleBox[{128, 768}, 0], CircleBox[{128, 784}, 0], 
+     CircleBox[{128, 800}, 0], CircleBox[{128, 816}, 0], 
+     CircleBox[{128, 832}, 0], CircleBox[{128, 848}, 0], 
+     CircleBox[{128, 864}, 0], CircleBox[{128, 880}, 0], 
+     CircleBox[{128, 896}, 0], CircleBox[{128, 912}, 0], 
+     CircleBox[{128, 928}, 0], CircleBox[{128, 944}, 0], 
+     CircleBox[{128, 960}, 0], CircleBox[{128, 976}, 0]}, {
+     CircleBox[{144, 16}, 0], CircleBox[{144, 32}, 0], 
+     CircleBox[{144, 48}, 0], CircleBox[{144, 64}, 0], 
+     CircleBox[{144, 80}, 0], CircleBox[{144, 96}, 0], 
+     CircleBox[{144, 112}, 0], CircleBox[{144, 128}, 0], 
+     CircleBox[{144, 144}, 0], CircleBox[{144, 160}, 0], 
+     CircleBox[{144, 176}, 0], CircleBox[{144, 192}, 0], 
+     CircleBox[{144, 208}, 0], CircleBox[{144, 224}, 0], 
+     CircleBox[{144, 240}, 0], CircleBox[{144, 256}, 0], 
+     CircleBox[{144, 272}, 0], CircleBox[{144, 288}, 0], 
+     CircleBox[{144, 304}, 0], CircleBox[{144, 320}, 0], 
+     CircleBox[{144, 336}, 0], CircleBox[{144, 352}, 0], 
+     CircleBox[{144, 368}, 0], CircleBox[{144, 384}, 0], 
+     CircleBox[{144, 400}, 0], CircleBox[{144, 416}, 0], 
+     CircleBox[{144, 432}, 0], CircleBox[{144, 448}, 0], 
+     CircleBox[{144, 464}, 0], CircleBox[{144, 480}, 0], 
+     CircleBox[{144, 496}, 0], CircleBox[{144, 512}, 0], 
+     CircleBox[{144, 528}, 0], CircleBox[{144, 544}, 0], 
+     CircleBox[{144, 560}, 0], CircleBox[{144, 576}, 0], 
+     CircleBox[{144, 592}, 0], CircleBox[{144, 608}, 0], 
+     CircleBox[{144, 624}, 0], CircleBox[{144, 640}, 0], 
+     CircleBox[{144, 656}, 0], CircleBox[{144, 672}, 0], 
+     CircleBox[{144, 688}, 0], CircleBox[{144, 704}, 0], 
+     CircleBox[{144, 720}, 0], CircleBox[{144, 736}, 0], 
+     CircleBox[{144, 752}, 0], CircleBox[{144, 768}, 0], 
+     CircleBox[{144, 784}, 0], CircleBox[{144, 800}, 0], 
+     CircleBox[{144, 816}, 0], CircleBox[{144, 832}, 0], 
+     CircleBox[{144, 848}, 0], CircleBox[{144, 864}, 0], 
+     CircleBox[{144, 880}, 0], CircleBox[{144, 896}, 0], 
+     CircleBox[{144, 912}, 0], CircleBox[{144, 928}, 0], 
+     CircleBox[{144, 944}, 0], CircleBox[{144, 960}, 0], 
+     CircleBox[{144, 976}, 0]}, {CircleBox[{160, 16}, 0], 
+     CircleBox[{160, 32}, 0], CircleBox[{160, 48}, 0], 
+     CircleBox[{160, 64}, 0], CircleBox[{160, 80}, 0], 
+     CircleBox[{160, 96}, 0], CircleBox[{160, 112}, 0], 
+     CircleBox[{160, 128}, 0], CircleBox[{160, 144}, 0], 
+     CircleBox[{160, 160}, 0], CircleBox[{160, 176}, 0], 
+     CircleBox[{160, 192}, 0], CircleBox[{160, 208}, 0], 
+     CircleBox[{160, 224}, 0], CircleBox[{160, 240}, 0], 
+     CircleBox[{160, 256}, 0], CircleBox[{160, 272}, 0], 
+     CircleBox[{160, 288}, 0], CircleBox[{160, 304}, 0], 
+     CircleBox[{160, 320}, 0], CircleBox[{160, 336}, 0], 
+     CircleBox[{160, 352}, 0], CircleBox[{160, 368}, 0], 
+     CircleBox[{160, 384}, 0], CircleBox[{160, 400}, 0], 
+     CircleBox[{160, 416}, 0], CircleBox[{160, 432}, 0], 
+     CircleBox[{160, 448}, 0], CircleBox[{160, 464}, 0], 
+     CircleBox[{160, 480}, 0], CircleBox[{160, 496}, 0], 
+     CircleBox[{160, 512}, 0], CircleBox[{160, 528}, 0], 
+     CircleBox[{160, 544}, 0], CircleBox[{160, 560}, 0], 
+     CircleBox[{160, 576}, 0], CircleBox[{160, 592}, 0], 
+     CircleBox[{160, 608}, 0], CircleBox[{160, 624}, 0], 
+     CircleBox[{160, 640}, 0], CircleBox[{160, 656}, 0], 
+     CircleBox[{160, 672}, 0], CircleBox[{160, 688}, 0], 
+     CircleBox[{160, 704}, 0], CircleBox[{160, 720}, 0], 
+     CircleBox[{160, 736}, 0], CircleBox[{160, 752}, 0], 
+     CircleBox[{160, 768}, 0], CircleBox[{160, 784}, 0], 
+     CircleBox[{160, 800}, 0], CircleBox[{160, 816}, 0], 
+     CircleBox[{160, 832}, 0], CircleBox[{160, 848}, 0], 
+     CircleBox[{160, 864}, 0], CircleBox[{160, 880}, 0], 
+     CircleBox[{160, 896}, 0], CircleBox[{160, 912}, 0], 
+     CircleBox[{160, 928}, 0], CircleBox[{160, 944}, 0], 
+     CircleBox[{160, 960}, 0], CircleBox[{160, 976}, 0]}, {
+     CircleBox[{176, 16}, 0], CircleBox[{176, 32}, 0], 
+     CircleBox[{176, 48}, 0], CircleBox[{176, 64}, 0], 
+     CircleBox[{176, 80}, 0], CircleBox[{176, 96}, 0], 
+     CircleBox[{176, 112}, 0], CircleBox[{176, 128}, 0], 
+     CircleBox[{176, 144}, 0], CircleBox[{176, 160}, 0], 
+     CircleBox[{176, 176}, 0], CircleBox[{176, 192}, 0], 
+     CircleBox[{176, 208}, 0], CircleBox[{176, 224}, 0], 
+     CircleBox[{176, 240}, 0], CircleBox[{176, 256}, 0], 
+     CircleBox[{176, 272}, 0], CircleBox[{176, 288}, 0], 
+     CircleBox[{176, 304}, 0], CircleBox[{176, 320}, 0], 
+     CircleBox[{176, 336}, 0], CircleBox[{176, 352}, 0], 
+     CircleBox[{176, 368}, 0], CircleBox[{176, 384}, 0], 
+     CircleBox[{176, 400}, 0], CircleBox[{176, 416}, 0], 
+     CircleBox[{176, 432}, 0], CircleBox[{176, 448}, 0], 
+     CircleBox[{176, 464}, 0], CircleBox[{176, 480}, 0], 
+     CircleBox[{176, 496}, 0], CircleBox[{176, 512}, 0], 
+     CircleBox[{176, 528}, 0], CircleBox[{176, 544}, 0], 
+     CircleBox[{176, 560}, 0], CircleBox[{176, 576}, 0], 
+     CircleBox[{176, 592}, 0], CircleBox[{176, 608}, 0], 
+     CircleBox[{176, 624}, 0], CircleBox[{176, 640}, 0], 
+     CircleBox[{176, 656}, 0], CircleBox[{176, 672}, 0], 
+     CircleBox[{176, 688}, 0], CircleBox[{176, 704}, 0], 
+     CircleBox[{176, 720}, 0], CircleBox[{176, 736}, 0], 
+     CircleBox[{176, 752}, 0], CircleBox[{176, 768}, 0], 
+     CircleBox[{176, 784}, 0], CircleBox[{176, 800}, 0], 
+     CircleBox[{176, 816}, 0], CircleBox[{176, 832}, 0], 
+     CircleBox[{176, 848}, 0], CircleBox[{176, 864}, 0], 
+     CircleBox[{176, 880}, 0], CircleBox[{176, 896}, 0], 
+     CircleBox[{176, 912}, 0], CircleBox[{176, 928}, 0], 
+     CircleBox[{176, 944}, 0], CircleBox[{176, 960}, 0], 
+     CircleBox[{176, 976}, 0]}, {CircleBox[{192, 16}, 0], 
+     CircleBox[{192, 32}, 0], CircleBox[{192, 48}, 0], 
+     CircleBox[{192, 64}, 0], CircleBox[{192, 80}, 0], 
+     CircleBox[{192, 96}, 0], CircleBox[{192, 112}, 0], 
+     CircleBox[{192, 128}, 0], CircleBox[{192, 144}, 0], 
+     CircleBox[{192, 160}, 0], CircleBox[{192, 176}, 0], 
+     CircleBox[{192, 192}, 0], CircleBox[{192, 208}, 0], 
+     CircleBox[{192, 224}, 0], CircleBox[{192, 240}, 0], 
+     CircleBox[{192, 256}, 0], CircleBox[{192, 272}, 0], 
+     CircleBox[{192, 288}, 0], CircleBox[{192, 304}, 0], 
+     CircleBox[{192, 320}, 0], CircleBox[{192, 336}, 0], 
+     CircleBox[{192, 352}, 0], CircleBox[{192, 368}, 0], 
+     CircleBox[{192, 384}, 0], CircleBox[{192, 400}, 0], 
+     CircleBox[{192, 416}, 0], CircleBox[{192, 432}, 0], 
+     CircleBox[{192, 448}, 0], CircleBox[{192, 464}, 0], 
+     CircleBox[{192, 480}, 0], CircleBox[{192, 496}, 0], 
+     CircleBox[{192, 512}, 0], CircleBox[{192, 528}, 0], 
+     CircleBox[{192, 544}, 0], CircleBox[{192, 560}, 0], 
+     CircleBox[{192, 576}, 0], CircleBox[{192, 592}, 0], 
+     CircleBox[{192, 608}, 0], CircleBox[{192, 624}, 0], 
+     CircleBox[{192, 640}, 0], CircleBox[{192, 656}, 0], 
+     CircleBox[{192, 672}, 0], CircleBox[{192, 688}, 0], 
+     CircleBox[{192, 704}, 0], CircleBox[{192, 720}, 0], 
+     CircleBox[{192, 736}, 0], CircleBox[{192, 752}, 0], 
+     CircleBox[{192, 768}, 0], CircleBox[{192, 784}, 0], 
+     CircleBox[{192, 800}, 0], CircleBox[{192, 816}, 0], 
+     CircleBox[{192, 832}, 0], CircleBox[{192, 848}, 0], 
+     CircleBox[{192, 864}, 0], CircleBox[{192, 880}, 0], 
+     CircleBox[{192, 896}, 0], CircleBox[{192, 912}, 0], 
+     CircleBox[{192, 928}, 0], CircleBox[{192, 944}, 0], 
+     CircleBox[{192, 960}, 0], CircleBox[{192, 976}, 0]}, {
+     CircleBox[{208, 16}, 0], CircleBox[{208, 32}, 0], 
+     CircleBox[{208, 48}, 0], CircleBox[{208, 64}, 0], 
+     CircleBox[{208, 80}, 0], CircleBox[{208, 96}, 0], 
+     CircleBox[{208, 112}, 0], CircleBox[{208, 128}, 0], 
+     CircleBox[{208, 144}, 0], CircleBox[{208, 160}, 0], 
+     CircleBox[{208, 176}, 0], CircleBox[{208, 192}, 0], 
+     CircleBox[{208, 208}, 0], CircleBox[{208, 224}, 0], 
+     CircleBox[{208, 240}, 0], CircleBox[{208, 256}, 0], 
+     CircleBox[{208, 272}, 0], CircleBox[{208, 288}, 0], 
+     CircleBox[{208, 304}, 0], CircleBox[{208, 320}, 0], 
+     CircleBox[{208, 336}, 0], CircleBox[{208, 352}, 0], 
+     CircleBox[{208, 368}, 0], CircleBox[{208, 384}, 0], 
+     CircleBox[{208, 400}, 0], CircleBox[{208, 416}, 0], 
+     CircleBox[{208, 432}, 0], CircleBox[{208, 448}, 0], 
+     CircleBox[{208, 464}, 0], CircleBox[{208, 480}, 0], 
+     CircleBox[{208, 496}, 0], CircleBox[{208, 512}, 0], 
+     CircleBox[{208, 528}, 0], CircleBox[{208, 544}, 0], 
+     CircleBox[{208, 560}, 0], CircleBox[{208, 576}, 0], 
+     CircleBox[{208, 592}, 0], CircleBox[{208, 608}, 0], 
+     CircleBox[{208, 624}, 0], CircleBox[{208, 640}, 0], 
+     CircleBox[{208, 656}, 0], CircleBox[{208, 672}, 0], 
+     CircleBox[{208, 688}, 0], CircleBox[{208, 704}, 0], 
+     CircleBox[{208, 720}, 0], CircleBox[{208, 736}, 0], 
+     CircleBox[{208, 752}, 0], CircleBox[{208, 768}, 0], 
+     CircleBox[{208, 784}, 0], CircleBox[{208, 800}, 0], 
+     CircleBox[{208, 816}, 0], CircleBox[{208, 832}, 0], 
+     CircleBox[{208, 848}, 0], CircleBox[{208, 864}, 0], 
+     CircleBox[{208, 880}, 0], CircleBox[{208, 896}, 0], 
+     CircleBox[{208, 912}, 0], CircleBox[{208, 928}, 0], 
+     CircleBox[{208, 944}, 0], CircleBox[{208, 960}, 0], 
+     CircleBox[{208, 976}, 0]}, {CircleBox[{224, 16}, 0], 
+     CircleBox[{224, 32}, 0], CircleBox[{224, 48}, 0], 
+     CircleBox[{224, 64}, 0], CircleBox[{224, 80}, 0], 
+     CircleBox[{224, 96}, 0], CircleBox[{224, 112}, 0], 
+     CircleBox[{224, 128}, 0], CircleBox[{224, 144}, 0], 
+     CircleBox[{224, 160}, 0], CircleBox[{224, 176}, 0], 
+     CircleBox[{224, 192}, 0], CircleBox[{224, 208}, 0], 
+     CircleBox[{224, 224}, 0], CircleBox[{224, 240}, 0], 
+     CircleBox[{224, 256}, 0], CircleBox[{224, 272}, 0], 
+     CircleBox[{224, 288}, 0], CircleBox[{224, 304}, 0], 
+     CircleBox[{224, 320}, 0], CircleBox[{224, 336}, 0], 
+     CircleBox[{224, 352}, 0], CircleBox[{224, 368}, 0], 
+     CircleBox[{224, 384}, 0], CircleBox[{224, 400}, 0], 
+     CircleBox[{224, 416}, 0], CircleBox[{224, 432}, 0], 
+     CircleBox[{224, 448}, 0], CircleBox[{224, 464}, 0], 
+     CircleBox[{224, 480}, 0], CircleBox[{224, 496}, 0], 
+     CircleBox[{224, 512}, 0], CircleBox[{224, 528}, 0], 
+     CircleBox[{224, 544}, 0], CircleBox[{224, 560}, 0], 
+     CircleBox[{224, 576}, 0], CircleBox[{224, 592}, 0], 
+     CircleBox[{224, 608}, 0], CircleBox[{224, 624}, 0], 
+     CircleBox[{224, 640}, 0], CircleBox[{224, 656}, 0], 
+     CircleBox[{224, 672}, 0], CircleBox[{224, 688}, 0], 
+     CircleBox[{224, 704}, 0], CircleBox[{224, 720}, 0], 
+     CircleBox[{224, 736}, 0], CircleBox[{224, 752}, 0], 
+     CircleBox[{224, 768}, 0], CircleBox[{224, 784}, 0], 
+     CircleBox[{224, 800}, 0], CircleBox[{224, 816}, 0], 
+     CircleBox[{224, 832}, 0], CircleBox[{224, 848}, 0], 
+     CircleBox[{224, 864}, 0], CircleBox[{224, 880}, 0], 
+     CircleBox[{224, 896}, 0], CircleBox[{224, 912}, 0], 
+     CircleBox[{224, 928}, 0], CircleBox[{224, 944}, 0], 
+     CircleBox[{224, 960}, 0], CircleBox[{224, 976}, 0]}, {
+     CircleBox[{240, 16}, 0], CircleBox[{240, 32}, 0], 
+     CircleBox[{240, 48}, 0], CircleBox[{240, 64}, 0], 
+     CircleBox[{240, 80}, 0], CircleBox[{240, 96}, 0], 
+     CircleBox[{240, 112}, 0], CircleBox[{240, 128}, 0], 
+     CircleBox[{240, 144}, 0], CircleBox[{240, 160}, 0], 
+     CircleBox[{240, 176}, 0], CircleBox[{240, 192}, 0], 
+     CircleBox[{240, 208}, 0], CircleBox[{240, 224}, 0], 
+     CircleBox[{240, 240}, 0], CircleBox[{240, 256}, 0], 
+     CircleBox[{240, 272}, 0], CircleBox[{240, 288}, 0], 
+     CircleBox[{240, 304}, 0], CircleBox[{240, 320}, 0], 
+     CircleBox[{240, 336}, 0], CircleBox[{240, 352}, 0], 
+     CircleBox[{240, 368}, 0], CircleBox[{240, 384}, 0], 
+     CircleBox[{240, 400}, 0], CircleBox[{240, 416}, 0], 
+     CircleBox[{240, 432}, 0], CircleBox[{240, 448}, 0], 
+     CircleBox[{240, 464}, 0], CircleBox[{240, 480}, 0], 
+     CircleBox[{240, 496}, 0], CircleBox[{240, 512}, 0], 
+     CircleBox[{240, 528}, 0], CircleBox[{240, 544}, 0], 
+     CircleBox[{240, 560}, 0], CircleBox[{240, 576}, 0], 
+     CircleBox[{240, 592}, 0], CircleBox[{240, 608}, 0], 
+     CircleBox[{240, 624}, 0], CircleBox[{240, 640}, 0], 
+     CircleBox[{240, 656}, 0], CircleBox[{240, 672}, 0], 
+     CircleBox[{240, 688}, 0], CircleBox[{240, 704}, 0], 
+     CircleBox[{240, 720}, 0], CircleBox[{240, 736}, 0], 
+     CircleBox[{240, 752}, 0], CircleBox[{240, 768}, 0], 
+     CircleBox[{240, 784}, 0], CircleBox[{240, 800}, 0], 
+     CircleBox[{240, 816}, 0], CircleBox[{240, 832}, 0], 
+     CircleBox[{240, 848}, 0], CircleBox[{240, 864}, 0], 
+     CircleBox[{240, 880}, 0], CircleBox[{240, 896}, 0], 
+     CircleBox[{240, 912}, 0], CircleBox[{240, 928}, 0], 
+     CircleBox[{240, 944}, 0], CircleBox[{240, 960}, 0], 
+     CircleBox[{240, 976}, 0]}, {CircleBox[{256, 16}, 0], 
+     CircleBox[{256, 32}, 0], CircleBox[{256, 48}, 0], 
+     CircleBox[{256, 64}, 0], CircleBox[{256, 80}, 0], 
+     CircleBox[{256, 96}, 0], CircleBox[{256, 112}, 0], 
+     CircleBox[{256, 128}, 0], CircleBox[{256, 144}, 0], 
+     CircleBox[{256, 160}, 0], CircleBox[{256, 176}, 0], 
+     CircleBox[{256, 192}, 0], CircleBox[{256, 208}, 0], 
+     CircleBox[{256, 224}, 0], CircleBox[{256, 240}, 0], 
+     CircleBox[{256, 256}, 0], CircleBox[{256, 272}, 0], 
+     CircleBox[{256, 288}, 0], CircleBox[{256, 304}, 0], 
+     CircleBox[{256, 320}, 0], CircleBox[{256, 336}, 0], 
+     CircleBox[{256, 352}, 0], CircleBox[{256, 368}, 0], 
+     CircleBox[{256, 384}, 0], CircleBox[{256, 400}, 0], 
+     CircleBox[{256, 416}, 0], CircleBox[{256, 432}, 0], 
+     CircleBox[{256, 448}, 0], CircleBox[{256, 464}, 0], 
+     CircleBox[{256, 480}, 0], CircleBox[{256, 496}, 0], 
+     CircleBox[{256, 512}, 0], CircleBox[{256, 528}, 0], 
+     CircleBox[{256, 544}, 0], CircleBox[{256, 560}, 0], 
+     CircleBox[{256, 576}, 0], CircleBox[{256, 592}, 0], 
+     CircleBox[{256, 608}, 0], CircleBox[{256, 624}, 0], 
+     CircleBox[{256, 640}, 0], CircleBox[{256, 656}, 0], 
+     CircleBox[{256, 672}, 0], CircleBox[{256, 688}, 0], 
+     CircleBox[{256, 704}, 0], CircleBox[{256, 720}, 0], 
+     CircleBox[{256, 736}, 0], CircleBox[{256, 752}, 0], 
+     CircleBox[{256, 768}, 0], CircleBox[{256, 784}, 0], 
+     CircleBox[{256, 800}, 0], CircleBox[{256, 816}, 0], 
+     CircleBox[{256, 832}, 0], CircleBox[{256, 848}, 0], 
+     CircleBox[{256, 864}, 0], CircleBox[{256, 880}, 0], 
+     CircleBox[{256, 896}, 0], CircleBox[{256, 912}, 0], 
+     CircleBox[{256, 928}, 0], CircleBox[{256, 944}, 0], 
+     CircleBox[{256, 960}, 0], CircleBox[{256, 976}, 0]}, {
+     CircleBox[{272, 16}, 0], CircleBox[{272, 32}, 0], 
+     CircleBox[{272, 48}, 0], CircleBox[{272, 64}, 0], 
+     CircleBox[{272, 80}, 0], CircleBox[{272, 96}, 0], 
+     CircleBox[{272, 112}, 0], CircleBox[{272, 128}, 0], 
+     CircleBox[{272, 144}, 0], CircleBox[{272, 160}, 0], 
+     CircleBox[{272, 176}, 0], CircleBox[{272, 192}, 0], 
+     CircleBox[{272, 208}, 0], CircleBox[{272, 224}, 0], 
+     CircleBox[{272, 240}, 0], CircleBox[{272, 256}, 0], 
+     CircleBox[{272, 272}, 0], CircleBox[{272, 288}, 0], 
+     CircleBox[{272, 304}, 0], CircleBox[{272, 320}, 0], 
+     CircleBox[{272, 336}, 0], CircleBox[{272, 352}, 0], 
+     CircleBox[{272, 368}, 0], CircleBox[{272, 384}, 0], 
+     CircleBox[{272, 400}, 0], CircleBox[{272, 416}, 0], 
+     CircleBox[{272, 432}, 0], CircleBox[{272, 448}, 0], 
+     CircleBox[{272, 464}, 0], CircleBox[{272, 480}, 0], 
+     CircleBox[{272, 496}, 0], CircleBox[{272, 512}, 0], 
+     CircleBox[{272, 528}, 0], CircleBox[{272, 544}, 0], 
+     CircleBox[{272, 560}, 0], CircleBox[{272, 576}, 0], 
+     CircleBox[{272, 592}, 0], CircleBox[{272, 608}, 0], 
+     CircleBox[{272, 624}, 0], CircleBox[{272, 640}, 0], 
+     CircleBox[{272, 656}, 0], CircleBox[{272, 672}, 0], 
+     CircleBox[{272, 688}, 0], CircleBox[{272, 704}, 0], 
+     CircleBox[{272, 720}, 0], CircleBox[{272, 736}, 0], 
+     CircleBox[{272, 752}, 0], CircleBox[{272, 768}, 0], 
+     CircleBox[{272, 784}, 0], CircleBox[{272, 800}, 0], 
+     CircleBox[{272, 816}, 0], CircleBox[{272, 832}, 0], 
+     CircleBox[{272, 848}, 0], CircleBox[{272, 864}, 0], 
+     CircleBox[{272, 880}, 0], CircleBox[{272, 896}, 0], 
+     CircleBox[{272, 912}, 0], CircleBox[{272, 928}, 0], 
+     CircleBox[{272, 944}, 0], CircleBox[{272, 960}, 0], 
+     CircleBox[{272, 976}, 0]}, {CircleBox[{288, 16}, 0], 
+     CircleBox[{288, 32}, 0], CircleBox[{288, 48}, 0], 
+     CircleBox[{288, 64}, 0], CircleBox[{288, 80}, 0], 
+     CircleBox[{288, 96}, 0], CircleBox[{288, 112}, 0], 
+     CircleBox[{288, 128}, 0], CircleBox[{288, 144}, 0], 
+     CircleBox[{288, 160}, 0], CircleBox[{288, 176}, 0], 
+     CircleBox[{288, 192}, 0], CircleBox[{288, 208}, 0], 
+     CircleBox[{288, 224}, 0], CircleBox[{288, 240}, 0], 
+     CircleBox[{288, 256}, 0], CircleBox[{288, 272}, 0], 
+     CircleBox[{288, 288}, 0], CircleBox[{288, 304}, 0], 
+     CircleBox[{288, 320}, 0], CircleBox[{288, 336}, 0], 
+     CircleBox[{288, 352}, 0], CircleBox[{288, 368}, 0], 
+     CircleBox[{288, 384}, 0], CircleBox[{288, 400}, 0], 
+     CircleBox[{288, 416}, 0], CircleBox[{288, 432}, 0], 
+     CircleBox[{288, 448}, 0], CircleBox[{288, 464}, 0], 
+     CircleBox[{288, 480}, 0], CircleBox[{288, 496}, 0], 
+     CircleBox[{288, 512}, 0], CircleBox[{288, 528}, 0], 
+     CircleBox[{288, 544}, 0], CircleBox[{288, 560}, 0], 
+     CircleBox[{288, 576}, 0], CircleBox[{288, 592}, 0], 
+     CircleBox[{288, 608}, 0], CircleBox[{288, 624}, 0], 
+     CircleBox[{288, 640}, 0], CircleBox[{288, 656}, 0], 
+     CircleBox[{288, 672}, 0], CircleBox[{288, 688}, 0], 
+     CircleBox[{288, 704}, 0], CircleBox[{288, 720}, 0], 
+     CircleBox[{288, 736}, 0], CircleBox[{288, 752}, 0], 
+     CircleBox[{288, 768}, 0], CircleBox[{288, 784}, 0], 
+     CircleBox[{288, 800}, 0], CircleBox[{288, 816}, 0], 
+     CircleBox[{288, 832}, 0], CircleBox[{288, 848}, 0], 
+     CircleBox[{288, 864}, 0], CircleBox[{288, 880}, 0], 
+     CircleBox[{288, 896}, 0], CircleBox[{288, 912}, 0], 
+     CircleBox[{288, 928}, 0], CircleBox[{288, 944}, 0], 
+     CircleBox[{288, 960}, 0], CircleBox[{288, 976}, 0]}, {
+     CircleBox[{304, 16}, 0], CircleBox[{304, 32}, 0], 
+     CircleBox[{304, 48}, 0], CircleBox[{304, 64}, 0], 
+     CircleBox[{304, 80}, 0], CircleBox[{304, 96}, 0], 
+     CircleBox[{304, 112}, 0], CircleBox[{304, 128}, 0], 
+     CircleBox[{304, 144}, 0], CircleBox[{304, 160}, 0], 
+     CircleBox[{304, 176}, 0], CircleBox[{304, 192}, 0], 
+     CircleBox[{304, 208}, 0], CircleBox[{304, 224}, 0], 
+     CircleBox[{304, 240}, 0], CircleBox[{304, 256}, 0], 
+     CircleBox[{304, 272}, 0], CircleBox[{304, 288}, 0], 
+     CircleBox[{304, 304}, 0], CircleBox[{304, 320}, 0], 
+     CircleBox[{304, 336}, 0], CircleBox[{304, 352}, 0], 
+     CircleBox[{304, 368}, 0], CircleBox[{304, 384}, 0], 
+     CircleBox[{304, 400}, 0], CircleBox[{304, 416}, 0], 
+     CircleBox[{304, 432}, 0], CircleBox[{304, 448}, 0], 
+     CircleBox[{304, 464}, 0], CircleBox[{304, 480}, 0], 
+     CircleBox[{304, 496}, 0], CircleBox[{304, 512}, 0], 
+     CircleBox[{304, 528}, 0], CircleBox[{304, 544}, 0], 
+     CircleBox[{304, 560}, 0], CircleBox[{304, 576}, 0], 
+     CircleBox[{304, 592}, 0], CircleBox[{304, 608}, 0], 
+     CircleBox[{304, 624}, 0], CircleBox[{304, 640}, 0], 
+     CircleBox[{304, 656}, 0], CircleBox[{304, 672}, 0], 
+     CircleBox[{304, 688}, 0], CircleBox[{304, 704}, 0], 
+     CircleBox[{304, 720}, 0], CircleBox[{304, 736}, 0], 
+     CircleBox[{304, 752}, 0], CircleBox[{304, 768}, 0], 
+     CircleBox[{304, 784}, 0], CircleBox[{304, 800}, 0], 
+     CircleBox[{304, 816}, 0], CircleBox[{304, 832}, 0], 
+     CircleBox[{304, 848}, 0], CircleBox[{304, 864}, 0], 
+     CircleBox[{304, 880}, 0], CircleBox[{304, 896}, 0], 
+     CircleBox[{304, 912}, 0], CircleBox[{304, 928}, 0], 
+     CircleBox[{304, 944}, 0], CircleBox[{304, 960}, 0], 
+     CircleBox[{304, 976}, 0]}, {CircleBox[{320, 16}, 0], 
+     CircleBox[{320, 32}, 0], CircleBox[{320, 48}, 0], 
+     CircleBox[{320, 64}, 0], CircleBox[{320, 80}, 0], 
+     CircleBox[{320, 96}, 0], CircleBox[{320, 112}, 0], 
+     CircleBox[{320, 128}, 0], CircleBox[{320, 144}, 0], 
+     CircleBox[{320, 160}, 0], CircleBox[{320, 176}, 0], 
+     CircleBox[{320, 192}, 0], CircleBox[{320, 208}, 0], 
+     CircleBox[{320, 224}, 0], CircleBox[{320, 240}, 0], 
+     CircleBox[{320, 256}, 0], CircleBox[{320, 272}, 0], 
+     CircleBox[{320, 288}, 0], CircleBox[{320, 304}, 0], 
+     CircleBox[{320, 320}, 0], CircleBox[{320, 336}, 0], 
+     CircleBox[{320, 352}, 0], CircleBox[{320, 368}, 0], 
+     CircleBox[{320, 384}, 0], CircleBox[{320, 400}, 0], 
+     CircleBox[{320, 416}, 0], CircleBox[{320, 432}, 0], 
+     CircleBox[{320, 448}, 0], CircleBox[{320, 464}, 0], 
+     CircleBox[{320, 480}, 0], CircleBox[{320, 496}, 0], 
+     CircleBox[{320, 512}, 0], CircleBox[{320, 528}, 0], 
+     CircleBox[{320, 544}, 0], CircleBox[{320, 560}, 0], 
+     CircleBox[{320, 576}, 0], CircleBox[{320, 592}, 0], 
+     CircleBox[{320, 608}, 0], CircleBox[{320, 624}, 0], 
+     CircleBox[{320, 640}, 0], CircleBox[{320, 656}, 0], 
+     CircleBox[{320, 672}, 0], CircleBox[{320, 688}, 0], 
+     CircleBox[{320, 704}, 0], CircleBox[{320, 720}, 0], 
+     CircleBox[{320, 736}, 0], CircleBox[{320, 752}, 0], 
+     CircleBox[{320, 768}, 0], CircleBox[{320, 784}, 0], 
+     CircleBox[{320, 800}, 0], CircleBox[{320, 816}, 0], 
+     CircleBox[{320, 832}, 0], CircleBox[{320, 848}, 0], 
+     CircleBox[{320, 864}, 0], CircleBox[{320, 880}, 0], 
+     CircleBox[{320, 896}, 0], CircleBox[{320, 912}, 0], 
+     CircleBox[{320, 928}, 0], CircleBox[{320, 944}, 0], 
+     CircleBox[{320, 960}, 0], CircleBox[{320, 976}, 0]}, {
+     CircleBox[{336, 16}, 0], CircleBox[{336, 32}, 0], 
+     CircleBox[{336, 48}, 0], CircleBox[{336, 64}, 0], 
+     CircleBox[{336, 80}, 0], CircleBox[{336, 96}, 0], 
+     CircleBox[{336, 112}, 0], CircleBox[{336, 128}, 0], 
+     CircleBox[{336, 144}, 0], CircleBox[{336, 160}, 0], 
+     CircleBox[{336, 176}, 0], CircleBox[{336, 192}, 0], 
+     CircleBox[{336, 208}, 0], CircleBox[{336, 224}, 0], 
+     CircleBox[{336, 240}, 0], CircleBox[{336, 256}, 0], 
+     CircleBox[{336, 272}, 0], CircleBox[{336, 288}, 0], 
+     CircleBox[{336, 304}, 0], CircleBox[{336, 320}, 0], 
+     CircleBox[{336, 336}, 0], CircleBox[{336, 352}, 0], 
+     CircleBox[{336, 368}, 0], CircleBox[{336, 384}, 0], 
+     CircleBox[{336, 400}, 0], CircleBox[{336, 416}, 0], 
+     CircleBox[{336, 432}, 0], CircleBox[{336, 448}, 0], 
+     CircleBox[{336, 464}, 0], CircleBox[{336, 480}, 0], 
+     CircleBox[{336, 496}, 0], CircleBox[{336, 512}, 0], 
+     CircleBox[{336, 528}, 0], CircleBox[{336, 544}, 0], 
+     CircleBox[{336, 560}, 0], CircleBox[{336, 576}, 0], 
+     CircleBox[{336, 592}, 0], CircleBox[{336, 608}, 0], 
+     CircleBox[{336, 624}, 0], CircleBox[{336, 640}, 0], 
+     CircleBox[{336, 656}, 0], CircleBox[{336, 672}, 0], 
+     CircleBox[{336, 688}, 0], CircleBox[{336, 704}, 0], 
+     CircleBox[{336, 720}, 0], CircleBox[{336, 736}, 0], 
+     CircleBox[{336, 752}, 0], CircleBox[{336, 768}, 0], 
+     CircleBox[{336, 784}, 0], CircleBox[{336, 800}, 0], 
+     CircleBox[{336, 816}, 0], CircleBox[{336, 832}, 0], 
+     CircleBox[{336, 848}, 0], CircleBox[{336, 864}, 0], 
+     CircleBox[{336, 880}, 0], CircleBox[{336, 896}, 0], 
+     CircleBox[{336, 912}, 0], CircleBox[{336, 928}, 0], 
+     CircleBox[{336, 944}, 0], CircleBox[{336, 960}, 0], 
+     CircleBox[{336, 976}, 0]}, {CircleBox[{352, 16}, 0], 
+     CircleBox[{352, 32}, 0], CircleBox[{352, 48}, 0], 
+     CircleBox[{352, 64}, 0], CircleBox[{352, 80}, 0], 
+     CircleBox[{352, 96}, 0], CircleBox[{352, 112}, 0], 
+     CircleBox[{352, 128}, 0], CircleBox[{352, 144}, 0], 
+     CircleBox[{352, 160}, 0], CircleBox[{352, 176}, 0], 
+     CircleBox[{352, 192}, 0], CircleBox[{352, 208}, 0], 
+     CircleBox[{352, 224}, 0], CircleBox[{352, 240}, 0], 
+     CircleBox[{352, 256}, 0], CircleBox[{352, 272}, 0], 
+     CircleBox[{352, 288}, 0], CircleBox[{352, 304}, 0], 
+     CircleBox[{352, 320}, 0], CircleBox[{352, 336}, 0], 
+     CircleBox[{352, 352}, 0], CircleBox[{352, 368}, 0], 
+     CircleBox[{352, 384}, 0], CircleBox[{352, 400}, 0], 
+     CircleBox[{352, 416}, 0], CircleBox[{352, 432}, 0], 
+     CircleBox[{352, 448}, 0], CircleBox[{352, 464}, 0], 
+     CircleBox[{352, 480}, 0], CircleBox[{352, 496}, 0], 
+     CircleBox[{352, 512}, 0], CircleBox[{352, 528}, 0], 
+     CircleBox[{352, 544}, 0], CircleBox[{352, 560}, 0], 
+     CircleBox[{352, 576}, 0], CircleBox[{352, 592}, 0], 
+     CircleBox[{352, 608}, 0], CircleBox[{352, 624}, 0], 
+     CircleBox[{352, 640}, 0], CircleBox[{352, 656}, 0], 
+     CircleBox[{352, 672}, 0], CircleBox[{352, 688}, 0], 
+     CircleBox[{352, 704}, 0], CircleBox[{352, 720}, 0], 
+     CircleBox[{352, 736}, 0], CircleBox[{352, 752}, 0], 
+     CircleBox[{352, 768}, 0], CircleBox[{352, 784}, 0], 
+     CircleBox[{352, 800}, 0], CircleBox[{352, 816}, 0], 
+     CircleBox[{352, 832}, 0], CircleBox[{352, 848}, 0], 
+     CircleBox[{352, 864}, 0], CircleBox[{352, 880}, 0], 
+     CircleBox[{352, 896}, 0], CircleBox[{352, 912}, 0], 
+     CircleBox[{352, 928}, 0], CircleBox[{352, 944}, 0], 
+     CircleBox[{352, 960}, 0], CircleBox[{352, 976}, 0]}, {
+     CircleBox[{368, 16}, 0], CircleBox[{368, 32}, 0], 
+     CircleBox[{368, 48}, 0], CircleBox[{368, 64}, 0], 
+     CircleBox[{368, 80}, 0], CircleBox[{368, 96}, 0], 
+     CircleBox[{368, 112}, 0], CircleBox[{368, 128}, 0], 
+     CircleBox[{368, 144}, 0], CircleBox[{368, 160}, 0], 
+     CircleBox[{368, 176}, 0], CircleBox[{368, 192}, 0], 
+     CircleBox[{368, 208}, 0], CircleBox[{368, 224}, 0], 
+     CircleBox[{368, 240}, 0], CircleBox[{368, 256}, 0], 
+     CircleBox[{368, 272}, 0], CircleBox[{368, 288}, 0], 
+     CircleBox[{368, 304}, 0], CircleBox[{368, 320}, 0], 
+     CircleBox[{368, 336}, 0], CircleBox[{368, 352}, 0], 
+     CircleBox[{368, 368}, 0], CircleBox[{368, 384}, 0], 
+     CircleBox[{368, 400}, 0], CircleBox[{368, 416}, 0], 
+     CircleBox[{368, 432}, 0], CircleBox[{368, 448}, 0], 
+     CircleBox[{368, 464}, 0], CircleBox[{368, 480}, 0], 
+     CircleBox[{368, 496}, 0], CircleBox[{368, 512}, 0], 
+     CircleBox[{368, 528}, 0], CircleBox[{368, 544}, 0], 
+     CircleBox[{368, 560}, 0], CircleBox[{368, 576}, 0], 
+     CircleBox[{368, 592}, 0], CircleBox[{368, 608}, 0], 
+     CircleBox[{368, 624}, 0], CircleBox[{368, 640}, 0], 
+     CircleBox[{368, 656}, 0], CircleBox[{368, 672}, 0], 
+     CircleBox[{368, 688}, 0], CircleBox[{368, 704}, 0], 
+     CircleBox[{368, 720}, 0], CircleBox[{368, 736}, 0], 
+     CircleBox[{368, 752}, 0], CircleBox[{368, 768}, 0], 
+     CircleBox[{368, 784}, 0], CircleBox[{368, 800}, 0], 
+     CircleBox[{368, 816}, 0], CircleBox[{368, 832}, 0], 
+     CircleBox[{368, 848}, 0], CircleBox[{368, 864}, 0], 
+     CircleBox[{368, 880}, 0], CircleBox[{368, 896}, 0], 
+     CircleBox[{368, 912}, 0], CircleBox[{368, 928}, 0], 
+     CircleBox[{368, 944}, 0], CircleBox[{368, 960}, 0], 
+     CircleBox[{368, 976}, 0]}, {CircleBox[{384, 16}, 0], 
+     CircleBox[{384, 32}, 0], CircleBox[{384, 48}, 0], 
+     CircleBox[{384, 64}, 0], CircleBox[{384, 80}, 0], 
+     CircleBox[{384, 96}, 0], CircleBox[{384, 112}, 0], 
+     CircleBox[{384, 128}, 0], CircleBox[{384, 144}, 0], 
+     CircleBox[{384, 160}, 0], CircleBox[{384, 176}, 0], 
+     CircleBox[{384, 192}, 0], CircleBox[{384, 208}, 0], 
+     CircleBox[{384, 224}, 0], CircleBox[{384, 240}, 0], 
+     CircleBox[{384, 256}, 0], CircleBox[{384, 272}, 0], 
+     CircleBox[{384, 288}, 0], CircleBox[{384, 304}, 0], 
+     CircleBox[{384, 320}, 0], CircleBox[{384, 336}, 0], 
+     CircleBox[{384, 352}, 0], CircleBox[{384, 368}, 0], 
+     CircleBox[{384, 384}, 0], CircleBox[{384, 400}, 0], 
+     CircleBox[{384, 416}, 0], CircleBox[{384, 432}, 0], 
+     CircleBox[{384, 448}, 0], CircleBox[{384, 464}, 0], 
+     CircleBox[{384, 480}, 0], CircleBox[{384, 496}, 0], 
+     CircleBox[{384, 512}, 0], CircleBox[{384, 528}, 0], 
+     CircleBox[{384, 544}, 0], CircleBox[{384, 560}, 0], 
+     CircleBox[{384, 576}, 0], CircleBox[{384, 592}, 0], 
+     CircleBox[{384, 608}, 0], CircleBox[{384, 624}, 0], 
+     CircleBox[{384, 640}, 0], CircleBox[{384, 656}, 0], 
+     CircleBox[{384, 672}, 0], CircleBox[{384, 688}, 0], 
+     CircleBox[{384, 704}, 0], CircleBox[{384, 720}, 0], 
+     CircleBox[{384, 736}, 0], CircleBox[{384, 752}, 0], 
+     CircleBox[{384, 768}, 0], CircleBox[{384, 784}, 0], 
+     CircleBox[{384, 800}, 0], CircleBox[{384, 816}, 0], 
+     CircleBox[{384, 832}, 0], CircleBox[{384, 848}, 0], 
+     CircleBox[{384, 864}, 0], CircleBox[{384, 880}, 0], 
+     CircleBox[{384, 896}, 0], CircleBox[{384, 912}, 0], 
+     CircleBox[{384, 928}, 0], CircleBox[{384, 944}, 0], 
+     CircleBox[{384, 960}, 0], CircleBox[{384, 976}, 0]}, {
+     CircleBox[{400, 16}, 0], CircleBox[{400, 32}, 0], 
+     CircleBox[{400, 48}, 0], CircleBox[{400, 64}, 0], 
+     CircleBox[{400, 80}, 0], CircleBox[{400, 96}, 0], 
+     CircleBox[{400, 112}, 0], CircleBox[{400, 128}, 0], 
+     CircleBox[{400, 144}, 0], CircleBox[{400, 160}, 0], 
+     CircleBox[{400, 176}, 0], CircleBox[{400, 192}, 0], 
+     CircleBox[{400, 208}, 0], CircleBox[{400, 224}, 0], 
+     CircleBox[{400, 240}, 0], CircleBox[{400, 256}, 0], 
+     CircleBox[{400, 272}, 0], CircleBox[{400, 288}, 0], 
+     CircleBox[{400, 304}, 0], CircleBox[{400, 320}, 0], 
+     CircleBox[{400, 336}, 0], CircleBox[{400, 352}, 0], 
+     CircleBox[{400, 368}, 0], CircleBox[{400, 384}, 0], 
+     CircleBox[{400, 400}, 0], CircleBox[{400, 416}, 0], 
+     CircleBox[{400, 432}, 0], CircleBox[{400, 448}, 0], 
+     CircleBox[{400, 464}, 0], CircleBox[{400, 480}, 0], 
+     CircleBox[{400, 496}, 0], CircleBox[{400, 512}, 0], 
+     CircleBox[{400, 528}, 0], CircleBox[{400, 544}, 0], 
+     CircleBox[{400, 560}, 0], CircleBox[{400, 576}, 0], 
+     CircleBox[{400, 592}, 0], CircleBox[{400, 608}, 0], 
+     CircleBox[{400, 624}, 0], CircleBox[{400, 640}, 0], 
+     CircleBox[{400, 656}, 0], CircleBox[{400, 672}, 0], 
+     CircleBox[{400, 688}, 0], CircleBox[{400, 704}, 0], 
+     CircleBox[{400, 720}, 0], CircleBox[{400, 736}, 0], 
+     CircleBox[{400, 752}, 0], CircleBox[{400, 768}, 0], 
+     CircleBox[{400, 784}, 0], CircleBox[{400, 800}, 0], 
+     CircleBox[{400, 816}, 0], CircleBox[{400, 832}, 0], 
+     CircleBox[{400, 848}, 0], CircleBox[{400, 864}, 0], 
+     CircleBox[{400, 880}, 0], CircleBox[{400, 896}, 0], 
+     CircleBox[{400, 912}, 0], CircleBox[{400, 928}, 0], 
+     CircleBox[{400, 944}, 0], CircleBox[{400, 960}, 0], 
+     CircleBox[{400, 976}, 0]}, {CircleBox[{416, 16}, 0], 
+     CircleBox[{416, 32}, 0], CircleBox[{416, 48}, 0], 
+     CircleBox[{416, 64}, 0], CircleBox[{416, 80}, 0], 
+     CircleBox[{416, 96}, 0], CircleBox[{416, 112}, 0], 
+     CircleBox[{416, 128}, 0], CircleBox[{416, 144}, 0], 
+     CircleBox[{416, 160}, 0], CircleBox[{416, 176}, 0], 
+     CircleBox[{416, 192}, 0], CircleBox[{416, 208}, 0], 
+     CircleBox[{416, 224}, 0], CircleBox[{416, 240}, 0], 
+     CircleBox[{416, 256}, 0], CircleBox[{416, 272}, 0], 
+     CircleBox[{416, 288}, 0], CircleBox[{416, 304}, 0], 
+     CircleBox[{416, 320}, 0], CircleBox[{416, 336}, 0], 
+     CircleBox[{416, 352}, 0], CircleBox[{416, 368}, 0], 
+     CircleBox[{416, 384}, 0], CircleBox[{416, 400}, 0], 
+     CircleBox[{416, 416}, 0], CircleBox[{416, 432}, 0], 
+     CircleBox[{416, 448}, 0], CircleBox[{416, 464}, 0], 
+     CircleBox[{416, 480}, 0], CircleBox[{416, 496}, 0], 
+     CircleBox[{416, 512}, 0], CircleBox[{416, 528}, 0], 
+     CircleBox[{416, 544}, 0], CircleBox[{416, 560}, 0], 
+     CircleBox[{416, 576}, 0], CircleBox[{416, 592}, 0], 
+     CircleBox[{416, 608}, 0], CircleBox[{416, 624}, 0], 
+     CircleBox[{416, 640}, 0], CircleBox[{416, 656}, 0], 
+     CircleBox[{416, 672}, 0], CircleBox[{416, 688}, 0], 
+     CircleBox[{416, 704}, 0], CircleBox[{416, 720}, 0], 
+     CircleBox[{416, 736}, 0], CircleBox[{416, 752}, 0], 
+     CircleBox[{416, 768}, 0], CircleBox[{416, 784}, 0], 
+     CircleBox[{416, 800}, 0], CircleBox[{416, 816}, 0], 
+     CircleBox[{416, 832}, 0], CircleBox[{416, 848}, 0], 
+     CircleBox[{416, 864}, 0], CircleBox[{416, 880}, 0], 
+     CircleBox[{416, 896}, 0], CircleBox[{416, 912}, 0], 
+     CircleBox[{416, 928}, 0], CircleBox[{416, 944}, 0], 
+     CircleBox[{416, 960}, 0], CircleBox[{416, 976}, 0]}, {
+     CircleBox[{432, 16}, 0], CircleBox[{432, 32}, 0], 
+     CircleBox[{432, 48}, 0], CircleBox[{432, 64}, 0], 
+     CircleBox[{432, 80}, 0], CircleBox[{432, 96}, 0], 
+     CircleBox[{432, 112}, 0], CircleBox[{432, 128}, 0], 
+     CircleBox[{432, 144}, 0], CircleBox[{432, 160}, 0], 
+     CircleBox[{432, 176}, 0], CircleBox[{432, 192}, 0], 
+     CircleBox[{432, 208}, 0], CircleBox[{432, 224}, 0], 
+     CircleBox[{432, 240}, 0], CircleBox[{432, 256}, 0], 
+     CircleBox[{432, 272}, 0], CircleBox[{432, 288}, 0], 
+     CircleBox[{432, 304}, 0], CircleBox[{432, 320}, 0], 
+     CircleBox[{432, 336}, 0], CircleBox[{432, 352}, 0], 
+     CircleBox[{432, 368}, 0], CircleBox[{432, 384}, 0], 
+     CircleBox[{432, 400}, 0], CircleBox[{432, 416}, 0], 
+     CircleBox[{432, 432}, 0], CircleBox[{432, 448}, 0], 
+     CircleBox[{432, 464}, 0], CircleBox[{432, 480}, 0], 
+     CircleBox[{432, 496}, 0], CircleBox[{432, 512}, 0], 
+     CircleBox[{432, 528}, 0], CircleBox[{432, 544}, 0], 
+     CircleBox[{432, 560}, 0], CircleBox[{432, 576}, 0], 
+     CircleBox[{432, 592}, 0], CircleBox[{432, 608}, 0], 
+     CircleBox[{432, 624}, 0], CircleBox[{432, 640}, 0], 
+     CircleBox[{432, 656}, 0], CircleBox[{432, 672}, 0], 
+     CircleBox[{432, 688}, 0], CircleBox[{432, 704}, 0], 
+     CircleBox[{432, 720}, 0], CircleBox[{432, 736}, 0], 
+     CircleBox[{432, 752}, 0], CircleBox[{432, 768}, 0], 
+     CircleBox[{432, 784}, 0], CircleBox[{432, 800}, 0], 
+     CircleBox[{432, 816}, 0], CircleBox[{432, 832}, 0], 
+     CircleBox[{432, 848}, 0], CircleBox[{432, 864}, 0], 
+     CircleBox[{432, 880}, 0], CircleBox[{432, 896}, 0], 
+     CircleBox[{432, 912}, 0], CircleBox[{432, 928}, 0], 
+     CircleBox[{432, 944}, 0], CircleBox[{432, 960}, 0], 
+     CircleBox[{432, 976}, 0]}, {CircleBox[{448, 16}, 0], 
+     CircleBox[{448, 32}, 0], CircleBox[{448, 48}, 0], 
+     CircleBox[{448, 64}, 0], CircleBox[{448, 80}, 0], 
+     CircleBox[{448, 96}, 0], CircleBox[{448, 112}, 0], 
+     CircleBox[{448, 128}, 0], CircleBox[{448, 144}, 0], 
+     CircleBox[{448, 160}, 0], CircleBox[{448, 176}, 0], 
+     CircleBox[{448, 192}, 0], CircleBox[{448, 208}, 0], 
+     CircleBox[{448, 224}, 0], CircleBox[{448, 240}, 0], 
+     CircleBox[{448, 256}, 0], CircleBox[{448, 272}, 0], 
+     CircleBox[{448, 288}, 0], CircleBox[{448, 304}, 0], 
+     CircleBox[{448, 320}, 0], CircleBox[{448, 336}, 0], 
+     CircleBox[{448, 352}, 0], CircleBox[{448, 368}, 0], 
+     CircleBox[{448, 384}, 0], CircleBox[{448, 400}, 0], 
+     CircleBox[{448, 416}, 0], CircleBox[{448, 432}, 0], 
+     CircleBox[{448, 448}, 0], CircleBox[{448, 464}, 0], 
+     CircleBox[{448, 480}, 0], CircleBox[{448, 496}, 0], 
+     CircleBox[{448, 512}, 0], CircleBox[{448, 528}, 0], 
+     CircleBox[{448, 544}, 0], CircleBox[{448, 560}, 0], 
+     CircleBox[{448, 576}, 0], CircleBox[{448, 592}, 0], 
+     CircleBox[{448, 608}, 0], CircleBox[{448, 624}, 0], 
+     CircleBox[{448, 640}, 0], CircleBox[{448, 656}, 0], 
+     CircleBox[{448, 672}, 0], CircleBox[{448, 688}, 0], 
+     CircleBox[{448, 704}, 0], CircleBox[{448, 720}, 0], 
+     CircleBox[{448, 736}, 0], CircleBox[{448, 752}, 0], 
+     CircleBox[{448, 768}, 0], CircleBox[{448, 784}, 0], 
+     CircleBox[{448, 800}, 0], CircleBox[{448, 816}, 0], 
+     CircleBox[{448, 832}, 0], CircleBox[{448, 848}, 0], 
+     CircleBox[{448, 864}, 0], CircleBox[{448, 880}, 0], 
+     CircleBox[{448, 896}, 0], CircleBox[{448, 912}, 0], 
+     CircleBox[{448, 928}, 0], CircleBox[{448, 944}, 0], 
+     CircleBox[{448, 960}, 0], CircleBox[{448, 976}, 0]}, {
+     CircleBox[{464, 16}, 0], CircleBox[{464, 32}, 0], 
+     CircleBox[{464, 48}, 0], CircleBox[{464, 64}, 0], 
+     CircleBox[{464, 80}, 0], CircleBox[{464, 96}, 0], 
+     CircleBox[{464, 112}, 0], CircleBox[{464, 128}, 0], 
+     CircleBox[{464, 144}, 0], CircleBox[{464, 160}, 0], 
+     CircleBox[{464, 176}, 0], CircleBox[{464, 192}, 0], 
+     CircleBox[{464, 208}, 0], CircleBox[{464, 224}, 0], 
+     CircleBox[{464, 240}, 0], CircleBox[{464, 256}, 0], 
+     CircleBox[{464, 272}, 0], CircleBox[{464, 288}, 0], 
+     CircleBox[{464, 304}, 0], CircleBox[{464, 320}, 0], 
+     CircleBox[{464, 336}, 0], CircleBox[{464, 352}, 0], 
+     CircleBox[{464, 368}, 0], CircleBox[{464, 384}, 0], 
+     CircleBox[{464, 400}, 0], CircleBox[{464, 416}, 0], 
+     CircleBox[{464, 432}, 0], CircleBox[{464, 448}, 0], 
+     CircleBox[{464, 464}, 0], CircleBox[{464, 480}, 0], 
+     CircleBox[{464, 496}, 0], CircleBox[{464, 512}, 0], 
+     CircleBox[{464, 528}, 0], CircleBox[{464, 544}, 0], 
+     CircleBox[{464, 560}, 0], CircleBox[{464, 576}, 0], 
+     CircleBox[{464, 592}, 0], CircleBox[{464, 608}, 0], 
+     CircleBox[{464, 624}, 0], CircleBox[{464, 640}, 0], 
+     CircleBox[{464, 656}, 0], CircleBox[{464, 672}, 0], 
+     CircleBox[{464, 688}, 0], CircleBox[{464, 704}, 0], 
+     CircleBox[{464, 720}, 0], CircleBox[{464, 736}, 0], 
+     CircleBox[{464, 752}, 0], CircleBox[{464, 768}, 0], 
+     CircleBox[{464, 784}, 0], CircleBox[{464, 800}, 0], 
+     CircleBox[{464, 816}, 0], CircleBox[{464, 832}, 0], 
+     CircleBox[{464, 848}, 0], CircleBox[{464, 864}, 0], 
+     CircleBox[{464, 880}, 0], CircleBox[{464, 896}, 0], 
+     CircleBox[{464, 912}, 0], CircleBox[{464, 928}, 0], 
+     CircleBox[{464, 944}, 0], CircleBox[{464, 960}, 0], 
+     CircleBox[{464, 976}, 0]}, {CircleBox[{480, 16}, 0], 
+     CircleBox[{480, 32}, 0], CircleBox[{480, 48}, 0], 
+     CircleBox[{480, 64}, 0], CircleBox[{480, 80}, 0], 
+     CircleBox[{480, 96}, 0], CircleBox[{480, 112}, 0], 
+     CircleBox[{480, 128}, 0], CircleBox[{480, 144}, 0], 
+     CircleBox[{480, 160}, 0], CircleBox[{480, 176}, 0], 
+     CircleBox[{480, 192}, 0], CircleBox[{480, 208}, 0], 
+     CircleBox[{480, 224}, 0], CircleBox[{480, 240}, 0], 
+     CircleBox[{480, 256}, 0], CircleBox[{480, 272}, 0], 
+     CircleBox[{480, 288}, 0], CircleBox[{480, 304}, 0], 
+     CircleBox[{480, 320}, 0], CircleBox[{480, 336}, 0], 
+     CircleBox[{480, 352}, 0], CircleBox[{480, 368}, 0], 
+     CircleBox[{480, 384}, 0], CircleBox[{480, 400}, 0], 
+     CircleBox[{480, 416}, 0], CircleBox[{480, 432}, 0], 
+     CircleBox[{480, 448}, 0], CircleBox[{480, 464}, 0], 
+     CircleBox[{480, 480}, 0], CircleBox[{480, 496}, 0], 
+     CircleBox[{480, 512}, 0], CircleBox[{480, 528}, 0], 
+     CircleBox[{480, 544}, 0], CircleBox[{480, 560}, 0], 
+     CircleBox[{480, 576}, 0], CircleBox[{480, 592}, 0], 
+     CircleBox[{480, 608}, 0], CircleBox[{480, 624}, 0], 
+     CircleBox[{480, 640}, 0], CircleBox[{480, 656}, 0], 
+     CircleBox[{480, 672}, 0], CircleBox[{480, 688}, 0], 
+     CircleBox[{480, 704}, 0], CircleBox[{480, 720}, 0], 
+     CircleBox[{480, 736}, 0], CircleBox[{480, 752}, 0], 
+     CircleBox[{480, 768}, 0], CircleBox[{480, 784}, 0], 
+     CircleBox[{480, 800}, 0], CircleBox[{480, 816}, 0], 
+     CircleBox[{480, 832}, 0], CircleBox[{480, 848}, 0], 
+     CircleBox[{480, 864}, 0], CircleBox[{480, 880}, 0], 
+     CircleBox[{480, 896}, 0], CircleBox[{480, 912}, 0], 
+     CircleBox[{480, 928}, 0], CircleBox[{480, 944}, 0], 
+     CircleBox[{480, 960}, 0], CircleBox[{480, 976}, 0]}, {
+     CircleBox[{496, 16}, 0], CircleBox[{496, 32}, 0], 
+     CircleBox[{496, 48}, 0], CircleBox[{496, 64}, 0], 
+     CircleBox[{496, 80}, 0], CircleBox[{496, 96}, 0], 
+     CircleBox[{496, 112}, 0], CircleBox[{496, 128}, 0], 
+     CircleBox[{496, 144}, 0], CircleBox[{496, 160}, 0], 
+     CircleBox[{496, 176}, 0], CircleBox[{496, 192}, 0], 
+     CircleBox[{496, 208}, 0], CircleBox[{496, 224}, 0], 
+     CircleBox[{496, 240}, 0], CircleBox[{496, 256}, 0], 
+     CircleBox[{496, 272}, 0], CircleBox[{496, 288}, 0], 
+     CircleBox[{496, 304}, 0], CircleBox[{496, 320}, 0], 
+     CircleBox[{496, 336}, 0], CircleBox[{496, 352}, 0], 
+     CircleBox[{496, 368}, 0], CircleBox[{496, 384}, 0], 
+     CircleBox[{496, 400}, 0], CircleBox[{496, 416}, 0], 
+     CircleBox[{496, 432}, 0], CircleBox[{496, 448}, 0], 
+     CircleBox[{496, 464}, 0], CircleBox[{496, 480}, 0], 
+     CircleBox[{496, 496}, 0], CircleBox[{496, 512}, 0], 
+     CircleBox[{496, 528}, 0], CircleBox[{496, 544}, 0], 
+     CircleBox[{496, 560}, 0], CircleBox[{496, 576}, 0], 
+     CircleBox[{496, 592}, 0], CircleBox[{496, 608}, 0], 
+     CircleBox[{496, 624}, 0], CircleBox[{496, 640}, 0], 
+     CircleBox[{496, 656}, 0], CircleBox[{496, 672}, 0], 
+     CircleBox[{496, 688}, 0], CircleBox[{496, 704}, 0], 
+     CircleBox[{496, 720}, 0], CircleBox[{496, 736}, 0], 
+     CircleBox[{496, 752}, 0], CircleBox[{496, 768}, 0], 
+     CircleBox[{496, 784}, 0], CircleBox[{496, 800}, 0], 
+     CircleBox[{496, 816}, 0], CircleBox[{496, 832}, 0], 
+     CircleBox[{496, 848}, 0], CircleBox[{496, 864}, 0], 
+     CircleBox[{496, 880}, 0], CircleBox[{496, 896}, 0], 
+     CircleBox[{496, 912}, 0], CircleBox[{496, 928}, 0], 
+     CircleBox[{496, 944}, 0], CircleBox[{496, 960}, 0], 
+     CircleBox[{496, 976}, 0]}}},
+  ImageSize->Large]], "Output",
+ CellChangeTimes->{
+  3.749746718117508*^9, {3.74974679686588*^9, 3.7497468142062483`*^9}, 
+   3.749746914289053*^9, 3.750355234539588*^9, {3.7503554418817883`*^9, 
+   3.75035546444632*^9}, 3.750360461970133*^9, 3.7503605107594633`*^9, {
+   3.75036055638975*^9, 3.750360566833644*^9}, 3.750360782325583*^9, 
+   3.7503611478338823`*^9, 3.750361263648018*^9, 3.75036139515138*^9, 
+   3.750361474578557*^9, 3.750655374900508*^9, 3.7506554084092283`*^9, {
+   3.750655458896213*^9, 3.7506554647836313`*^9}, 3.750655751472427*^9, 
+   3.7506557961428547`*^9, 3.75065602667807*^9, 3.750656136759479*^9, 
+   3.75065643786296*^9, {3.7506569165125303`*^9, 3.7506569353181953`*^9}, 
+   3.7506581971865253`*^9, 3.750658504694495*^9, 3.750658567825721*^9, 
+   3.7506596958019648`*^9, 3.750660463292227*^9, 3.750660582523837*^9, 
+   3.7506606168868217`*^9, 3.75066632614244*^9, 3.750666607526497*^9, 
+   3.7506666505897923`*^9, 3.750666757500597*^9, {3.751040183083065*^9, 
+   3.751040193135181*^9}, 3.7510403605216017`*^9, 3.75104041240919*^9, 
+   3.7510976069996085`*^9, 3.7510977844619384`*^9, 3.751097881843738*^9, 
+   3.7510979358471365`*^9, 3.7510980117712603`*^9, 3.7510982797161207`*^9, 
+   3.7510983501940107`*^9, 3.751098764563182*^9, 3.7510992396280127`*^9, 
+   3.751100013537351*^9, 
+   3.751100312085327*^9},ExpressionUUID->"6d98c599-4c62-4513-89f7-\
+d74e5a23ddbd"],
 
 Cell[BoxData[
  GraphicsBox[{{}, {{{}, {}, {
-      {RGBColor[0.368417, 0.506779, 0.709798], PointSize[0.01388888888888889],
-        AbsoluteThickness[1.6], LineBox[CompressedData["
-1:eJwtVXk4lGsbpyJOIZO1U7acJFSiLMlPMVLp06JpQRxliWhTKQdZyklpx1en
-spYoKqEsdWgsUdTMO+adGSlLKS3C+75T6eAbfee5rud6rvuP537u33Lfj6H/
-rnUB4+Tk5BJle+y81Ld/nW8aD6I5NV27A6UI0J5cVJ7DQ+Cf23xeukph6ZSt
-rHGXB9L9kbhHFodr1jqRj3hgJVQ3ZbGlmJ6+Z/34Zh4et2+u/LxMCtX2T2oX
-2njQs1qjO+oohcWkWSOzP/BgEipwtraX4vSweZrRdx5Wr1x6P91aisEvVnOn
-K/GhT+/kRM+Vou5UfVaMNh/lr7NmvzCR4uXArL/ZJnx06a3SrzCQwnAJW1Xd
-ho/fuYRZgK4U+e6WE5cu56NWqZNXry5Fz7MDRx038cHXKcwpUJaiplNBPX8H
-HzfW3Zu4RV6Kjgp/18goPlzLqGHBNwYlE3TlNU/x8cZyfOrAFwY78nr2JmTx
-Efif9LraHgZFV2YrHy/h45yCe4ewnUHzWPp6PoKxzuVYK4P6BcOsASEfTxN9
-P7xrZjAp5lf/qh4+Mg58Cy2uZxC222iolJHl15jR+PZvBn3KrLb28QQu+TbL
-x5czMHttxcpSJ/DnEWdZiQyM+5MyRvUIGDpIbP0LGcTuPKc/YEZgsHmRzfU8
-BmnGz5loWwIn9ozM0shm4DD/SH+WCwGvjycSyy4z6Fps+bFuDYGrphFbt6Uz
-YCdoOBz1JpB3qMHU/hyDw112Xk7BBO40TmOmpDB4aTrj1ug+AuW64dXvkhi0
-1EYYcmIJ/EDS98F4BucOqgbcSCbgEJi5YCSaQSIrUDKSSiDmZHmo8iEG+wsf
-emzIIlBdzM/ViGAQ5KZZd/MWgXHij+36u2T4fhQpjdwnUMr1Pb8whMH0NMUY
-Ty6Br72Rz5wCGKhabqUKWgjYTpEx7Mdg9GlpsLyEwKchhcrfvRhYm7UlVb0l
-ICJUY1dzZPoky+UdHCBQd0vb2W4tgyUxu4iMYQIf95Vq/ljFoPu4QQtXWYAp
-i9e/r3JlMLTUJ3eNlgCdJR1s36UM3qi/dBMbCTCTeqI/2YHBzgO5Qy3zBMjQ
-d1U6vYiBbYY9x3SJAHUjxVGD82X4IrxTPq0UQGlDiNTJjMFMqXKmzmYBpD7q
-/+z6jYGmjN38IAHkX41TTtZnwPf06NGPFsA8+n38kBaDpGynjCfnBSiKK2SZ
-qzLQX7FCzfmmAO7DVfluCgzaJ9t0UFwBUs2qnrL/oWF5KfWz8ysBHg+NCUCj
-wEXs1fRdgC+N3GWFvTQqH6Qo9mu1/p+vDhrWqkzlnYWt+BkKaXTXaFVGc1qh
-cIJ70beZRku4xfnOyNZ/36Fhp3xtXuLlVnzevvtCVQUNcdQAO6qqFdarxgkE
-xTQWxrqHEqJWeO8dcwYNHT/9KxWDrUjYoeNodJ0G1cSUXfxFCM/ua3/VZtII
-8NStbzcQYmKL7lrJXzTuVm+M+LhQCFJbOcwuXVa/CXX60QohrI+2hH46R2O6
-IrXxibcQGyeMejWeohGbM8Pmn3AhSjYz5ZJkGlse3HoceER2v5qjrJVEI912
-0Gn7WSF2fmK1eiXQOEPv0BzOEuJNZuLFslgauhM4qhbFQji9usmZ9QcNH48I
-n281Qqh0WJzJjJTx2afI28IT4lFIwON5+2mQuW2s8g4hhucviyzZQyMoNvNl
-2RchiioPFTiH02jckxdxZ0SIz3EcvychNMy3F00uUCFRkSC6uCyIxmlOaW7O
-dBJaNaOc4m00BtyqHK6YkZCzf5au7UfDczFXkGZPQnFO9+sgbxplFk07z6wg
-oTJtyOTBJlm9BrwJyZtIzI/zOkh50ohiiS4nBJHomum/0ngtDY+7IVN6DpBw
-PLTpxsLVNIzWDCe4HSNxn31RZcEKmX73fLLU0kjskNsVN4FNI2Ykql9yjcSv
-lS6M0ImGompw7y9lJFIzPH9EONCQa3r9MKeeRPkiz5OUDY2QBd1h10gS2lXv
-zdysZPr6ljRM6iVROI8l2TuXho2t+rBkiET02Rdp+0xpNDz8rjJVRYRv12Je
-eRrTmFSyOFfHQIRGWfd81aNRMyaTlQgu7seND+vSMAuZr8JdLkKu7onr96bS
-//IggsFWcp5Ihcb6NMNT+/eIsHzDVJf2iTK/1lv0vDsmguyz6H4sT+NNTp0u
-97IISgalx8//oMCx6J098Z4IUx/st/FgKPxhEvhQp0mEjY5PqY4+Cho/DS7C
-HLl6q+D3FPzevjBq+y7Cojsb4us6KZzesPI5zRLj5/NtFObu9dh40FwMTfvb
-d1cJKGReTytk2GIYfnCUy2+m0KI1ZYuarxik9RdbdgOF51efCowjxeh6drtH
-robCiCo7zvGsGC8+/5bCq6BwxWylck2BGNnpa83vl1BQ8zvri1oxGk+lOFUV
-UYi7ICp92C6GQDa+hDcotBracFW+iRHWpPnqbTYF09upL3xYEoy5R/8KhWgH
-ur3QXAK1vhZJWLoMz4wGtVRXCU5Mc+f2n5XhGUvrK8Hdzt7U4pMU3NfOTfGN
-lEDWpJuvJlH4b/CZ+LwzErzumHQ+P55CVqVxS/INCTa3f7DrjaZg52/hqFAt
-wX3/WPGSQxR4SouKYkkJjt0KZy5HUAi+7ag31CdBQ4Vs0OymwA877r1bsQ2H
-U3yyD4dSkPu5+pGjl82bUfsV/wNrBz7S
-        "]]}}}}, {}, {}, {{}, {}}, {{}, {}}},
-  
+      {RGBColor[0.368417, 0.506779, 0.709798], PointSize[
+       0.019444444444444445`], AbsoluteThickness[1.6], 
+       LineBox[{{0.26245, 1.37739}, {0.26245, 
+        1.37739}}]}}}}, {}, {}, {{}, {}}, {{}, {}}},
   AspectRatio->NCache[GoldenRatio^(-1), 0.6180339887498948],
   Axes->{True, True},
   AxesLabel->{
@@ -1642,9 +2639,9 @@ U3yyD4dSkPu5+pGjl82bUfsV/wNrBz7S
      TraditionalForm], 
     FormBox[
     "\"\:041f\:0440\:0438\:0437\:0430\:0431\:043e\:0439\:043d\:043e\:0435 \
-\:0434\:0430\:0432\:043b\:0435\:043d\:0438\:0435, \:041f\:0430\"", 
+\:0434\:0430\:0432\:043b\:0435\:043d\:0438\:0435, \:041c\:041f\:0430\"", 
      TraditionalForm]},
-  AxesOrigin->{0.26347179687500005`, 1.2001580000000003`},
+  AxesOrigin->{0, 0},
   DisplayFunction->Identity,
   Frame->{{False, False}, {False, False}},
   FrameLabel->{{None, None}, {None, None}},
@@ -1653,7 +2650,7 @@ U3yyD4dSkPu5+pGjl82bUfsV/wNrBz7S
   GridLinesStyle->Directive[
     GrayLevel[0.5, 0.4]],
   ImagePadding->All,
-  ImageSize->{799.375, Automatic},
+  ImageSize->Large,
   Method->{"CoordinatesToolOptions" -> {"DisplayFunction" -> ({
         (Identity[#]& )[
          Part[#, 1]], 
@@ -1663,12 +2660,12 @@ U3yyD4dSkPu5+pGjl82bUfsV/wNrBz7S
          Part[#, 1]], 
         (Identity[#]& )[
          Part[#, 2]]}& )}},
-  PlotRange->{{0.274803, 1.}, {1.21374, 1.48538}},
+  PlotRange->{{0, 0.5249}, {0, 2.75478}},
   PlotRangeClipping->True,
   PlotRangePadding->{{
      Scaled[0.02], 
      Scaled[0.02]}, {
-     Scaled[0.05], 
+     Scaled[0.02], 
      Scaled[0.05]}},
   Ticks->{Automatic, Automatic}]], "Output",
  CellChangeTimes->{
@@ -1684,10 +2681,14 @@ U3yyD4dSkPu5+pGjl82bUfsV/wNrBz7S
    3.7506581971865253`*^9, 3.750658504694495*^9, 3.750658567825721*^9, 
    3.7506596958019648`*^9, 3.750660463292227*^9, 3.750660582523837*^9, 
    3.7506606168868217`*^9, 3.75066632614244*^9, 3.750666607526497*^9, 
-   3.7506666505897923`*^9, 3.750666757500597*^9, 3.7510105643567147`*^9, 
-   3.7510883399155235`*^9, 3.751088400420268*^9, 3.7510888420038486`*^9, 
-   3.7510953499272575`*^9},ExpressionUUID->"dfe4ff5e-7aef-4234-b6bd-\
-d2cce05035da"],
+   3.7506666505897923`*^9, 3.750666757500597*^9, {3.751040183083065*^9, 
+   3.751040193135181*^9}, 3.7510403605216017`*^9, 3.75104041240919*^9, 
+   3.7510976069996085`*^9, 3.7510977844619384`*^9, 3.751097881843738*^9, 
+   3.7510979358471365`*^9, 3.7510980117712603`*^9, 3.7510982797161207`*^9, 
+   3.7510983501940107`*^9, 3.751098764563182*^9, 3.7510992396280127`*^9, 
+   3.751100013537351*^9, 
+   3.751100312147829*^9},ExpressionUUID->"360e6e3b-c587-48a8-816a-\
+cec6449c51e6"],
 
 Cell[BoxData[
  OverlayBox[{
@@ -2113,10 +3114,14 @@ Cell[BoxData[
    3.7506581971865253`*^9, 3.750658504694495*^9, 3.750658567825721*^9, 
    3.7506596958019648`*^9, 3.750660463292227*^9, 3.750660582523837*^9, 
    3.7506606168868217`*^9, 3.75066632614244*^9, 3.750666607526497*^9, 
-   3.7506666505897923`*^9, 3.750666757500597*^9, 3.7510105643567147`*^9, 
-   3.7510883399155235`*^9, 3.751088400420268*^9, 3.7510888420038486`*^9, 
-   3.7510953501062984`*^9},ExpressionUUID->"d2a5c3c8-d396-4ff1-9816-\
-6572905f4492"],
+   3.7506666505897923`*^9, 3.750666757500597*^9, {3.751040183083065*^9, 
+   3.751040193135181*^9}, 3.7510403605216017`*^9, 3.75104041240919*^9, 
+   3.7510976069996085`*^9, 3.7510977844619384`*^9, 3.751097881843738*^9, 
+   3.7510979358471365`*^9, 3.7510980117712603`*^9, 3.7510982797161207`*^9, 
+   3.7510983501940107`*^9, 3.751098764563182*^9, 3.7510992396280127`*^9, 
+   3.751100013537351*^9, 
+   3.751100312342399*^9},ExpressionUUID->"7e89d2cf-2f37-47af-9dfb-\
+b979c5384b3c"],
 
 Cell[CellGroupData[{
 
@@ -2187,31 +3192,34 @@ Cell[BoxData[
    "\"Directory \
 \\!\\(\\*RowBox[{\\\"\\\\\\\"C:\\\\\\\\\\\\\\\\Users\\\\\\\\\\\\\\\\Nikita\\\\\
 \\\\\\\\\\\\Documents\\\\\\\\\\\\\\\\~\\\\\\\\\\\\\\\\Desktop\\\\\\\\\\\\\\\\\
-\\\\\\\"\\\"}]\\) does not exist.\"",2,181,7,23151647649028870739,"Local"},
+\\\\\\\"\\\"}]\\) does not exist.\"",2,94,3,23151724095050902558,"Local"},
   "MessageTemplate"]], "Message", "MSG",
- CellChangeTimes->{3.7510105654714804`*^9, 3.751088341250828*^9, 
-  3.7510884008453646`*^9, 3.751088842461952*^9, 
-  3.751095350186318*^9},ExpressionUUID->"b0dacfc3-6794-461c-acc6-\
-2ad6ce78a44f"],
+ CellChangeTimes->{3.7510976074917192`*^9, 3.751097785002062*^9, 
+  3.7510982805573034`*^9, 3.7510983508521605`*^9, 3.7510987651843224`*^9, 
+  3.7510992401841393`*^9, 3.751100014523572*^9, 
+  3.751100312451782*^9},ExpressionUUID->"e028da79-071c-405c-a88e-\
+e7be909e5fe1"],
 
 Cell[BoxData[
  TemplateBox[{
   "Export","noopen",
    "\"Cannot open \
-\\!\\(\\*RowBox[{\\\"\\\\\\\"~/Desktop/opening.gif\\\\\\\"\\\"}]\\).\"",2,181,
-   8,23151647649028870739,"Local"},
+\\!\\(\\*RowBox[{\\\"\\\\\\\"~/Desktop/opening.gif\\\\\\\"\\\"}]\\).\"",2,94,
+   4,23151724095050902558,"Local"},
   "MessageTemplate"]], "Message", "MSG",
- CellChangeTimes->{3.7510105654714804`*^9, 3.751088341250828*^9, 
-  3.7510884008453646`*^9, 3.751088842461952*^9, 
-  3.7510953502253246`*^9},ExpressionUUID->"2dfcf3e2-486d-445f-9014-\
-ccd5d5537ba4"],
+ CellChangeTimes->{3.7510976074917192`*^9, 3.751097785002062*^9, 
+  3.7510982805573034`*^9, 3.7510983508521605`*^9, 3.7510987651843224`*^9, 
+  3.7510992401841393`*^9, 3.751100014523572*^9, 
+  3.751100312483041*^9},ExpressionUUID->"b533e712-c4ae-4c25-9af1-\
+3970fe8bb572"],
 
 Cell[BoxData["$Failed"], "Output",
  CellChangeTimes->{3.750659652156084*^9, 3.750666699563397*^9, 
-  3.750666774903749*^9, 3.7510105655965085`*^9, 3.7510883414458723`*^9, 
-  3.7510884009343853`*^9, 3.7510888425479717`*^9, 
-  3.7510953502573347`*^9},ExpressionUUID->"434b28f4-6608-4267-a70c-\
-5e3a9e1250df"]
+  3.750666774903749*^9, 3.7510976075787387`*^9, 3.75109778508108*^9, 
+  3.7510982806513257`*^9, 3.751098350935181*^9, 3.7510987652713413`*^9, 
+  3.7510992402511563`*^9, 3.751100014717616*^9, 
+  3.7511003125142927`*^9},ExpressionUUID->"38355a13-9063-43dd-8d61-\
+d612b7f23597"]
 }, Open  ]]
 }, Open  ]],
 
@@ -2384,561 +3392,11 @@ Cell[BoxData[{
    3.7503598303588943`*^9}, 3.750360044553823*^9, {3.7503602219784393`*^9, 
    3.750360333147932*^9}, 
    3.750360417313128*^9},ExpressionUUID->"f9860513-b3e0-485f-8fa7-\
-1faeae9d239c"],
-
-Cell[CellGroupData[{
-
-Cell[BoxData["fracture"], "Input",
- CellChangeTimes->{{3.7510106609545107`*^9, 
-  3.7510106632660303`*^9}},ExpressionUUID->"e01db493-b34f-48f7-a699-\
-b19d8480567a"],
-
-Cell[BoxData[
- RowBox[{"{", 
-  RowBox[{
-   RowBox[{"{", 
-    RowBox[{"\<\"Time\"\>", ",", "\<\"[min]\"\>", ",", "\<\"Opening\"\>", 
-     ",", "\<\"[mm]\"\>", ",", "\<\"Pressure\"\>", ",", "\<\"[Pa]\"\>", 
-     ",", "\<\"Length\"\>", ",", "\<\"[m]\"\>", ",", "\<\"Height\"\>", 
-     ",", "\<\"[m]\"\>", ",", "\<\"Aspect\"\>", ",", "\<\"raio\"\>", 
-     ",", "\<\"[n/d]\"\>"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.274803`", ",", "1.91465`", ",", "1.40001`", ",", "40", ",", "0", 
-     ",", "\<\"inf\"\>"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.275618`", ",", "1.91546`", ",", "1.3923`", ",", "40.0001`", ",", "0", 
-     ",", "\<\"inf\"\>"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.276433`", ",", "1.91617`", ",", "1.39231`", ",", "40.0006`", ",", "0", 
-     ",", "\<\"inf\"\>"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.277273`", ",", "1.91663`", ",", "1.392`", ",", "40.0014`", ",", 
-     "40.0007`", ",", "1.00002`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.278138`", ",", "1.91687`", ",", "1.39134`", ",", "40.0027`", ",", 
-     "40.0014`", ",", "1.00003`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.279027`", ",", "1.91692`", ",", "1.39038`", ",", "40.0046`", ",", 
-     "40.0023`", ",", "1.00006`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.279917`", ",", "1.91684`", ",", "1.38921`", ",", "40.0069`", ",", 
-     "40.0035`", ",", "1.00009`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.280831`", ",", "1.91664`", ",", "1.38784`", ",", "40.0099`", ",", 
-     "40.005`", ",", "1.00012`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.281745`", ",", "1.91638`", ",", "1.38635`", ",", "40.0136`", ",", 
-     "40.0068`", ",", "1.00017`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.282684`", ",", "1.91605`", ",", "1.38472`", ",", "40.0181`", ",", 
-     "40.009`", ",", "1.00023`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.283647`", ",", "1.91568`", ",", "1.38299`", ",", "40.0235`", ",", 
-     "40.0117`", ",", "1.00029`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.284611`", ",", "1.91528`", ",", "1.3812`", ",", "40.0297`", ",", 
-     "40.0149`", ",", "1.00037`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.285599`", ",", "1.91488`", ",", "1.37934`", ",", "40.0371`", ",", 
-     "40.0185`", ",", "1.00046`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.286636`", ",", "1.91445`", ",", "1.37736`", ",", "40.0458`", ",", 
-     "40.0229`", ",", "1.00057`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.287699`", ",", "1.91402`", ",", "1.37533`", ",", "40.056`", ",", 
-     "40.028`", ",", "1.0007`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.288786`", ",", "1.91361`", ",", "1.37325`", ",", "40.0677`", ",", 
-     "40.0339`", ",", "1.00085`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.289922`", ",", "1.91319`", ",", "1.37108`", ",", "40.0815`", ",", 
-     "40.0407`", ",", "1.00102`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.291108`", ",", "1.91279`", ",", "1.36884`", ",", "40.0974`", ",", 
-     "40.0487`", ",", "1.00122`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.292269`", ",", "1.91243`", ",", "1.36666`", ",", "40.1148`", ",", 
-     "40.0574`", ",", "1.00143`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.293356`", ",", "1.91212`", ",", "1.36463`", ",", "40.1327`", ",", 
-     "40.0664`", ",", "1.00165`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.294369`", ",", "1.91186`", ",", "1.36277`", ",", "40.1507`", ",", 
-     "40.0754`", ",", "1.00188`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.295333`", ",", "1.91163`", ",", "1.36101`", ",", "40.1692`", ",", 
-     "40.0847`", ",", "1.00211`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.296247`", ",", "1.91142`", ",", "1.35935`", ",", "40.188`", ",", 
-     "40.0941`", ",", "1.00234`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.297111`", ",", "1.91125`", ",", "1.35779`", ",", "40.2069`", ",", 
-     "40.1036`", ",", "1.00258`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.297951`", ",", "1.91109`", ",", "1.35628`", ",", "40.2264`", ",", 
-     "40.1133`", ",", "1.00282`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.298767`", ",", "1.91095`", ",", "1.35483`", ",", "40.2463`", ",", 
-     "40.1233`", ",", "1.00306`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.299557`", ",", "1.91083`", ",", "1.35343`", ",", "40.2665`", ",", 
-     "40.1335`", ",", "1.00332`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.300323`", ",", "1.91072`", ",", "1.35207`", ",", "40.2872`", ",", 
-     "40.1438`", ",", "1.00357`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.301064`", ",", "1.91062`", ",", "1.35076`", ",", "40.308`", ",", 
-     "40.1543`", ",", "1.00383`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.301805`", ",", "1.91053`", ",", "1.34946`", ",", "40.3298`", ",", 
-     "40.1652`", ",", "1.0041`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.302522`", ",", "1.91046`", ",", "1.3482`", ",", "40.3517`", ",", 
-     "40.1762`", ",", "1.00437`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.303238`", ",", "1.91039`", ",", "1.34694`", ",", "40.3745`", ",", 
-     "40.1877`", ",", "1.00465`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.303955`", ",", "1.91033`", ",", "1.34568`", ",", "40.3983`", ",", 
-     "40.1996`", ",", "1.00494`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.304647`", ",", "1.91029`", ",", "1.34447`", ",", "40.4221`", ",", 
-     "40.2115`", ",", "1.00524`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.305338`", ",", "1.91025`", ",", "1.34326`", ",", "40.4467`", ",", 
-     "40.2239`", ",", "1.00554`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.30603`", ",", "1.91022`", ",", "1.34205`", ",", "40.4723`", ",", 
-     "40.2367`", ",", "1.00586`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.306722`", ",", "1.91021`", ",", "1.34084`", ",", "40.4988`", ",", 
-     "40.25`", ",", "1.00618`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.307414`", ",", "1.9102`", ",", "1.33963`", ",", "40.5262`", ",", 
-     "40.2637`", ",", "1.00652`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.308105`", ",", "1.91021`", ",", "1.33843`", ",", "40.5545`", ",", 
-     "40.2779`", ",", "1.00687`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.308797`", ",", "1.91022`", ",", "1.33722`", ",", "40.5838`", ",", 
-     "40.2927`", ",", "1.00723`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.309489`", ",", "1.91025`", ",", "1.33601`", ",", "40.6141`", ",", 
-     "40.3079`", ",", "1.0076`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.310181`", ",", "1.9103`", ",", "1.33481`", ",", "40.6454`", ",", 
-     "40.3236`", ",", "1.00798`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.310897`", ",", "1.91036`", ",", "1.33357`", ",", "40.679`", ",", 
-     "40.3404`", ",", "1.00839`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.311613`", ",", "1.91043`", ",", "1.33233`", ",", "40.7136`", ",", 
-     "40.3577`", ",", "1.00882`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.312355`", ",", "1.91053`", ",", "1.33105`", ",", "40.7506`", ",", 
-     "40.3763`", ",", "1.00927`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.313096`", ",", "1.91064`", ",", "1.32977`", ",", "40.7889`", ",", 
-     "40.3955`", ",", "1.00974`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.313862`", ",", "1.91078`", ",", "1.32846`", ",", "40.8298`", ",", 
-     "40.416`", ",", "1.01024`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.314627`", ",", "1.91095`", ",", "1.32716`", ",", "40.8721`", ",", 
-     "40.4372`", ",", "1.01075`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.315418`", ",", "1.91114`", ",", "1.32582`", ",", "40.9172`", ",", 
-     "40.4599`", ",", "1.0113`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.316233`", ",", "1.91136`", ",", "1.32445`", ",", "40.9655`", ",", 
-     "40.484`", ",", "1.01189`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.317073`", ",", "1.91162`", ",", "1.32306`", ",", "41.0169`", ",", 
-     "40.5098`", ",", "1.01252`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.317938`", ",", "1.91192`", ",", "1.32164`", ",", "41.0718`", ",", 
-     "40.5373`", ",", "1.01318`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.318827`", ",", "1.91226`", ",", "1.3202`", ",", "41.1303`", ",", 
-     "40.5666`", ",", "1.0139`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.320137`", ",", "1.91283`", ",", "1.31811`", ",", "41.2205`", ",", 
-     "40.6117`", ",", "1.01499`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.32152`", ",", "1.91352`", ",", "1.31596`", ",", "41.321`", ",", 
-     "40.662`", ",", "1.01621`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.322953`", ",", "1.91432`", ",", "1.31379`", ",", "41.431`", ",", 
-     "40.7171`", ",", "1.01754`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.32446`", ",", "1.91526`", ",", "1.31159`", ",", "41.5535`", ",", 
-     "40.7783`", ",", "1.01901`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.326066`", ",", "1.91638`", ",", "1.30932`", ",", "41.692`", ",", 
-     "40.8474`", ",", "1.02068`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.327746`", ",", "1.91766`", ",", "1.30705`", ",", "41.8458`", ",", 
-     "40.924`", ",", "1.02252`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.329525`", ",", "1.91912`", ",", "1.30476`", ",", "42.019`", ",", 
-     "41.0103`", ",", "1.0246`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.331402`", ",", "1.92079`", ",", "1.30246`", ",", "42.2137`", ",", 
-     "41.107`", ",", "1.02692`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.333404`", ",", "1.92267`", ",", "1.30014`", ",", "42.435`", ",", 
-     "41.2168`", ",", "1.02955`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.335503`", ",", "1.92475`", ",", "1.29784`", ",", "42.6828`", ",", 
-     "41.3395`", ",", "1.03249`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.337678`", ",", "1.92698`", ",", "1.29559`", ",", "42.9564`", ",", 
-     "41.4747`", ",", "1.03573`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.339629`", ",", "1.92902`", ",", "1.29366`", ",", "43.2169`", ",", 
-     "41.603`", ",", "1.03879`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.341359`", ",", "1.93084`", ",", "1.29202`", ",", "43.4594`", ",", 
-     "41.7221`", ",", "1.04164`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.34294`", ",", "1.93251`", ",", "1.29056`", ",", "43.6907`", ",", 
-     "41.8355`", ",", "1.04435`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.344397`", ",", "1.93404`", ",", "1.28925`", ",", "43.9119`", ",", 
-     "41.9437`", ",", "1.04693`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.345756`", ",", "1.93546`", ",", "1.28805`", ",", "44.1249`", ",", 
-     "42.0477`", ",", "1.0494`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.347041`", ",", "1.93677`", ",", "1.28692`", ",", "44.3321`", ",", 
-     "42.1486`", ",", "1.0518`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.348251`", ",", "1.938`", ",", "1.28587`", ",", "44.5324`", ",", 
-     "42.246`", ",", "1.05412`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.349413`", ",", "1.93915`", ",", "1.28486`", ",", "44.7291`", ",", 
-     "42.3415`", ",", "1.05639`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.350524`", ",", "1.94024`", ",", "1.2839`", ",", "44.9215`", ",", 
-     "42.4346`", ",", "1.0586`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.351587`", ",", "1.94126`", ",", "1.28298`", ",", "45.1088`", ",", 
-     "42.5252`", ",", "1.06075`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.352624`", ",", "1.94223`", ",", "1.28207`", ",", "45.2951`", ",", 
-     "42.6152`", ",", "1.06289`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.353637`", ",", "1.94316`", ",", "1.28118`", ",", "45.4799`", ",", 
-     "42.7043`", ",", "1.065`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.354625`", ",", "1.94405`", ",", "1.28031`", ",", "45.663`", ",", 
-     "42.7924`", ",", "1.06708`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.355589`", ",", "1.9449`", ",", "1.27945`", ",", "45.844`", ",", 
-     "42.8793`", ",", "1.06914`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.356528`", ",", "1.9457`", ",", "1.27861`", ",", "46.0227`", ",", 
-     "42.965`", ",", "1.07117`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.357466`", ",", "1.94649`", ",", "1.27776`", ",", "46.2035`", ",", 
-     "43.0517`", ",", "1.07321`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.358381`", ",", "1.94724`", ",", "1.27692`", ",", "46.3816`", ",", 
-     "43.1368`", ",", "1.07522`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.359295`", ",", "1.94798`", ",", "1.27607`", ",", "46.5616`", ",", 
-     "43.2228`", ",", "1.07725`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.360209`", ",", "1.9487`", ",", "1.27521`", ",", "46.7434`", ",", 
-     "43.3095`", ",", "1.07929`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.361123`", ",", "1.9494`", ",", "1.27434`", ",", "46.927`", ",", 
-     "43.3969`", ",", "1.08134`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.362037`", ",", "1.95008`", ",", "1.27346`", ",", "47.1121`", ",", 
-     "43.4849`", ",", "1.08341`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.362951`", ",", "1.95076`", ",", "1.27256`", ",", "47.2989`", ",", 
-     "43.5735`", ",", "1.0855`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.363865`", ",", "1.95141`", ",", "1.27166`", ",", "47.4871`", ",", 
-     "43.6627`", ",", "1.08759`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.364779`", ",", "1.95206`", ",", "1.27074`", ",", "47.6767`", ",", 
-     "43.7524`", ",", "1.08969`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.365693`", ",", "1.95269`", ",", "1.26981`", ",", "47.8676`", ",", 
-     "43.8427`", ",", "1.09181`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.366632`", ",", "1.95333`", ",", "1.26885`", ",", "48.0651`", ",", 
-     "43.9358`", ",", "1.09398`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.367571`", ",", "1.95396`", ",", "1.26787`", ",", "48.2547`", ",", 
-     "44.0293`", ",", "1.09597`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.368534`", ",", "1.9546`", ",", "1.26685`", ",", "48.4501`", ",", 
-     "44.1449`", ",", "1.09753`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.369498`", ",", "1.95523`", ",", "1.26583`", ",", "48.6464`", ",", 
-     "44.2616`", ",", "1.09907`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.370486`", ",", "1.95587`", ",", "1.26476`", ",", "48.8486`", ",", 
-     "44.3819`", ",", "1.10064`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.371499`", ",", "1.95652`", ",", "1.26366`", ",", "49.0568`", ",", 
-     "44.5058`", ",", "1.10226`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.372537`", ",", "1.95718`", ",", "1.26252`", ",", "49.2708`", ",", 
-     "44.6332`", ",", "1.1039`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.373599`", ",", "1.95786`", ",", "1.26134`", ",", "49.4908`", ",", 
-     "44.7642`", ",", "1.10559`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.374686`", ",", "1.95855`", ",", "1.26012`", ",", "49.7167`", ",", 
-     "44.8986`", ",", "1.10731`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.375798`", ",", "1.95926`", ",", "1.25887`", ",", "49.9485`", ",", 
-     "45.0365`", ",", "1.10907`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.376959`", ",", "1.96001`", ",", "1.25756`", ",", "50.1914`", ",", 
-     "45.1806`", ",", "1.11091`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.378145`", ",", "1.96079`", ",", "1.25622`", ",", "50.4403`", ",", 
-     "45.328`", ",", "1.11278`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.37938`", ",", "1.96161`", ",", "1.25481`", ",", "50.7003`", ",", 
-     "45.4815`", ",", "1.11475`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.38064`", ",", "1.96246`", ",", "1.25338`", ",", "50.9664`", ",", 
-     "45.638`", ",", "1.11675`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.381925`", ",", "1.96335`", ",", "1.25192`", ",", "51.2382`", ",", 
-     "45.7974`", ",", "1.1188`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.383234`", ",", "1.96428`", ",", "1.25043`", ",", "51.5156`", ",", 
-     "45.9602`", ",", "1.12088`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.384568`", ",", "1.96525`", ",", "1.24892`", ",", "51.7983`", ",", 
-     "46.1271`", ",", "1.12295`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.385927`", ",", "1.96627`", ",", "1.24739`", ",", "52.086`", ",", 
-     "46.2981`", ",", "1.12501`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.387335`", ",", "1.96736`", ",", "1.24582`", ",", "52.3837`", ",", "44",
-      ",", "1.19054`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.388768`", ",", "1.9685`", ",", "1.24424`", ",", "52.686`", ",", "44", 
-     ",", "1.19741`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.39025`", ",", "1.96973`", ",", "1.24262`", ",", "52.998`", ",", "44", 
-     ",", "1.2045`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.391782`", ",", "1.97103`", ",", "1.24098`", ",", "53.3192`", ",", "44",
-      ",", "1.2118`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.393339`", ",", "1.97241`", ",", "1.23933`", ",", "53.6443`", ",", "44",
-      ",", "1.21919`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.394895`", ",", "1.97383`", ",", "1.23771`", ",", "53.968`", ",", "44", 
-     ",", "1.22654`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.396427`", ",", "1.97527`", ",", "1.23615`", ",", "54.2848`", ",", "44",
-      ",", "1.23374`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.397958`", ",", "1.97675`", ",", "1.23462`", ",", "54.5997`", ",", "44",
-      ",", "1.2409`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.39949`", ",", "1.97827`", ",", "1.23311`", ",", "54.9127`", ",", "44", 
-     ",", "1.24802`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.401047`", ",", "1.97985`", ",", "1.23162`", ",", "55.2285`", ",", "44",
-      ",", "1.25519`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.402603`", ",", "1.98148`", ",", "1.23016`", ",", "55.5421`", ",", "44",
-      ",", "1.26232`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.404159`", ",", "1.98313`", ",", "1.22872`", ",", "55.8532`", ",", "44",
-      ",", "1.26939`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.405765`", ",", "1.98487`", ",", "1.22727`", ",", "56.1717`", ",", "44",
-      ",", "1.27663`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.407371`", ",", "1.98664`", ",", "1.22586`", ",", "56.4876`", ",", "44",
-      ",", "1.28381`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.408977`", ",", "1.98843`", ",", "1.22447`", ",", "56.8011`", ",", "44",
-      ",", "1.29093`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.410558`", ",", "1.99022`", ",", "1.22313`", ",", "48.0513`", ",", "44",
-      ",", "1.09208`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.41209`", ",", "1.99197`", ",", "1.22185`", ",", "48.0585`", ",", "44", 
-     ",", "1.09224`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.413597`", ",", "1.99371`", ",", "1.22061`", ",", "48.0663`", ",", "44",
-      ",", "1.09242`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.415079`", ",", "1.99542`", ",", "1.2194`", ",", "48.0747`", ",", "44", 
-     ",", "1.09261`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.416537`", ",", "1.99712`", ",", "1.21824`", ",", "48.0838`", ",", "44",
-      ",", "1.09281`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.41797`", ",", "1.99879`", ",", "1.2171`", ",", "48.0937`", ",", "44", 
-     ",", "1.09304`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.419403`", ",", "2.00047`", ",", "1.21597`", ",", "48.1044`", ",", "44",
-      ",", "1.09328`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.420836`", ",", "2.00214`", ",", "1.21485`", ",", "48.1162`", ",", "44",
-      ",", "1.09355`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "0.422268`", ",", "2.00382`", ",", "1.21374`", ",", "48.1289`", ",", "44",
-      ",", "1.09384`"}], "}"}], ",", 
-   RowBox[{"{", 
-    RowBox[{
-    "1", ",", "3.58824`", ",", "1.48538`", ",", "174.367`", ",", "44.7586`", 
-     ",", "3.89571`"}], "}"}]}], "}"}]], "Output",
- CellChangeTimes->{3.7510106645003095`*^9, 3.7510883416449175`*^9, 
-  3.7510884011484346`*^9, 3.7510888427010064`*^9, 
-  3.751095350455377*^9},ExpressionUUID->"d1491e8b-48f5-401d-8fa9-\
-a9e267c37ee6"]
-}, Open  ]]
+1faeae9d239c"]
 }, Open  ]]
 },
-WindowSize->{1920, 997},
-WindowMargins->{{-8, Automatic}, {Automatic, -8}},
+WindowSize->{775, 872},
+WindowMargins->{{Automatic, 212}, {Automatic, 25}},
 FrontEndVersion->"11.1 for Microsoft Windows (64-bit) (March 13, 2017)",
 StyleDefinitions->"Default.nb"
 ]
@@ -2954,125 +3412,127 @@ CellTagsIndex->{}
 (*NotebookFileOutline
 Notebook[{
 Cell[CellGroupData[{
-Cell[580, 22, 340, 6, 101, "Title", "ExpressionUUID" -> \
+Cell[580, 22, 361, 6, 101, "Title", "ExpressionUUID" -> \
 "ddfe3c05-f490-498c-a937-55d066fcee60",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[923, 30, 739, 14, 47, "Input", "ExpressionUUID" -> \
+Cell[944, 30, 739, 14, 87, "Input", "ExpressionUUID" -> \
 "c8fc9359-af65-4370-a97e-f2120c432808",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[1665, 46, 398, 6, 56, "Subtitle", "ExpressionUUID" -> \
+Cell[1686, 46, 398, 6, 56, "Subtitle", "ExpressionUUID" -> \
 "e25394e1-9c35-4f6a-8495-86623345b352",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[2066, 54, 505, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[2087, 54, 505, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
 "0fcc0597-25c9-4843-be60-e01aeb713b6b",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[2574, 64, 1592, 33, 66, "Input", "ExpressionUUID" -> \
+Cell[2595, 64, 1590, 33, 66, "Input", "ExpressionUUID" -> \
 "a5463fb8-e42c-4825-bd77-14da5aea42de",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[4169, 99, 439, 7, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[4188, 99, 439, 7, 33, "Subsubtitle", "ExpressionUUID" -> \
 "a26e5cb8-621f-473e-9817-1af4aa08599c",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[4611, 108, 2640, 62, 200, "Input", "ExpressionUUID" -> \
+Cell[4630, 108, 2640, 62, 200, "Input", "ExpressionUUID" -> \
 "10d40c72-dbe1-482b-86cc-2099e7fe3572",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[7254, 172, 494, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[7273, 172, 494, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
 "d7ba3c85-2ecc-4633-b74f-86fb15d632b7",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[7751, 182, 1510, 31, 87, "Input", "ExpressionUUID" -> \
+Cell[7770, 182, 1510, 31, 106, "Input", "ExpressionUUID" -> \
 "90ba4dbf-43e9-4ba4-a7f8-632fbcbaa84a",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[9264, 215, 447, 7, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[9283, 215, 447, 7, 33, "Subsubtitle", "ExpressionUUID" -> \
 "a1f5bcd3-ad1c-4608-8d2e-184dd5d3b14f",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[9714, 224, 5975, 169, 557, "Input", "ExpressionUUID" -> \
+Cell[9733, 224, 5975, 169, 557, "Input", "ExpressionUUID" -> \
 "765118ba-0da3-4f4d-94a2-ea87440e3b8f",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[15692, 395, 493, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[15711, 395, 493, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
 "ba1976cb-53a4-4ebe-af03-95fcd4651050",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[16188, 405, 2196, 60, 403, "Input", "ExpressionUUID" -> \
+Cell[16207, 405, 2196, 60, 403, "Input", "ExpressionUUID" -> \
 "67f1f69a-9268-470a-94ea-01295451108c",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[18387, 467, 556, 9, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[18406, 467, 556, 9, 33, "Subsubtitle", "ExpressionUUID" -> \
 "36014964-da04-4894-82b2-12a8ee0727f9",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[18946, 478, 5372, 130, 794, "Input", "ExpressionUUID" -> \
+Cell[18965, 478, 5372, 130, 850, "Input", "ExpressionUUID" -> \
 "1493d0a1-889d-4ede-9aba-40cf1a08fef3",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[24321, 610, 674, 10, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[24340, 610, 674, 10, 57, "Subsubtitle", "ExpressionUUID" -> \
 "21ae29e2-a91d-4224-a123-209e3951a365",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[24998, 622, 5180, 117, 366, "Input", "ExpressionUUID" -> \
+Cell[25017, 622, 5180, 117, 589, "Input", "ExpressionUUID" -> \
 "c04ec092-9ade-455b-bd88-c95dcd94b5c3",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[30181, 741, 913, 13, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[30200, 741, 913, 13, 57, "Subsubtitle", "ExpressionUUID" -> \
 "f292807d-09b1-495c-8b9c-9b6b00df497f",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[31097, 756, 1319, 35, 47, "Input", "ExpressionUUID" -> \
+Cell[31116, 756, 1319, 35, 121, "Input", "ExpressionUUID" -> \
 "8a2511f9-6e16-4201-9ed6-e04ec148a2c9",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[32419, 793, 689, 10, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[32438, 793, 1000, 16, 57, "Subsubtitle", "ExpressionUUID" -> \
+"b0004f69-f221-4be9-a8c1-e15c829973e9",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
+Cell[33441, 811, 2156, 49, 422, "Input", "ExpressionUUID" -> \
+"46a45533-6ecb-4034-b627-79c1f651cb37",
+ CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
+Cell[35600, 862, 802, 12, 33, "Subsubtitle", "ExpressionUUID" -> \
 "394e299f-9abe-4d8b-a9b5-36a2d37636ef",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[33111, 805, 9794, 225, 1001, "Input", "ExpressionUUID" -> \
+Cell[36405, 876, 9794, 225, 1303, "Input", "ExpressionUUID" -> \
 "10ba4f6e-0c6b-4e7a-a2ff-06682d875362",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[42908, 1032, 506, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[46202, 1103, 506, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
 "474d85fe-a0e0-43b5-8093-a15ae79f8acf",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[43417, 1042, 1470, 34, 158, "Input", "ExpressionUUID" -> \
+Cell[46711, 1113, 1752, 41, 195, "Input", "ExpressionUUID" -> \
 "81b3acb9-66fc-4528-a224-93e31f291675",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[44890, 1078, 1010, 25, 121, "Input", "ExpressionUUID" -> \
+Cell[48466, 1156, 1010, 25, 121, "Input", "ExpressionUUID" -> \
 "81fda618-a9ea-4032-a1ff-be2c56cf9413",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[45903, 1105, 558, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[49479, 1183, 558, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
 "5f65bd77-40eb-4e12-b562-42a327fbbec3",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[46464, 1115, 1256, 31, 84, "Input", "ExpressionUUID" -> \
+Cell[50040, 1193, 1256, 31, 84, "Input", "ExpressionUUID" -> \
 "8ce706b7-ea1d-454a-902a-be912f5d64c8",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[47723, 1148, 1826, 33, 36, "Print", "ExpressionUUID" -> \
-"83518fa4-adfd-459a-a75c-a2d0b3067fe5",
+Cell[51299, 1226, 1998, 35, 36, "Print", "ExpressionUUID" -> \
+"521520b9-7c00-47aa-9779-96fe4d935de6",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[49552, 1183, 458, 7, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[53300, 1263, 458, 7, 33, "Subsubtitle", "ExpressionUUID" -> \
 "c9835767-2b4a-4bf0-9d05-9ee1c3d7ac31",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}],
-Cell[50013, 1192, 1285, 30, 106, "Input", "ExpressionUUID" -> \
+Cell[53761, 1272, 1728, 39, 125, "Input", "ExpressionUUID" -> \
 "04cc1e9d-381e-4076-b5e5-e3b493b8c2f5",
  CellGroupingRules->{"GroupTogetherGrouping", 10000.}]
 }, Open  ]],
-Cell[51313, 1225, 18106, 358, 602, "Output", "ExpressionUUID" -> \
-"842ce452-082a-40f3-974f-ec0d74f7e8fc"],
-Cell[69422, 1585, 5343, 104, 463, "Output", "ExpressionUUID" -> \
-"dfe4ff5e-7aef-4234-b6bd-d2cce05035da"],
-Cell[74768, 1691, 20161, 427, 449, "Output", "ExpressionUUID" -> \
-"d2a5c3c8-d396-4ff1-9816-6572905f4492"],
+Cell[55504, 1314, 17184, 345, 602, "Output", "ExpressionUUID" -> \
+"0359275a-81e3-4129-8cfc-d12cfeffadbb"],
+Cell[72691, 1661, 55843, 964, 735, "Output", "ExpressionUUID" -> \
+"6d98c599-4c62-4513-89f7-d74e5a23ddbd"],
+Cell[128537, 2627, 2843, 63, 323, "Output", "ExpressionUUID" -> \
+"360e6e3b-c587-48a8-816a-cec6449c51e6"],
+Cell[131383, 2692, 20406, 431, 449, "Output", "ExpressionUUID" -> \
+"7e89d2cf-2f37-47af-9dfb-b979c5384b3c"],
 Cell[CellGroupData[{
-Cell[94954, 2122, 519, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[151814, 3127, 519, 8, 33, "Subsubtitle", "ExpressionUUID" -> \
 "0dbe9cc2-e47a-4c58-81f1-7c9ef8e5e32c"],
 Cell[CellGroupData[{
-Cell[95498, 2134, 1823, 47, 252, "Input", "ExpressionUUID" -> \
+Cell[152358, 3139, 1823, 47, 271, "Input", "ExpressionUUID" -> \
 "b0245563-8792-413f-a4c1-ff322b233949"],
-Cell[97324, 2183, 539, 11, 21, "Message", "ExpressionUUID" -> \
-"b0dacfc3-6794-461c-acc6-2ad6ce78a44f"],
-Cell[97866, 2196, 424, 10, 21, "Message", "ExpressionUUID" -> \
-"2dfcf3e2-486d-445f-9014-ccd5d5537ba4"],
-Cell[98293, 2208, 306, 5, 30, "Output", "ExpressionUUID" -> \
-"434b28f4-6608-4267-a70c-5e3a9e1250df"]
+Cell[154184, 3188, 613, 12, 21, "Message", "ExpressionUUID" -> \
+"e028da79-071c-405c-a88e-e7be909e5fe1"],
+Cell[154800, 3202, 496, 11, 21, "Message", "ExpressionUUID" -> \
+"b533e712-c4ae-4c25-9af1-3970fe8bb572"],
+Cell[155299, 3215, 374, 6, 30, "Output", "ExpressionUUID" -> \
+"38355a13-9063-43dd-8d61-d612b7f23597"]
 }, Open  ]]
 }, Open  ]],
 Cell[CellGroupData[{
-Cell[98648, 2219, 568, 9, 33, "Subsubtitle", "ExpressionUUID" -> \
+Cell[155722, 3227, 568, 9, 33, "Subsubtitle", "ExpressionUUID" -> \
 "190e1697-5378-40fd-b7b7-68e948097639"],
-Cell[99219, 2230, 6123, 156, 758, "Input", "ExpressionUUID" -> \
-"f9860513-b3e0-485f-8fa7-1faeae9d239c"],
-Cell[CellGroupData[{
-Cell[105367, 2390, 164, 3, 30, "Input", "ExpressionUUID" -> \
-"e01db493-b34f-48f7-a699-b19d8480567a"],
-Cell[105534, 2395, 20552, 540, 620, "Output", "ExpressionUUID" -> \
-"d1491e8b-48f5-401d-8fa9-a9e267c37ee6"]
-}, Open  ]]
+Cell[156293, 3238, 6123, 156, 777, "Input", "ExpressionUUID" -> \
+"f9860513-b3e0-485f-8fa7-1faeae9d239c"]
 }, Open  ]]
 }
 ]
